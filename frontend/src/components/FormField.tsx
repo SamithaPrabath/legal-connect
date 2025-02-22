@@ -1,32 +1,29 @@
 import { Box, TextFieldProps } from "@mui/material";
 import { ChangeEventHandler } from "react";
-import CustomTypography, {
-    fontSizes,
-    fontWeights,
-} from "../typography/CustomTypography";
-import OutlinedTextField from "./OutlinedTextField";
+import OutlinedTextField from "./MUITextField";
+import MUITypography from "./MUITypography";
 
 type PropTypes = {
   label: string;
   name: string;
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  value?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 } & TextFieldProps;
 
 const FormField = ({ label, name, value, onChange, ...rest }: PropTypes) => {
   return (
     <Box sx={{ width: "100%" }}>
-      <CustomTypography
-        fontSize={fontSizes.sm}
-        fontWeight={fontWeights.xl}
-        ml={1}
+      <MUITypography
+        fontSize={"14px"}
+        fontWeight={"500"}
+        // ml={1}
         mb={1}
+        color="secondary"
       >
         {label}
-      </CustomTypography>
+      </MUITypography>
       <OutlinedTextField
         name={name}
-        fullWidth
         placeholder={label}
         value={value}
         onChange={onChange}

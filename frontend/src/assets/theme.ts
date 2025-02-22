@@ -1,5 +1,8 @@
 import { createTheme } from "@mui/material";
 
+const textPrimary = "#191919"
+const textSecondary = "#696969"
+
 const theme = createTheme({
     palette:{
         background: {
@@ -16,18 +19,33 @@ const theme = createTheme({
             light: "#EDF7FF"
         },
         text: {
-            primary: "#191919",
-            secondary:"#696969"
+            primary: textPrimary,
+            secondary: textSecondary
         },        
     },
     typography:{
-        allVariants:{
-            color:"black"
-        },
         fontFamily:"'Be Vietnam Pro', sans-serif;",
         button:{
             fontSize:"12px !important",
             textTransform:"capitalize",
+        },
+        h2:{
+            fontSize:"28px",
+            fontWeight: 500
+        },
+        h5: {
+            fontSize: "12px",
+            fontWeight: 500
+        },
+        body1: {
+            fontSize: "12px",
+            fontWeight: 400, 
+            color: textPrimary
+        },
+        body2: {
+            fontSize: "12px",
+            fontWeight: 400, 
+            color: textSecondary
         }
     },
 })

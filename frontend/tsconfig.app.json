@@ -12,6 +12,7 @@
       "@components/*": ["./src/components/*"],
       "@assets/*": ["./src/assets/*"],
       "@screens/*": ["./src/screens/*"],
+      "@type/*": ["./src/type/*"],
     },
 
     /* Bundler mode */

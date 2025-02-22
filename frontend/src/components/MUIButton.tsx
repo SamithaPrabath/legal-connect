@@ -4,7 +4,7 @@ const MUIButton = styled(Button)<ButtonProps>(({ theme, color, variant, size }) 
   const isOutlined = variant === "outlined";
   const { primary, secondary } = theme.palette;
   const { main, light } = color === "secondary" ? secondary : primary;
-  let paddingY = size === "small" ? 5 : 8
+  let paddingY = size === "small" ? 5 : 10
   if (isOutlined) paddingY--;
   return {
     backgroundColor: isOutlined ? light : main,

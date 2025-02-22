@@ -1,10 +1,10 @@
 import { styled, TextField } from "@mui/material";
 
-const OutlinedTextField = styled(TextField)(({ theme }) => ({
+const MUITextField = styled(TextField)(({ theme }) => ({
   "& .MuiOutlinedInput-root": {
     borderWidth: "1px",
     fontSize: "14px",
-    borderRadius: "10px",
+    borderRadius: "4px",
     borderColor: "lightgray",
     "& fieldset": {
       borderColor: theme.palette.divider,
@@ -19,7 +19,10 @@ const OutlinedTextField = styled(TextField)(({ theme }) => ({
   },
   "& input": {
     padding: "12px",
+    "::placeholder": {
+      textTransform:"capitalize"
+    }
   },
 }));
 
-export default OutlinedTextField;
+export default MUITextField;
