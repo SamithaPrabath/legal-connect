@@ -1,6 +1,6 @@
 enum AccountType {
-    LAWYER,
-    CLIENT
+    LAWYER = "lawyer",
+    CLIENT = "client"
 }
 
 export default AccountType;

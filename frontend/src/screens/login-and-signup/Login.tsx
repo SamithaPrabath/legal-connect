@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 import { useState } from "react"
 import EmailAndPasswordField, { SignForm } from "./EmailAndPasswordField"
 
@@ -14,10 +14,10 @@ const Login = () => {
     }
 
   return (
-    <div>
-      <Typography variant="h2">Welcome back!</Typography>
+    <Box width="100%">
+      <Typography variant="h2" textAlign="center">Welcome back!</Typography>
       <EmailAndPasswordField form={loginForm} formType="signin" handleChange={handleChange} />
-    </div>
+    </Box>
   )
 }
 

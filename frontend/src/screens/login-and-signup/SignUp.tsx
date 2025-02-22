@@ -32,8 +32,8 @@ const SignUp = () => {
     }
 
   return (
-    <Box>
-        <MUITypography variant="h2">Create Your Account</MUITypography>
+    <Box width="100%">
+        <MUITypography variant="h2" mb={3} textAlign="center">Create Your Account</MUITypography>
         {isAccountTypeSelected  
            ? <EmailAndPasswordField form={userForm} handleChange={handleChange} formType="signup" />
            : <AccountTypeManager selectedAccountType={accountType} handleAccountType={handleAccountType} handleAccountTypeSelect={handleAccountTypeSelect} />
@@ -56,13 +56,22 @@ const AccountTypeManager = ({selectedAccountType, handleAccountType, handleAccou
 ]
     return (
         <Box>
-            <Typography variant="body2">Welcome to LegalConnect! To get started, please select your role. If you're seeking legal assistance, choose ‘Client.’ If you're a legal professional offering services, choose ‘Lawyer.’ This will help us tailor the experience to your needs.</Typography>
+            <Typography variant="body2" marginBottom="15px">Welcome to LegalConnect! To get started, please select your role. If you're seeking legal assistance, choose ‘Client.’ If you're a legal professional offering services, choose ‘Lawyer.’ This will help us tailor the experience to your needs.</Typography>
             <RadioGroup value={selectedAccountType} aria-label="Account Type" onChange={(event) => handleAccountType(event.target.value as unknown as AccountType)}>
                 <List>
-                    {accountCards.map(({label, description, value}) => <AccountTypeCard  label={label} description={description} value={value}/>)}
+                {accountCards.map(({label, description, value}) => <ListItem onClick={() => handleAccountType(value)} sx={{
+                    border: (theme) => {
+                        const { divider, primary} = theme.palette;
+
+                        return `1px solid ${selectedAccountType === value ? primary.main : divider}`
+                    },
+                    transition: "border-color 0.25s",
+                    borderRadius: "8px",
+                    marginBottom: "15px"
+                }}><AccountTypeCard  label={label} description={description} value={value}/></ListItem>)}
                 </List>
             </RadioGroup>
-            <MUIButton onClick={handleAccountTypeSelect}>Continue</MUIButton>
+            <MUIButton fullWidth onClick={handleAccountTypeSelect}>Continue</MUIButton>
         </Box>
     )
 }
@@ -75,13 +84,13 @@ type AccountCard = {
 
 const AccountTypeCard = ({label, description, value}: AccountCard) => {
     return (
-        <ListItem>
+        <Box width="100%" display="flex" justifyContent="space-between" alignItems="start">
             <Box display="flex" flexDirection="column">
                 <MUITypography variant="h5">{label}</MUITypography>
                 <Typography variant="body1">{description}</Typography>
             </Box>
             <Radio value={value} size="small" checkedIcon={<CheckCircle />} />
-        </ListItem>
+        </Box>
     )
 }
 

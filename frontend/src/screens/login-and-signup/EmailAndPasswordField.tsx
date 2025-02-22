@@ -17,12 +17,12 @@ type PropTypes = {
 const EmailAndPasswordField = ({handleChange, form, formType}: PropTypes) => {
   return (
     <Box>
-      <Box>
-        <FormField label="Email" name="email" value={form.email} onChange={handleChange} />
-        <FormField label="Password" name="password" value={form.password} type="password" onChange={handleChange} />
+      <Box mb={3} display="flex" flexDirection="column" gap={2}>
+        <FormField fullWidth label="Email" name="email" value={form.email} onChange={handleChange} />
+        <FormField fullWidth label="Password" name="password" value={form.password} type="password" onChange={handleChange} />
       </Box>
 
-      <MUIButton>{formType === "signin" ? "Login" : "Continue"}</MUIButton>
+      <MUIButton fullWidth>{formType === "signin" ? "Login" : "Continue"}</MUIButton>
     </Box>
   )
 }

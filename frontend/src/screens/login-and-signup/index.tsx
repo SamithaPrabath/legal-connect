@@ -1,27 +1,48 @@
-import Logo from '@components/Logo';
-import { Typography } from '@mui/material';
-import { useState } from 'react';
-import Login from './Login';
-import SignUp from './SignUp';
+import Logo from "@components/Logo";
+import { Box, Typography } from "@mui/material";
+import { useState } from "react";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import LoginImage from "@assets/images/login_image.png";
 
 const LoginSignUp = () => {
-    const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
 
-    const switchCompos = () => {
-        setIsLogin(!isLogin);
-    }
+  const switchCompos = () => {
+    setIsLogin(!isLogin);
+  };
 
   return (
-    <div>
-      <Logo />
-      <Typography>{isLogin ? "Don't you have": "Already have"} an account ?</Typography>
-      <Typography width="fit-content" color='secondary' sx={{cursor:"pointer", ":hover": { textDecoration: "underline"}}} onClick={switchCompos}>{isLogin ? "Create an account": "Login"}</Typography>
-      {isLogin 
-        ? <Login />
-        : <SignUp />
-      }
-    </div>
-  )
-}
+    <Box display="flex" justifyContent="space-between" >
+      <Box width="40%" py={3} px={5}>
+        <Box display="flex" alignItems="center" justifyContent="space-between" >
+        <Logo />
+        <Box zIndex={2}>
+            <Typography display="inline-block" mr={1}>
+              {isLogin ? "Don't you have" : "Already have"} an account ? 
+            </Typography>
+            <Typography
+              width="fit-content"
+              display="inline-block"
+              color="secondary"
+              sx={{ cursor: "pointer", ":hover": { textDecoration: "underline" } }}
+              onClick={switchCompos}
+            >
+              {isLogin ? "Create an account" : "Login"}
+            </Typography>
+        </Box>
+        </Box>
+        <Box height="100%" display="flex" justifyContent="center" alignItems="center" position="relative" bottom={50} px={10}>
+        {isLogin ? <Login /> : <SignUp />}
+        </Box>
+      </Box>
+      <Box flex="1" width="60%" height="100dvh" sx={{
+        backgroundImage: `url(${LoginImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "right"
+      }} />
+    </Box>
+  );
+};
 
-export default LoginSignUp
+export default LoginSignUp;
