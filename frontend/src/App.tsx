@@ -1,11 +1,10 @@
 import Background from "@components/Background";
-import SignUp from "@screens/login-and-signup/SignUp";
-import Test from "@screens/Test";
+import LoginSignUp from "@screens/login-and-signup";
 
 const App = () => {
   return <Background>
     {/* <Test /> */}
-    <SignUp />
+    <LoginSignUp />
   </Background>
 }
 
