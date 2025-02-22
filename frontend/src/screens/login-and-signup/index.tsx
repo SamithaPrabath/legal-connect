@@ -14,10 +14,10 @@ const LoginSignUp = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" >
-      <Box width="40%" py={3} px={5}>
+      <Box width="30%" py={3} px={5}>
         <Box display="flex" alignItems="center" justifyContent="space-between" >
         <Logo />
-        <Box zIndex={2}>
+        <Box zIndex={10}>
             <Typography display="inline-block" mr={1}>
               {isLogin ? "Don't you have" : "Already have"} an account ? 
             </Typography>
@@ -32,11 +32,11 @@ const LoginSignUp = () => {
             </Typography>
         </Box>
         </Box>
-        <Box height="100%" display="flex" justifyContent="center" alignItems="center" position="relative" bottom={50} px={10}>
+        <Box height="100%" display="flex" justifyContent="center" alignItems="center" position="relative" bottom={50} px={3}>
         {isLogin ? <Login /> : <SignUp />}
         </Box>
       </Box>
-      <Box flex="1" width="60%" height="100dvh" sx={{
+      <Box flex="1" width="70%" height="100dvh" sx={{
         backgroundImage: `url(${LoginImage})`,
         backgroundSize: "cover",
         backgroundPosition: "right"

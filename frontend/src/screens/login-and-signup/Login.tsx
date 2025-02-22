@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     <Box width="100%">
-      <Typography variant="h2" textAlign="center">Welcome back!</Typography>
+      <Typography variant="h2" textAlign="center" mb={3}>Welcome back!</Typography>
       <EmailAndPasswordField form={loginForm} formType="signin" handleChange={handleChange} />
     </Box>
   )
