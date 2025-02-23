@@ -1,3 +1,4 @@
+export const create_account_route = "/create-account"
 export const findalawyer_route = "/find-a-lawyer";
 export const payments_route = "/payments";
 export const mycases_route = "/my-cases"

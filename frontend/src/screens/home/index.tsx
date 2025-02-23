@@ -1,14 +1,14 @@
-import Header from '@components/Header'
-import { Box } from '@mui/material'
-import { Outlet } from 'react-router-dom'
+import Header from "@components/Header";
+import { Box } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
   return (
     <Box>
-        <Header />
+      <Header />
       <Outlet />
     </Box>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
