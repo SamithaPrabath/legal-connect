@@ -1,5 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import InfoCard from "./InfoCard";
+import FormCard from "../FormCard";
 import DefaultProfile from "@assets/images/default_profile.png";
 import MUIButton from "@components/MUIButton";
 import FormField from "@components/FormField";
@@ -24,7 +24,7 @@ const BasicInformation = () => {
   };
 
   return (
-    <InfoCard id="basicInfo" title="Basic Information">
+    <FormCard id="basicInfo" title="Basic Information">
       <Box width="100%" display="flex">
         <Box {...profileImageSectionStyle}>
           <img src={DefaultProfile} width="100px" />
@@ -50,7 +50,7 @@ const BasicInformation = () => {
           </Box>
         </Box>
       </Box>
-    </InfoCard>
+    </FormCard>
   );
 };
 

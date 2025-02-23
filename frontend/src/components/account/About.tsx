@@ -3,7 +3,7 @@ import FormField from "@components/FormField";
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import InfoCard from "./InfoCard";
+import FormCard from "../FormCard";
 
 const About = () => {
   const [options, setOptions] = useState<string[]>([]);
@@ -23,7 +23,7 @@ const About = () => {
   };
 
   return (
-    <InfoCard id="about" title="About">
+    <FormCard id="about" title="About">
       <FormField fullWidth label="Bio" name="bio" multiline rows={4} />
       <FormField
         fullWidth
@@ -82,7 +82,7 @@ const About = () => {
         multiline
         rows={4}
       />
-    </InfoCard>
+    </FormCard>
   );
 };
 

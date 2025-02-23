@@ -7,7 +7,7 @@ type PropTypes = {
     children?: ReactNode
 } & BoxProps
 
-const InfoCard = ({title, children, ...rest}: PropTypes) => {
+const FormCard = ({title, children, ...rest}: PropTypes) => {
     const { divider, background } = useTheme().palette;
     return (
       <Box p="20px" border={`1px solid ${divider}`} bgcolor={background.paper} {...boxShadow}>
@@ -19,4 +19,4 @@ const InfoCard = ({title, children, ...rest}: PropTypes) => {
     )
   }
 
-export default InfoCard
+export default FormCard

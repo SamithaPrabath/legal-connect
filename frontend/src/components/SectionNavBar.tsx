@@ -1,12 +1,18 @@
 import { Box, Typography } from "@mui/material";
-import { AccountSection } from ".";
 import { border } from "@assets/style/boxStyles";
+
+
+export type Section = {
+  sectionId: string;
+  label: string;
+}
+
 
 const SectionNavBar = ({
   sections,
   activeSectionId,
 }: {
-  sections: AccountSection[];
+  sections: Section[];
   activeSectionId: string;
 }) => {
   return (
@@ -25,7 +31,7 @@ const NavBarElement = ({
   section,
   isActive,
 }: {
-  section: AccountSection;
+  section: Section;
   isActive: boolean;
 }) => {
   const scrollToSection = (id: string) => {
