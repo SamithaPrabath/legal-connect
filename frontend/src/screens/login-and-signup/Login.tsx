@@ -8,8 +8,7 @@ const Login = () => {
         password: ""
     })
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = event.target;
+    const handleChange = (name: string, value: string | null) => {
         setLoginForm(prev => ({...prev, [name]: value}))
     }
 

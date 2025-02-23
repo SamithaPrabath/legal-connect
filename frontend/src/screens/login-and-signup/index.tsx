@@ -6,7 +6,7 @@ import SignUp from "./SignUp";
 import LoginImage from "@assets/images/login_image.png";
 
 const LoginSignUp = () => {
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
 
   const switchCompos = () => {
     setIsLogin(!isLogin);

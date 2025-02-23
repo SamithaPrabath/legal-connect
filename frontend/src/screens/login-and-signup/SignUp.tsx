@@ -34,10 +34,7 @@ const SignUp = () => {
     setIsAccountTypeSelected(true);
   };
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
+  const handleChange = (name: string, value: string | null) => {
     setUserForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -146,7 +143,7 @@ const AccountTypeCard = ({ label, description, value }: AccountCard) => {
       display="flex"
       justifyContent="space-between"
       alignItems="start"
-      sx={{cursor: "default"}}
+      sx={{ cursor: "default" }}
     >
       <Box display="flex" flexDirection="column">
         <MUITypography variant="h5">{label}</MUITypography>
@@ -164,7 +161,7 @@ const AccountTypeCard = ({ label, description, value }: AccountCard) => {
             fontSize: 15,
           },
           "&:hover": {
-            backgroundColor: "transparent", 
+            backgroundColor: "transparent",
           },
           "&.Mui-checked::before": {
             backgroundColor: "transparent",
