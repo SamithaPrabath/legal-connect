@@ -21,7 +21,10 @@ const theme = createTheme({
         text: {
             primary: textPrimary,
             secondary: textSecondary
-        },        
+        },
+        info: {
+            main: textPrimary
+        }       
     },
     typography:{
         fontFamily:"'Be Vietnam Pro', sans-serif;",
@@ -31,6 +34,10 @@ const theme = createTheme({
         },
         h2:{
             fontSize:"28px",
+            fontWeight: 500
+        },
+        h4: {
+            fontSize: "16px",
             fontWeight: 500
         },
         h5: {

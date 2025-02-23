@@ -1,10 +1,12 @@
 import Background from "@components/Background";
-import LoginSignUp from "@screens/login-and-signup";
+import { RouterProvider } from "react-router-dom";
+import router from "./route-config";
 
 const App = () => {
   return <Background>
     {/* <Test /> */}
-    <LoginSignUp />
+    <RouterProvider router={router} />
+    {/* <LoginSignUp /> */}
   </Background>
 }
 
