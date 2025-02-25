@@ -7,7 +7,9 @@ import MUIButton from "@components/MUIButton";
 import SectionNavBar, { Section } from "@components/SectionNavBar";
 import SubHeader from "@components/SubHeader";
 import { Box } from "@mui/material";
+import { mycases_route } from "@utils/context-paths";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const sections: Section[] = [
   { sectionId: "caseBasicInfo", label: "Basic Information" },
@@ -18,6 +20,8 @@ const sections: Section[] = [
 
 const CreateCase = () => {
   const [activeSection, setActiveSection] = useState<string>("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,7 +47,7 @@ const CreateCase = () => {
       <SubHeader {...flexCenter} py="10px">
         <Box width="280px" {...flexCenter} gap="10px">
         <MUIButton fullWidth>Create Case</MUIButton>
-        <MUIButton fullWidth variant="outlined" color="secondary">
+        <MUIButton fullWidth variant="outlined" color="secondary" onClick={() => navigate(mycases_route)}>
           Back
         </MUIButton>
         </Box>

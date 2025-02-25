@@ -24,10 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    children:[
+    children: [
       {
         path: create_account_route,
-        element: <CreateAccount />
+        element: <CreateAccount />,
       },
       {
         path: findalawyer_route,
@@ -41,15 +41,15 @@ const router = createBrowserRouter([
         path: mycases_route,
         element: <MyCases />,
         children: [
-          {path: create_case_route, element: <CreateCase />}
-        ]
+          { path: create_case_route, element: <CreateCase /> },
+        ],
       },
       {
         path: schedule_route,
         element: <Schedule />,
       },
-    ]
-  }
+    ],
+  },
 ]);
 
 export default router;

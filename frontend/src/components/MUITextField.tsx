@@ -1,10 +1,10 @@
 import { styled, TextField } from "@mui/material";
 
-const MUITextField = styled(TextField)(({ theme }) => ({
+const MUITextField = styled(TextField)(({ theme, select}) => ({
   "& .MuiOutlinedInput-root": {
     borderWidth: "1px",
-    fontSize: "14px",
-    borderRadius: "4px",
+    fontSize: "12px",
+    borderRadius: select ? "10px" : "4px",
     borderColor: "lightgray",
     "& fieldset": {
       borderColor: theme.palette.divider,
@@ -22,6 +22,13 @@ const MUITextField = styled(TextField)(({ theme }) => ({
     "::placeholder": {
       textTransform:"capitalize"
     }
+  },
+  "& .MuiSelect-select": {
+    padding: "12px", // Ensure proper padding inside the select
+    textTransform: "capitalize", // Capitalize selected value
+  },
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: theme.palette.text.primary,
   },
 }));
 
