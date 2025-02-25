@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom"
 
 const MyCases = () => {
   return (
     <div>
-      my cases
+      <Outlet />
     </div>
   )
 }

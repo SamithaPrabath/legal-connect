@@ -46,6 +46,7 @@ const NavBarElement = ({
     <Box
       px="20px"
       py="10px"
+      pr="50px"
       {...border}
       {...(section.sectionId === "contactInfo" && {
         borderTop: "none",

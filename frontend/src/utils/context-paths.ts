@@ -5,3 +5,5 @@ export const mycases_route = "/my-cases"
 export const schedule_route = "/schedule"
 export const login_signup_route = "/portal"
 export const message_route = "/messages"
+
+export const create_case_route = "/my-cases/create-case"
