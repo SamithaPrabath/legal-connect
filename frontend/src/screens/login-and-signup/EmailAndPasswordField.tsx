@@ -1,6 +1,11 @@
 import FormField from "@components/FormField";
 import MUIButton from "@components/MUIButton";
 import { Box } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { updateUserAbout } from "@redux/slices/user/form";
+import { AboutInfo, UserType } from "@type/User";
+import { create_account_route } from "@utils/context-paths";
+import { useNavigate } from "react-router-dom";
 
 export type SignForm = {
   email: string;
@@ -16,10 +21,39 @@ type PropTypes = {
 };
 
 const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
+  const navigate = useNavigate();
+  const { form: userForm } = useAppSelector(state => state.user);
+  const dispatch = useAppDispatch();
+
+  const isEmailAndPasswordValid = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(form.email) && form.password.length > 4
+  }
+
+  const handleClick = () => {
+    if (!isEmailAndPasswordValid()) {
+      // throw an error message here
+      return;
+    }
+    if (formType === "signup"){
+      if (userForm.type === UserType.LAWYER){
+        const about: AboutInfo = {
+          bio: "",
+          credentialsAndEducation: "",
+          practiceAreas: [],
+          workHistory: ""
+        }
+        dispatch(updateUserAbout(about))
+      }
+      navigate(create_account_route)
+    }
+  }
+
   return (
     <Box>
       <FormField
         fullWidth
+        type="email"
         label="Email"
         name="email"
         value={form.email}
@@ -34,7 +68,7 @@ const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
         handleChange={handleChange}
       />
 
-      <MUIButton fullWidth>
+      <MUIButton fullWidth onClick={handleClick}>
         {formType === "signin" ? "Login" : "Continue"}
       </MUIButton>
     </Box>

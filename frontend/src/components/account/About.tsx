@@ -1,13 +1,26 @@
 import { border, flexCenter } from "@assets/style/boxStyles";
 import FormField from "@components/FormField";
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import FormCard from "../FormCard";
+import { AboutInfo } from "@type/User";
 
-const About = () => {
+type PropTypes = {
+  form: AboutInfo | null,
+  handleData: (name: string, value: string |  null) => void
+  removePracticeArea: (value:string) => void
+}
+
+const About = ({form, handleData, removePracticeArea}:PropTypes) => {
+
+  if (!form) return null;
+
   const [options, setOptions] = useState<string[]>([]);
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  useEffect(() => {
+    setOptions(form.practiceAreas);
+  },[form.practiceAreas])
 
   const hanldeInputChange = (value: string) => {
     if (options.length > 0) {
@@ -17,14 +30,9 @@ const About = () => {
     } else setOptions([value]);
   };
 
-  const onChange = (_: string, value: string | null) => {
-    if (!value) return;
-    setSelectedOptions((prev) => [...prev, value]);
-  };
-
   return (
     <FormCard id="about" title="About">
-      <FormField fullWidth label="Bio" name="bio" multiline rows={4} />
+      <FormField fullWidth value={form.bio} handleChange={handleData} label="Bio" name="bio" multiline rows={4} />
       <FormField
         fullWidth
         label="Practice Areas"
@@ -33,7 +41,7 @@ const About = () => {
         options={options}
         optionLabel={(option) => option}
         onInputChange={hanldeInputChange}
-        handleChange={onChange}
+        handleChange={handleData}
         value={null}
       />
       <Box
@@ -49,7 +57,7 @@ const About = () => {
         gap="5px"
         justifyContent="start"
       >
-        {selectedOptions.map((option) => (
+        {form.practiceAreas.map((option) => (
           <Box
             bgcolor="black"
             width="fit-content"
@@ -64,7 +72,7 @@ const About = () => {
             <Typography variant="body1" color="inherit">
               {option}
             </Typography>
-            <IoClose />
+            <IoClose onClick={() => removePracticeArea(option)} />
           </Box>
         ))}
       </Box>
@@ -74,6 +82,8 @@ const About = () => {
         name="credentialsAndEducation"
         multiline
         rows={4}
+        value={form.credentialsAndEducation}
+        handleChange={handleData}
       />
       <FormField
         fullWidth
@@ -81,6 +91,8 @@ const About = () => {
         name="workHistory"
         multiline
         rows={4}
+        value={form.workHistory}
+        handleChange={handleData}
       />
     </FormCard>
   );

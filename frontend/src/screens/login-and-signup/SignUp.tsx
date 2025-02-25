@@ -9,25 +9,29 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import AccountType from "@type/AccountType";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import {
+  updateUserContactInfo,
+  updateUserPassword,
+  updateUserType
+} from "@redux/slices/user/form";
+import { UserType } from "@type/User";
 import { useState } from "react";
-import EmailAndPasswordField, { SignForm } from "./EmailAndPasswordField";
+import EmailAndPasswordField from "./EmailAndPasswordField";
 
 const SignUp = () => {
-  const [accountType, setAccountType] = useState<AccountType | null>(null);
   const [isAccountTypeSelected, setIsAccountTypeSelected] =
     useState<boolean>(false);
-  const [userForm, setUserForm] = useState<SignForm>({
-    email: "",
-    password: "",
-  });
 
-  const handleAccountType = (type: AccountType) => {
-    setAccountType(type);
+  const { form } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const handleAccountType = (type: UserType) => {
+    dispatch(updateUserType(type));
   };
 
   const handleAccountTypeSelect = () => {
-    if (!accountType) {
+    if (!form.type) {
       // throw a error notification
       return;
     }
@@ -35,7 +39,11 @@ const SignUp = () => {
   };
 
   const handleChange = (name: string, value: string | null) => {
-    setUserForm((prev) => ({ ...prev, [name]: value }));
+    const contactInfo = { ...form.contactInfo };
+    if (name === "email") {
+      contactInfo.email = value || "";
+      dispatch(updateUserContactInfo(contactInfo));
+    } else if (name === "password") dispatch(updateUserPassword(value));
   };
 
   return (
@@ -45,13 +53,13 @@ const SignUp = () => {
       </MUITypography>
       {isAccountTypeSelected ? (
         <EmailAndPasswordField
-          form={userForm}
+          form={{ email: form.contactInfo.email, password: form.password }}
           handleChange={handleChange}
           formType="signup"
         />
       ) : (
         <AccountTypeManager
-          selectedAccountType={accountType}
+          selectedAccountType={form.type}
           handleAccountType={handleAccountType}
           handleAccountTypeSelect={handleAccountTypeSelect}
         />
@@ -65,21 +73,21 @@ const AccountTypeManager = ({
   handleAccountType,
   handleAccountTypeSelect,
 }: {
-  selectedAccountType: AccountType | null;
-  handleAccountType: (type: AccountType) => void;
+  selectedAccountType: UserType | null;
+  handleAccountType: (type: UserType) => void;
   handleAccountTypeSelect: () => void;
 }) => {
   const accountCards: AccountCard[] = [
     {
       label: "I am a Client",
       description: "I find and connect with lawyers for my legal needs",
-      value: AccountType.CLIENT,
+      value: UserType.CLIENT,
     },
     {
       label: "I am a Lawyer",
       description:
         "I manage cases, interact with clients, and offer legal services",
-      value: AccountType.LAWYER,
+      value: UserType.LAWYER,
     },
   ];
   return (
@@ -94,7 +102,7 @@ const AccountTypeManager = ({
         value={selectedAccountType}
         aria-label="Account Type"
         onChange={(event) =>
-          handleAccountType(event.target.value as unknown as AccountType)
+          handleAccountType(event.target.value as unknown as UserType)
         }
       >
         <List>
@@ -133,7 +141,7 @@ const AccountTypeManager = ({
 type AccountCard = {
   label: string;
   description: string;
-  value: AccountType;
+  value: UserType;
 };
 
 const AccountTypeCard = ({ label, description, value }: AccountCard) => {
