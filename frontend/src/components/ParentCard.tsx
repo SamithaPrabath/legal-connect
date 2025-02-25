@@ -9,7 +9,7 @@ type PropTypes = {
   parentBoxProps?: BoxProps
 } & BoxProps;
 
-const CaseParentCard = ({ children, title, sideCompo, parentBoxProps, ...rest }: PropTypes) => {
+const ParentCard = ({ children, title, sideCompo, parentBoxProps, ...rest }: PropTypes) => {
   return (
     <Box bgcolor="white" {...border} px="30px" py="20px" {...parentBoxProps} >
       <Box
@@ -28,4 +28,4 @@ const CaseParentCard = ({ children, title, sideCompo, parentBoxProps, ...rest }:
   );
 };
 
-export default CaseParentCard;
+export default ParentCard;

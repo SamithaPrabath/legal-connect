@@ -1,5 +1,5 @@
 import { border } from "@assets/style/boxStyles";
-import CaseParentCard from "@components/case/CaseParentCard";
+import ParentCard from "@components/ParentCard";
 import EventCard from "@components/case/event/EventCard";
 import TimeLineCard from "@components/case/event/TimeLineCard";
 import { Box, Typography } from "@mui/material";
@@ -39,11 +39,11 @@ const CaseEvents = () => {
       gap="30px"
       height="100%"
     >
-      <CaseParentCard title="Upcoming Events" parentBoxProps={{width:"80%"}}>
+      <ParentCard title="Upcoming Events" parentBoxProps={{width:"80%"}}>
         {events.map((event) => (
           <EventCard {...event} />
         ))}
-      </CaseParentCard>
+      </ParentCard>
       <Box width="20%" bgcolor="white" {...border} p="20px" minHeight="500px">
         <Typography variant="h4" mb="20px">
           Timeline

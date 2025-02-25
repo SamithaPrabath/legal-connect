@@ -1,4 +1,4 @@
-import CaseParentCard from "@components/case/CaseParentCard"
+import ParentCard from "@components/ParentCard"
 import NoteCard from "@components/case/note/NoteCard"
 import MUIButton from "@components/MUIButton"
 import { Box } from "@mui/material"
@@ -13,9 +13,9 @@ const CaseNotes = () => {
 
   return (
     <Box p="30px">
-      <CaseParentCard title="Notes" display="flex" flexDirection="column" gap="10px" sideCompo={<MUIButton color="secondary" size="small">Add Notes</MUIButton>}>
+      <ParentCard title="Notes" display="flex" flexDirection="column" gap="10px" sideCompo={<MUIButton color="secondary" size="small">Add Notes</MUIButton>}>
         {notes.map(note => <NoteCard {...note} />)}
-      </CaseParentCard>
+      </ParentCard>
     </Box>
   )
 }
