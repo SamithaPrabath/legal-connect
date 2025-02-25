@@ -1,4 +1,3 @@
-import { Payments, Schedule } from "@mui/icons-material";
 import CreateAccount from "@screens/create-account";
 import FindALawyer from "@screens/find-a-lawyer";
 import Home from "@screens/home";
@@ -10,6 +9,8 @@ import CaseDocuments from "@screens/my-cases/case-viewer/Documents";
 import CaseEvents from "@screens/my-cases/case-viewer/Events";
 import CaseNotes from "@screens/my-cases/case-viewer/Notes";
 import CaseOverview from "@screens/my-cases/case-viewer/Overview";
+import Payments from "@screens/payments";
+import Schedule from "@screens/schedule";
 import {
   create_account_route,
   create_case_route,
