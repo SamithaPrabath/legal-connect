@@ -39,7 +39,7 @@ const CaseEvents = () => {
       gap="30px"
       height="100%"
     >
-      <CaseParentCard title="Upcoming Events" width="80%">
+      <CaseParentCard title="Upcoming Events" parentBoxProps={{width:"80%"}}>
         {events.map((event) => (
           <EventCard {...event} />
         ))}

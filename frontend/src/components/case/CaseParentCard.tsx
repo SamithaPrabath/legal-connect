@@ -6,11 +6,12 @@ type PropTypes = {
   children?: ReactNode;
   title: string;
   sideCompo?: ReactNode;
+  parentBoxProps?: BoxProps
 } & BoxProps;
 
-const CaseParentCard = ({ children, title, sideCompo, ...rest }: PropTypes) => {
+const CaseParentCard = ({ children, title, sideCompo, parentBoxProps, ...rest }: PropTypes) => {
   return (
-    <Box bgcolor="white" {...border} px="30px" py="20px" >
+    <Box bgcolor="white" {...border} px="30px" py="20px" {...parentBoxProps} >
       <Box
         display="flex"
         alignItems="center"
