@@ -11,7 +11,7 @@ const MUIButton = styled(Button)<ButtonProps>(({ theme, color, variant, size }) 
     border: isOutlined ? `1px solid ${main}` : undefined,
     color: isOutlined ? main : "#FFF",
     borderRadius: "48px",
-    padding:`${paddingY}px 25px`
+    padding:`${paddingY}px ${size === "small" ? 15 : 25}px`
   };
 });
 

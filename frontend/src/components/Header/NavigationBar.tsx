@@ -28,7 +28,7 @@ const NavElement = ({contextPath, name, hidden = false}: NavElementType) => {
   if (hidden) return null;
 
   return (
-    <Typography variant="h4" color={location.pathname === contextPath ? "secondary" : "textSecondary"}>
+    <Typography variant="h4" color={location.pathname.startsWith(contextPath) ? "secondary" : "textSecondary"}>
       <Link style={{textDecoration:"none", color:"inherit"}} to={contextPath}>{name}</Link>
     </Typography>
   )

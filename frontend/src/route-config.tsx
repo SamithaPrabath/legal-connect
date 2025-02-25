@@ -1,7 +1,15 @@
 import { Payments, Schedule } from "@mui/icons-material";
+import CreateAccount from "@screens/create-account";
 import FindALawyer from "@screens/find-a-lawyer";
+import Home from "@screens/home";
+import LoginSignUp from "@screens/login-and-signup";
 import MyCases from "@screens/my-cases";
-import { createBrowserRouter } from "react-router-dom";
+import CreateCase from "@screens/my-cases/CreateCase";
+import CaseViewer from "@screens/my-cases/case-viewer";
+import CaseDocuments from "@screens/my-cases/case-viewer/Documents";
+import CaseEvents from "@screens/my-cases/case-viewer/Events";
+import CaseNotes from "@screens/my-cases/case-viewer/Notes";
+import CaseOverview from "@screens/my-cases/case-viewer/Overview";
 import {
   create_account_route,
   create_case_route,
@@ -10,11 +18,13 @@ import {
   mycases_route,
   payments_route,
   schedule_route,
+  view_case_documents_route,
+  view_case_events_route,
+  view_case_notes_route,
+  view_case_overview_route,
+  view_case_route,
 } from "@utils/context-paths";
-import LoginSignUp from "@screens/login-and-signup";
-import Home from "@screens/home";
-import CreateAccount from "@screens/create-account";
-import CreateCase from "@screens/my-cases/CreateCase";
+import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +52,22 @@ const router = createBrowserRouter([
         element: <MyCases />,
         children: [
           { path: create_case_route, element: <CreateCase /> },
+          {
+            path: view_case_route(null),
+            element: <CaseViewer />,
+            children: [
+              {
+                path: view_case_overview_route(null),
+                element: <CaseOverview />,
+              },
+              { path: view_case_events_route(null), element: <CaseEvents /> },
+              {
+                path: view_case_documents_route(null),
+                element: <CaseDocuments />,
+              },
+              { path: view_case_notes_route(null), element: <CaseNotes /> },
+            ],
+          },
         ],
       },
       {

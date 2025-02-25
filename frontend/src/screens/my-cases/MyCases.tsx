@@ -16,15 +16,18 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import { CaseStatus } from "@type/Case";
-import { create_case_route } from "@utils/context-paths";
+import {
+  create_case_route,
+  view_case_overview_route,
+} from "@utils/context-paths";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStatusChip } from "./utils";
 
-const MyCasesCompo = () => {
+const MyCasesLawyer = () => {
   const { divider } = useTheme().palette;
 
   const navigate = useNavigate();
@@ -40,7 +43,12 @@ const MyCasesCompo = () => {
           mb="30px"
         >
           <Typography variant="h2">My Cases</Typography>
-          <MUIButton sx={{ px: "50px" }} onClick={() => navigate(create_case_route)}>New Case</MUIButton>
+          <MUIButton
+            sx={{ px: "50px" }}
+            onClick={() => navigate(create_case_route)}
+          >
+            New Case
+          </MUIButton>
         </Box>
         <Box>
           <Box
@@ -184,12 +192,18 @@ const tableColumns = [
 
 const CaseTable = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { divider } = theme.palette;
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
 
-  const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => setPage(newPage);
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChangePage = (
+    _: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => setPage(newPage);
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -218,20 +232,26 @@ const CaseTable = () => {
                 const isLastElement = index === cases.length - 1;
                 if (column.id === "actions")
                   return (
-                    <TableCell  {...!isLastElement && tableCellProps}>
+                    <TableCell {...(!isLastElement && tableCellProps)}>
                       <MUIButton
                         variant="outlined"
                         size="small"
                         color="secondary"
+                        onClick={() => navigate(view_case_overview_route(c.id))}
                       >
                         View
                       </MUIButton>
                     </TableCell>
                   );
-                  else if (column.id === "status") return <TableCell {...!isLastElement && tableCellProps}>{getStatusChip(c.status, theme)}</TableCell>
+                else if (column.id === "status")
+                  return (
+                    <TableCell {...(!isLastElement && tableCellProps)}>
+                      {getStatusChip(c.status, theme)}
+                    </TableCell>
+                  );
                 else
                   return (
-                    <TableCell {...!isLastElement && tableCellProps}>
+                    <TableCell {...(!isLastElement && tableCellProps)}>
                       {c[column.id as keyof typeof c]}
                     </TableCell>
                   );
@@ -252,4 +272,4 @@ const CaseTable = () => {
     </TableContainer>
   );
 };
-export default MyCasesCompo;
+export default MyCasesLawyer;
