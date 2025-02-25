@@ -30,7 +30,7 @@ const CaseViewer = () => {
 
   console.log(params);
   return (
-    <div>
+    <Box height="100%">
       <SubHeader pt="10px" boxShadow="none" height="fit-content">
         <Box
           display="flex"
@@ -62,7 +62,7 @@ const CaseViewer = () => {
       </SubHeader>
 
       <Outlet />
-    </div>
+    </Box>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Box, lighten, Theme, Typography } from "@mui/material";
+import { Box, darken, lighten, Theme, Typography } from "@mui/material";
 import { CaseStatus } from "@type/Case";
 
 export const getStatusChip = (status: CaseStatus, theme: Theme) => {
@@ -16,10 +16,10 @@ export const getStatusChip = (status: CaseStatus, theme: Theme) => {
         whiteSpace="nowrap"
         px="5px"
         py="2px"
-        borderRadius="5px"
+        // borderRadius="5px"
         width="fit-content"
       >
-        <Typography sx={{ color, fontWeight: 600, textTransform: "capitalize" }}>{status}</Typography>
+        <Typography sx={{ color: darken(color, 0.4), fontSize: "10px", fontWeight: 600, textTransform: "capitalize" }}>{status}</Typography>
       </Box>
     );
   };
