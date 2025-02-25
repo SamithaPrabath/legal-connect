@@ -81,7 +81,7 @@ const SearchResultCard = ({
               <Typography variant="h3">{name}</Typography>
               <StatusBox status={status} />
               <Box {...flexCenter} gap="10px">
-                  <Rating value={rating} size="small" readOnly/>
+                  <Rating value={rating} size="small" precision={0.5} readOnly/>
                   <Typography variant="body2">{`(${rating}/5 from ${reviewCount} reviews)`}</Typography>
               </Box>
             </Box>

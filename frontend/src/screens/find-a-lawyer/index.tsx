@@ -70,7 +70,7 @@ const FindALawyer = () => {
       <Box {...flexCenter} justifyContent="space-between" px="30px">
         <Typography variant="h5">{`${selectedLocation} has ${results.length} ${selectedCaseType} Attorneys`}</Typography>
         <Box {...flexCenter} gap="10px">
-          <Typography>Sort By </Typography><SortOptionDropdown />
+          <Typography variant="h5">Sort By </Typography><SortOptionDropdown />
         </Box>
       </Box>
       <Box py="10px" px="30px" display="flex" flexDirection="column" gap="20px">
