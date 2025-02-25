@@ -4,14 +4,14 @@ import CaseClient from "@components/case/Client";
 import CaseCourt from "@components/case/Court";
 import CaseOppositionParty from "@components/case/OppositionParty";
 import MUIButton from "@components/MUIButton";
-import SectionNavBar, { Section } from "@components/SectionNavBar";
+import FormNavBar, { FormSection } from "@components/FormNavBar";
 import SubHeader from "@components/SubHeader";
 import { Box } from "@mui/material";
 import { mycases_route } from "@utils/context-paths";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const sections: Section[] = [
+const sections: FormSection[] = [
   { sectionId: "caseBasicInfo", label: "Basic Information" },
   { sectionId: "caseClient", label: "Client" },
   { sectionId: "caseOppositionParty", label: "Opposition Party" },
@@ -53,7 +53,7 @@ const CreateCase = () => {
         </Box>
       </SubHeader>
       <Box display="flex" justifyContent="center" alignItems="start" gap="20px">
-        <SectionNavBar sections={sections} activeSectionId={activeSection} />
+        <FormNavBar sections={sections} activeSectionId={activeSection} />
         <Box
           maxWidth="1000px"
           minWidth="800px"

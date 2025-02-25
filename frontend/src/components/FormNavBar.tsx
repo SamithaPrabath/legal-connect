@@ -1,18 +1,16 @@
-import { Box, Typography } from "@mui/material";
 import { border } from "@assets/style/boxStyles";
+import { Box, Typography } from "@mui/material";
 
-
-export type Section = {
+export type FormSection = {
   sectionId: string;
   label: string;
-}
+};
 
-
-const SectionNavBar = ({
+const FormNavBar = ({
   sections,
   activeSectionId,
 }: {
-  sections: Section[];
+  sections: FormSection[];
   activeSectionId: string;
 }) => {
   return (
@@ -31,16 +29,14 @@ const NavBarElement = ({
   section,
   isActive,
 }: {
-  section: Section;
+  section: FormSection;
   isActive: boolean;
 }) => {
   const scrollToSection = (id: string) => {
-    document
-      .getElementById(id)
-      ?.scrollIntoView({
-        behavior: "smooth",
-        block: section.sectionId === "about" ? "end" : "center",
-      });
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: section.sectionId === "about" ? "end" : "center",
+    });
   };
   return (
     <Box
@@ -52,16 +48,22 @@ const NavBarElement = ({
         borderTop: "none",
         borderBottom: "none",
       })}
-      borderLeft={ (theme) => `2px solid ${isActive ? theme.palette.secondary.main : theme.palette.divider}`}
+      borderLeft={(theme) =>
+        `2px solid ${
+          isActive ? theme.palette.secondary.main : theme.palette.divider
+        }`
+      }
       sx={{
-        transition:"all 0.25s",
-        cursor:"pointer"
+        transition: "all 0.25s",
+        cursor: "pointer",
       }}
       onClick={() => scrollToSection(section.sectionId)}
     >
-      <Typography variant="h6" {...(isActive && {color:"secondary"})}>{section.label}</Typography>
+      <Typography variant="h6" {...(isActive && { color: "secondary" })}>
+        {section.label}
+      </Typography>
     </Box>
   );
 };
 
-export default SectionNavBar;
+export default FormNavBar;

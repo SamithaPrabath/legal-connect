@@ -6,7 +6,7 @@ import MUIButton from "@components/MUIButton";
 import SubHeader from "@components/SubHeader";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import SectionNavBar, { Section } from "../../components/SectionNavBar";
+import FormNavBar, { FormSection } from "../../components/FormNavBar";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import {
   updateUserAbout,
@@ -15,7 +15,7 @@ import {
 } from "@redux/slices/user/form";
 import { aboutKeyType, basicInfoKeyType, contactInorKeyType, UserType } from "@type/User";
 
-const sections: Section[] = [
+const sections: FormSection[] = [
   { sectionId: "basicInfo", label: "Basic Information" },
   { sectionId: "contactInfo", label: "Contact Information" },
   { sectionId: "about", label: "About" },
@@ -92,7 +92,7 @@ const CreateAccount = () => {
         <MUIButton>Create Account</MUIButton>
       </SubHeader>
       <Box display="flex" justifyContent="center" alignItems="start" gap="20px">
-       {form.type === UserType.LAWYER && <SectionNavBar sections={sections} activeSectionId={activeSection} />}
+       {form.type === UserType.LAWYER && <FormNavBar sections={sections} activeSectionId={activeSection} />}
         <Box
           maxWidth="1000px"
           minWidth="800px"
