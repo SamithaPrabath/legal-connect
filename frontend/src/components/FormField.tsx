@@ -1,4 +1,4 @@
-import { Autocomplete, Box, TextFieldProps, Typography } from "@mui/material";
+import { Autocomplete, Box, BoxProps, TextFieldProps, Typography } from "@mui/material";
 import OutlinedTextField from "./MUITextField";
 
 type PropTypes<T> = {
@@ -10,6 +10,7 @@ type PropTypes<T> = {
   optionLabel?: (option: T) => string;
   handleChange?: (name: string, value: string | T | null) => void;
   onInputChange?: (value: string) => void;
+  boxProps?:BoxProps
 } & TextFieldProps;
 
 const FormField = <T,>({
@@ -21,10 +22,11 @@ const FormField = <T,>({
   onInputChange,
   options = [],
   optionLabel,
+  boxProps,
   ...rest
 }: PropTypes<T>) => {
   return (
-    <Box sx={{ width: "100%" }} mb={2}>
+    <Box sx={{ width: "100%" }} mb={2} {...boxProps}>
       <Typography variant="h6" mb={1}>
         {label}
       </Typography>

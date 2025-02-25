@@ -3,6 +3,11 @@ export enum UserType {
     CLIENT = "client"
 }
 
+export enum UserStatus {
+    AVAILABLE = "Available for Consultation",
+    UNAVAILABLE = "Unavailable"
+}
+
 export type BasicInfo = {
     image: null | string;
     firstName: string;
