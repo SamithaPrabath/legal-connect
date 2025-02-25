@@ -1,5 +1,6 @@
 import FormField from "@components/FormField";
 import MUIButton from "@components/MUIButton";
+import MUITable, { Column } from "@components/MUITable";
 import MUITextField from "@components/MUITextField";
 import { Clear, Search } from "@mui/icons-material";
 import {
@@ -7,16 +8,8 @@ import {
   IconButton,
   InputAdornment,
   MenuItem,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
   Typography,
-  useTheme,
+  useTheme
 } from "@mui/material";
 import { CaseStatus } from "@type/Case";
 import {
@@ -179,7 +172,7 @@ const cases = [
   },
 ];
 
-const tableColumns = [
+const tableColumns: Column[] = [
   { id: "id", label: "Case ID" },
   { id: "name", label: "Case Name" },
   { id: "client", label: "Client Name" },
@@ -193,83 +186,22 @@ const tableColumns = [
 const CaseTable = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const { divider } = theme.palette;
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
 
-  const handleChangePage = (
-    _: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => setPage(newPage);
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const data: any[] = cases.map((c) => ({
+    ...c,
+    status: getStatusChip(c.status, theme),
+    actions: (
+      <MUIButton
+        variant="outlined"
+        size="small"
+        color="secondary"
+        onClick={() => navigate(view_case_overview_route(c.id))}
+      >
+        View
+      </MUIButton>
+    ),
+  }));
 
-  const tableCellProps = {
-    sx: { borderBottom: `1px solid ${divider}` }, // Ensures row borders
-  };
-
-  return (
-    <TableContainer
-      component={Paper}
-      sx={{ boxShadow: "none", borderRadius: 2 }}
-    >
-      <Table>
-        <TableHead sx={{ backgroundColor: "#f1f5f9" }}>
-          <TableRow sx={{ borderTop: tableCellProps.sx.borderBottom }}>
-            {tableColumns.map((column) => (
-              <TableCell {...tableCellProps}>{column.label}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {cases.map((c, index) => (
-            <TableRow key={c.id}>
-              {tableColumns.map((column) => {
-                const isLastElement = index === cases.length - 1;
-                if (column.id === "actions")
-                  return (
-                    <TableCell {...(!isLastElement && tableCellProps)}>
-                      <MUIButton
-                        variant="outlined"
-                        size="small"
-                        color="secondary"
-                        onClick={() => navigate(view_case_overview_route(c.id))}
-                      >
-                        View
-                      </MUIButton>
-                    </TableCell>
-                  );
-                else if (column.id === "status")
-                  return (
-                    <TableCell {...(!isLastElement && tableCellProps)}>
-                      {getStatusChip(c.status, theme)}
-                    </TableCell>
-                  );
-                else
-                  return (
-                    <TableCell {...(!isLastElement && tableCellProps)}>
-                      {c[column.id as keyof typeof c]}
-                    </TableCell>
-                  );
-              })}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <TablePagination
-        rowsPerPageOptions={[3, 5, 10]}
-        component="div"
-        count={cases.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </TableContainer>
-  );
+  return <MUITable columns={tableColumns} data={data} />
 };
 export default MyCasesLawyer;

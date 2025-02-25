@@ -3,10 +3,10 @@ import MUIButton from "@components/MUIButton";
 import SectionNavBar, { Section } from "@components/SectionNavBar";
 import SubHeader from "@components/SubHeader";
 import { Box, Typography } from "@mui/material";
-import { view_case_documents_route, view_case_events_route, view_case_notes_route, view_case_overview_route } from "@utils/context-paths";
+import { mycases_route, view_case_documents_route, view_case_events_route, view_case_notes_route, view_case_overview_route } from "@utils/context-paths";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 const CaseViewer = () => {
   const params = useParams();
@@ -20,6 +20,7 @@ const CaseViewer = () => {
   const [activeSection, setActiveSection] = useState<Section | null>(null)
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const section = sections.find(section => section.contextPath === location.pathname);
@@ -39,7 +40,7 @@ const CaseViewer = () => {
         >
           <Box {...flexCenter} gap="15px">
             <Box {...flexCenter} gap="5px">
-              <Typography>My Cases</Typography>
+              <Typography sx={{cursor:"pointer"}} onClick={() => navigate(mycases_route)}>My Cases</Typography>
               <MdKeyboardArrowRight fontSize="24px" />
               <Typography>{params.caseId}</Typography>
             </Box>

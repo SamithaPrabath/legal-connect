@@ -1,6 +1,6 @@
 import { mycases_route } from "@utils/context-paths";
 import { Outlet, useLocation } from "react-router-dom"
-import MyCasesLawyer from "./MyCases";
+import MyCasesLawyer from "./LawyerCases";
 
 const MyCases = () => {
   const location = useLocation();
