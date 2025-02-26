@@ -47,7 +47,7 @@ const PaymentRequests = () => {
   ];
 
   return (
-    <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(52f0px, 1fr))" alignContent="start" gap="20px" p="30px">
+    <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(520px, 1fr))" alignContent="start" gap="20px" p="30px">
       {payments.map((payment) => (
         <PaymentCard {...payment} />
       ))}
