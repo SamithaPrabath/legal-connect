@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material"
-import { findalawyer_route, mycases_route, payments_route, schedule_route } from "@utils/context-paths"
+import { findalawyer_route, mycases_route, payment_request_route, schedule_route } from "@utils/context-paths"
 import { Link, useLocation } from "react-router-dom"
 
 const NavigationBar = () => {
@@ -7,7 +7,7 @@ const NavigationBar = () => {
     { name: "My Cases", contextPath: mycases_route},
     { name: "Schedule", contextPath: schedule_route},
     { name: "Find a Lawyer", contextPath: findalawyer_route},
-    { name: "Payments", contextPath: payments_route}
+    { name: "Payments", contextPath: payment_request_route}
   ]
   return (
     <Box display="flex" gap="20px">

@@ -10,6 +10,8 @@ import CaseEvents from "@screens/my-cases/case-viewer/Events";
 import CaseNotes from "@screens/my-cases/case-viewer/Notes";
 import CaseOverview from "@screens/my-cases/case-viewer/Overview";
 import Payments from "@screens/payments";
+import PaymentHistory from "@screens/payments/PaymentHistory";
+import PaymentRequests from "@screens/payments/PaymentRequests";
 import Schedule from "@screens/schedule";
 import {
   create_account_route,
@@ -17,6 +19,8 @@ import {
   findalawyer_route,
   login_signup_route,
   mycases_route,
+  payment_history_route,
+  payment_request_route,
   payments_route,
   schedule_route,
   view_case_documents_route,
@@ -47,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: payments_route,
         element: <Payments />,
+        children: [
+          {path: payment_request_route, element:<PaymentRequests />},
+          {path: payment_history_route, element:<PaymentHistory />},
+        ]
       },
       {
         path: mycases_route,

@@ -13,3 +13,6 @@ export const view_case_overview_route = (caseId: string | null) => `${view_case_
 export const view_case_events_route = (caseId: string | null) => `${view_case_route(caseId)}/events`;
 export const view_case_documents_route = (caseId: string | null) => `${view_case_route(caseId)}/documents`;
 export const view_case_notes_route = (caseId: string | null) => `${view_case_route(caseId)}/notes`;
+
+export const payment_request_route  = "/payments/requests"
+export const payment_history_route  = "/payments/history"

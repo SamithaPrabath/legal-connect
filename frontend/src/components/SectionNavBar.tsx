@@ -1,6 +1,6 @@
 import { flexCenter } from "@assets/style/boxStyles";
 import { Box, Typography, useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export type Section = {
   label: string;
@@ -9,14 +9,13 @@ export type Section = {
 
 type PropTypes = {
   sections: Section[];
-  activeSection: Section | null;
 };
 
-const SectionNavBar = ({ sections, activeSection }: PropTypes) => {
+const SectionNavBar = ({ sections }: PropTypes) => {
   return (
     <Box {...flexCenter} width="fit-content">
       {sections.map((section) => (
-        <NavbarElement section={section} activeSection={activeSection} />
+        <NavbarElement section={section} />
       ))}
     </Box>
   );
@@ -24,15 +23,14 @@ const SectionNavBar = ({ sections, activeSection }: PropTypes) => {
 
 const NavbarElement = ({
   section,
-  activeSection,
 }: {
   section: Section;
-  activeSection: Section | null;
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { divider } = useTheme().palette;
 
-  const isActive = activeSection?.contextPath === section.contextPath;
+  const isActive = location.pathname === section.contextPath;
 
   return (
     <Box
@@ -42,6 +40,7 @@ const NavbarElement = ({
       textAlign="center"
       width="200px"
       pb="5px"
+      {...!isActive && {position:"relative", top:"1px"}}
       onClick={() => navigate(section.contextPath)}
     >
       <Typography variant={isActive ? "body1" : "body2"} sx={{fontWeight:600}}>{section.label}</Typography>

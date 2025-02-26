@@ -4,9 +4,8 @@ import SectionNavBar, { Section } from "@components/SectionNavBar";
 import SubHeader from "@components/SubHeader";
 import { Box, Typography } from "@mui/material";
 import { mycases_route, view_case_documents_route, view_case_events_route, view_case_notes_route, view_case_overview_route } from "@utils/context-paths";
-import { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 const CaseViewer = () => {
   const params = useParams();
@@ -17,15 +16,8 @@ const CaseViewer = () => {
     {label: "Documents", contextPath: view_case_documents_route(caseId)},
     {label: "Notes", contextPath: view_case_notes_route(caseId)},
   ]
-  const [activeSection, setActiveSection] = useState<Section | null>(null)
 
-  const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const section = sections.find(section => section.contextPath === location.pathname);
-    setActiveSection(section || null)   
-  },[location])
 
 
   console.log(params);
@@ -58,7 +50,7 @@ const CaseViewer = () => {
             </MUIButton>
           </Box>
         </Box>
-        <Box px="30px" pt="30px"><SectionNavBar sections={sections} activeSection={activeSection} /></Box>
+        <Box px="30px" pt="30px"><SectionNavBar sections={sections} /></Box>
       </SubHeader>
 
       <Outlet />
