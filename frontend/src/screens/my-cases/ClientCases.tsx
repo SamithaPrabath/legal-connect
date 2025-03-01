@@ -1,7 +1,6 @@
 import CaseCard from '@components/case/overview/CaseCard'
 import ParentCard from '@components/ParentCard'
 import { Box } from '@mui/material'
-import React from 'react'
 
 const MyCasesClient = () => {
   return (

@@ -19,6 +19,7 @@ import {
   tempReviewSummaryAction,
 } from "@temporaryActions/tempReviewActions";
 import { ReviewRequest, ReviewResponse } from "@type/Review";
+import { UserType } from "@type/User";
 import { isBackendConnected } from "@utils/env-config";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { useEffect, useState } from "react";
@@ -28,6 +29,8 @@ const LawyerProfileReviews = () => {
 
   const { data: userData } = useAppSelector((state) => state.user.user);
   const { data: reviews } = useAppSelector((state) => state.review.list);
+
+  const userType = new LocalStorageHandler().userType;
 
   useEffect(() => {
     if (!isBackendConnected) return;
@@ -54,18 +57,18 @@ const LawyerProfileReviews = () => {
           <ReviewCard review={review} />
         ))}
       </ParentCard>
-      <Box
+      {userType === UserType.CLIENT && <Box
         pl="40px"
         width="600px"
         display="flex"
         flexDirection="column"
         gap="40px"
         position="sticky"
-        top="180px"
+        top="120px"
       >
         <ReviewSummaryPanel />
         <ReviewAdderPanel />
-      </Box>
+      </Box>}
     </Box>
   );
 };

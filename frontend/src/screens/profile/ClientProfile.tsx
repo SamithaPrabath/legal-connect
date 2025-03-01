@@ -2,6 +2,7 @@ import { border, flexCenter } from "@assets/style/boxStyles"
 import ContactInformation from "@components/account/ContactInformation"
 import ImageCompo from "@components/ImageCompo"
 import MUIButton from "@components/MUIButton"
+import ProfileIDButton from "@components/ProfileIDButton"
 import SubHeader from "@components/SubHeader"
 import { Box, Typography, useTheme } from "@mui/material"
 import { UserInfoResponse } from "@type/User"
@@ -20,7 +21,7 @@ const ClientProfile = ({userData}:PropTypes) => {
     <Box>
         <SubHeader py="10px" {...flexCenter} gap="10px">
             <MUIButton>Edit Profile Info</MUIButton>
-            <MUIButton color="secondary">Profile ID: 12345</MUIButton>
+            <ProfileIDButton profileId="1234"variant={undefined}/>
         </SubHeader>
       <Box py="30px" display="flex" flexDirection="column" gap="30px" maxWidth="800px" margin="auto">
           <Box bgcolor="white" {...flexCenter} {...border} flexDirection="column" py="30px" gap="5px">
