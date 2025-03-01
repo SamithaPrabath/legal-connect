@@ -5,7 +5,10 @@ import { Box, lighten, Typography, useTheme } from '@mui/material';
 import { UserStatus } from '@type/User';
 
 
-const StatusBox = ({status}: {status: UserStatus}) => {
+const StatusBox = ({status}: {status: UserStatus | null}) => {
+
+  if (!status) return null;
+
     const { primary, text} = useTheme().palette;
 
     const color = (status === UserStatus.AVAILABLE) ? primary.main : text.secondary

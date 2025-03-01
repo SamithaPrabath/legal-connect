@@ -12,6 +12,9 @@ import CaseOverview from "@screens/my-cases/case-viewer/Overview";
 import Payments from "@screens/payments";
 import PaymentHistory from "@screens/payments/PaymentHistory";
 import PaymentRequests from "@screens/payments/PaymentRequests";
+import Profile from "@screens/profile";
+import LawyerProfileAbout from "@screens/profile/LawyerProfileAbout";
+import LawyerProfileReviews from "@screens/profile/LawyerProfileReviews";
 import Schedule from "@screens/schedule";
 import {
   create_account_route,
@@ -22,6 +25,9 @@ import {
   payment_history_route,
   payment_request_route,
   payments_route,
+  profile_about_route,
+  profile_reviews_route,
+  profile_route,
   schedule_route,
   view_case_documents_route,
   view_case_events_route,
@@ -83,6 +89,14 @@ const router = createBrowserRouter([
         path: schedule_route,
         element: <Schedule />,
       },
+      {
+        path: profile_route(null),
+        element: <Profile />,
+        children:[
+          {path: profile_about_route(null), element: <LawyerProfileAbout />},
+          {path: profile_reviews_route(null), element: <LawyerProfileReviews />},
+        ]
+      }
     ],
   },
 ]);

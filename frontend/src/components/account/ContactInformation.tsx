@@ -1,20 +1,42 @@
-import FormField from '@components/FormField'
-import FormCard from '../FormCard'
-import { ContactInfo } from '@type/User'
+import FormField from "@components/FormField";
+import { ContactInfo } from "@type/User";
+import FormCard from "../FormCard";
 
 type PropTypes = {
-  form: ContactInfo,
-  handleData: (name: string, value: string | null) => void
-}
+  form: ContactInfo;
+  handleData?: (name: string, value: string | null) => void;
+  readonly: boolean;
+};
 
-const ContactInformation = ({form, handleData}: PropTypes) => {
+const ContactInformation = ({ form, handleData, readonly }: PropTypes) => {
   return (
-    <FormCard id='contactInfo' title='Contact Information' mt="20px">
-      <FormField value={form.email} handleChange={handleData}  fullWidth label="Email" name='email' />
-      <FormField value={form.phone} handleChange={handleData} fullWidth label="Phone" name='phone' />
-      <FormField value={form.address} handleChange={handleData} fullWidth label="Address" name='address' />
+    <FormCard id="contactInfo" title="Contact Information" mt="20px">
+      <FormField
+        readOnly
+        value={form.email}
+        handleChange={handleData}
+        fullWidth
+        label="Email"
+        name="email"
+      />
+      <FormField
+        readOnly
+        value={form.phone}
+        handleChange={handleData}
+        fullWidth
+        label="Phone"
+        name="phone"
+      />
+      <FormField
+        readOnly
+        value={form.address}
+        handleChange={handleData}
+        fullWidth
+        label="Address"
+        name="address"
+      />
     </FormCard>
-  )
-}
+  );
+};
 
-export default ContactInformation
+export default ContactInformation;

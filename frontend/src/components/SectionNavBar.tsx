@@ -1,5 +1,5 @@
 import { flexCenter } from "@assets/style/boxStyles";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, BoxProps, Typography, useTheme } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export type Section = {
@@ -9,13 +9,13 @@ export type Section = {
 
 type PropTypes = {
   sections: Section[];
-};
+} & BoxProps;
 
-const SectionNavBar = ({ sections }: PropTypes) => {
+const SectionNavBar = ({ sections, ...rest }: PropTypes) => {
   return (
-    <Box {...flexCenter} width="fit-content">
+    <Box {...flexCenter} width="fit-content" {...rest}>
       {sections.map((section) => (
-        <NavbarElement section={section} />
+        <NavbarElement section={section} isWidthFlexible={!!rest.width} />
       ))}
     </Box>
   );
@@ -23,8 +23,10 @@ const SectionNavBar = ({ sections }: PropTypes) => {
 
 const NavbarElement = ({
   section,
+  isWidthFlexible
 }: {
   section: Section;
+  isWidthFlexible: boolean;
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,7 +40,7 @@ const NavbarElement = ({
       borderBottom={`2px solid ${isActive ? "black" : divider}`}
       sx={{ transition: "all 0.25s", cursor:"pointer" }}
       textAlign="center"
-      width="200px"
+      width= {isWidthFlexible? "100%" : "200px"}
       pb="5px"
       {...!isActive && {position:"relative", top:"1px"}}
       onClick={() => navigate(section.contextPath)}

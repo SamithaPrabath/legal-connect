@@ -5,6 +5,7 @@ type PropTypes<T> = {
   label: string;
   name: string;
   value?: T | null;
+  readOnly?: boolean;
   autocomplete?: boolean;
   options?: T[];
   optionLabel?: (option: T) => string;
@@ -17,6 +18,7 @@ const FormField = <T,>({
   label,
   name,
   value,
+  readOnly,
   autocomplete = false,
   handleChange,
   onInputChange,
@@ -32,6 +34,9 @@ const FormField = <T,>({
       </Typography>
       {!autocomplete ? (
         <OutlinedTextField
+          InputProps={{
+            readOnly
+          }}
           name={name}
           value={value}
           placeholder={label}

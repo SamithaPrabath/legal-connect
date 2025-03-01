@@ -1,0 +1,40 @@
+import { border, flexCenter } from "@assets/style/boxStyles"
+import ContactInformation from "@components/account/ContactInformation"
+import ImageCompo from "@components/ImageCompo"
+import MUIButton from "@components/MUIButton"
+import SubHeader from "@components/SubHeader"
+import { Box, Typography, useTheme } from "@mui/material"
+import { UserInfoResponse } from "@type/User"
+
+
+type PropTypes = {
+    userData: UserInfoResponse
+}
+
+const ClientProfile = ({userData}:PropTypes) => {
+
+    const { text } = useTheme().palette;
+    const { basicInfo, contactInfo } = userData;
+
+  return (
+    <Box>
+        <SubHeader py="10px" {...flexCenter} gap="10px">
+            <MUIButton>Edit Profile Info</MUIButton>
+            <MUIButton color="secondary">Profile ID: 12345</MUIButton>
+        </SubHeader>
+      <Box py="30px" display="flex" flexDirection="column" gap="30px" maxWidth="800px" margin="auto">
+          <Box bgcolor="white" {...flexCenter} {...border} flexDirection="column" py="30px" gap="5px">
+              <ImageCompo base64String={basicInfo.image} width="150px" height="150px" />
+              <Typography variant="h2" mb="10px">{`${basicInfo.firstName} ${basicInfo.lastName}`}</Typography>
+              <Typography variant="h4" sx={{color: text.secondary}} >{basicInfo.occupation}</Typography>
+              <Typography variant="h6" sx={{color: text.secondary}} >{basicInfo.location}</Typography>
+          </Box>
+          <ContactInformation form={contactInfo} readonly  />
+      </Box>
+    </Box>
+  )
+}
+
+
+
+export default ClientProfile

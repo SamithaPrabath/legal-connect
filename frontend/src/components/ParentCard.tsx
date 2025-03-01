@@ -7,9 +7,10 @@ type PropTypes = {
   title: string;
   sideCompo?: ReactNode;
   parentBoxProps?: BoxProps
+  titleVariant?: "h2" | "h3" | "h4"
 } & BoxProps;
 
-const ParentCard = ({ children, title, sideCompo, parentBoxProps, ...rest }: PropTypes) => {
+const ParentCard = ({ children, title, sideCompo, parentBoxProps, titleVariant, ...rest }: PropTypes) => {
   return (
     <Box bgcolor="white" {...border} px="30px" py="20px" {...parentBoxProps} >
       <Box
@@ -18,7 +19,7 @@ const ParentCard = ({ children, title, sideCompo, parentBoxProps, ...rest }: Pro
         justifyContent="space-between"
         mb="30px"
       >
-        <Typography variant="h2">{title}</Typography>
+        <Typography variant={titleVariant || "h2"}>{title}</Typography>
         {sideCompo}
       </Box>
       <Box {...rest}>
