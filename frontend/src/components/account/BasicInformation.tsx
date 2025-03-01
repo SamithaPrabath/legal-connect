@@ -1,11 +1,10 @@
-import DefaultProfile from "@assets/images/default_profile.png";
 import FormField from "@components/FormField";
+import ImageCompo from "@components/ImageCompo";
 import MUIButton from "@components/MUIButton";
 import { Box, useTheme } from "@mui/material";
 import { BasicInfo } from "@type/User";
+import { useRef } from "react";
 import FormCard from "../FormCard";
-import { useRef, useState } from "react";
-import { flexCenter } from "@assets/style/boxStyles";
 
 type PropTypes = {
   form: BasicInfo;
@@ -13,11 +12,6 @@ type PropTypes = {
 };
 
 const BasicInformation = ({ form, handleData }: PropTypes) => {
-  const [imgStyle, setImgStyle] = useState<{ width?: string; height?: string }>(
-    {
-      height: "100%",
-    }
-  );
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleButtonClick = () => {
@@ -31,17 +25,8 @@ const BasicInformation = ({ form, handleData }: PropTypes) => {
       reader.readAsDataURL(file);
       reader.onload = () => {
         const base64String = reader.result as string;
-        handleData("image", base64String);
+        handleData("image", base64String.split(",")[1]);
 
-        const img = new Image();
-        img.src = base64String;
-        img.onload = () => {
-          if (img.width > img.height) {
-            setImgStyle({ height: "100%", width: "auto" });
-          } else {
-            setImgStyle({ width: "100%", height: "auto" });
-          }
-        };
       };
       reader.onerror = (error) =>
         console.error("Error converting file to base64:", error);
@@ -77,19 +62,7 @@ const BasicInformation = ({ form, handleData }: PropTypes) => {
             onChange={handleFileChange}
             style={{ display: "none" }}
           />
-          <Box
-            width="100px"
-            height="100px"
-            borderRadius="50%"
-            overflow="hidden"
-            {...flexCenter}
-          >
-            <img
-              src={form.image || DefaultProfile}
-              width={imgStyle.width}
-              height={imgStyle.height}
-            />
-          </Box>
+          <ImageCompo base64String={form.image} />
 
           <MUIButton
             onClick={handleButtonClick}

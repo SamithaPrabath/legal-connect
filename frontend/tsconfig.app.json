@@ -15,6 +15,8 @@
       "@screens/*": ["./src/screens/*"],
       "@type/*": ["./src/type/*"],
       "@utils/*": ["./src/utils/*"],
+      "@actions/*": ["./src/actions/*"],
+      "@temporaryActions/*": ["./src/temporaryActions/*"],
     },
 
     /* Bundler mode */

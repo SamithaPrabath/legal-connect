@@ -17,7 +17,7 @@ const LoginSignUp = () => {
       <Box width="30%" py={3} px={5}>
         <Box display="flex" alignItems="center" justifyContent="space-between" >
         <Logo />
-        <Box zIndex={10}>
+        <Box zIndex={10} textAlign="right">
             <Typography display="inline-block" mr={1}>
               {isLogin ? "Don't you have" : "Already have"} an account ? 
             </Typography>

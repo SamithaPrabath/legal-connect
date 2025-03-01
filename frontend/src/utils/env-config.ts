@@ -1,0 +1,1 @@
+export const isBackendConnected = import.meta.env.VITE_IS_BACKEND_CONNECTED.toLowerCase() === "true";

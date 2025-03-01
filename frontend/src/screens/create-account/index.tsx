@@ -14,6 +14,9 @@ import {
   updateUserContactInfo,
 } from "@redux/slices/user/form";
 import { aboutKeyType, basicInfoKeyType, contactInorKeyType, UserType } from "@type/User";
+import { signupAction } from "@actions/portalAction";
+import { useNavigate } from "react-router-dom";
+import { login_signup_route } from "@utils/context-paths";
 
 const sections: FormSection[] = [
   { sectionId: "basicInfo", label: "Basic Information" },
@@ -24,7 +27,9 @@ const sections: FormSection[] = [
 const CreateAccount = () => {
   const [activeSection, setActiveSection] = useState("");
   const { form } = useAppSelector((state) => state.user);
+  const { success } = useAppSelector(state => state.portal.signup);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleBasicInfo = (name: string, value: string | null) => {
     const isBasicInfo = (obj: string): obj is basicInfoKeyType => typeof obj === "string";
@@ -86,10 +91,22 @@ const CreateAccount = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (success) navigate(login_signup_route)
+  },[success])
+
+  useEffect(() => {
+    if (!form.password || !form.type) navigate(login_signup_route);
+  },[]);
+
+  const handleSubmit = () => {
+    dispatch(signupAction());
+  }
+
   return (
     <Box>
       <SubHeader {...flexCenter} py="10px">
-        <MUIButton>Create Account</MUIButton>
+        <MUIButton onClick={handleSubmit}>Create Account</MUIButton>
       </SubHeader>
       <Box display="flex" justifyContent="center" alignItems="start" gap="20px">
        {form.type === UserType.LAWYER && <FormNavBar sections={sections} activeSectionId={activeSection} />}

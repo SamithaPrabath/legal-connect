@@ -1,0 +1,47 @@
+{
+  "token": [
+    {
+      "id": "d62e",
+      "email": "lawyer@gmail.com",
+      "password": "12345",
+      "token": "fdafafadfadsfa",
+      "userType": "lawyer"
+    },
+    {
+      "id": "2",
+      "email": "client@gmail.com",
+      "password": "12345",
+      "token": "blaafadfasdf",
+      "userType": "client"
+    },
+    {
+      "id": "3",
+      "email": "admin@gmail.com",
+      "password": "12345",
+      "token": "fadfadfadfafdafadfadf232qfd",
+      "userType": "admin"
+    }
+  ],
+  "user": [
+    {
+      "id": "5da8",
+      "type": "client",
+      "password": "12345",
+      "basicInfo": {
+        "image": null,
+        "firstName": "thushara",
+        "lastName": "dilshan",
+        "city": "Dambulla",
+        "language": "English",
+        "location": "Sri Lanka",
+        "occupation": "software engineer"
+      },
+      "contactInfo": {
+        "email": "thushara.abeykoon99@gmail.com",
+        "address": "12/A, Rathmalgahaela, Dambulla",
+        "phone": "0768664719"
+      },
+      "about": null
+    }
+  ]
+}

@@ -1,8 +1,12 @@
+import caseReducer from "@redux/slices/cases/reducer";
+import portal from "@redux/slices/portal/reducer";
 import user from "@redux/slices/user/reducer";
 import { combineReducers } from "@reduxjs/toolkit";
 
 const reducer = combineReducers({
-    user
+    user,
+    portal,
+    case: caseReducer,
 })
 
 export default reducer;

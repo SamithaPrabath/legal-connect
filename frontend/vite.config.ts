@@ -13,6 +13,8 @@ export default defineConfig({
       '@screens': path.resolve(__dirname, "./src/screens/"),
       '@type': path.resolve(__dirname, "./src/type/"),
       '@utils': path.resolve(__dirname, "./src/utils/"),
+      '@actions': path.resolve(__dirname, "./src/actions/"),
+      '@temporaryActions': path.resolve(__dirname, "./src/temporaryActions/"),
     }
   }
 })

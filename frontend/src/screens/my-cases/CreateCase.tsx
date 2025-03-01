@@ -10,6 +10,8 @@ import { Box } from "@mui/material";
 import { mycases_route } from "@utils/context-paths";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CaseRequest } from "@type/Case";
+import { useAppSelector } from "@redux/hooks";
 
 const sections: FormSection[] = [
   { sectionId: "caseBasicInfo", label: "Basic Information" },
@@ -18,10 +20,36 @@ const sections: FormSection[] = [
   { sectionId: "caseCourt", label: "Court" },
 ];
 
+const initialState: CaseRequest = {
+  caseName:"",
+  caseNumber: "",
+  caseType: "",
+  client: {
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+  },
+  court: {
+    address: "",
+    name: "",
+    phone: ""
+  },
+  lawyerId: "",
+  oppositionParty: {
+    lawyerName:"",
+    name:"",
+    phone:""
+  }
+}
+
 const CreateCase = () => {
   const [activeSection, setActiveSection] = useState<string>("");
+  const [caseForm, setCaseForm] = useState<CaseRequest>(initialState);
 
   const navigate = useNavigate();
+
+  const { data: userData } = useAppSelector(state => state.user.user);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,6 +69,58 @@ const CreateCase = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (userData) {
+      setCaseForm(prev => ({
+        ...prev,
+        client: {
+          id: userData.id,
+          email: userData.contactInfo.email,
+          name: userData.basicInfo.firstName + " " + userData.basicInfo.lastName,
+          phone: userData.contactInfo.phone
+        }
+      }))
+    }
+  },[userData])
+
+
+  const handleBasicInfo = (name: string, value: string | null) => {
+    setCaseForm(prev => ({
+      ...prev,
+      [name]: value || ""
+    }))
+  }
+
+  const handleClientInfo = (name: string , value: string | null) => {
+    setCaseForm(prev => ({
+      ...prev,
+      client: {
+        ...prev.client,
+        [name]: value || ""
+      }
+    }))
+  };
+
+  const handleOppositionPartyInfo = (name: string, value: string | null) => {
+    setCaseForm(prev => ({
+      ...prev,
+      oppositionParty: {
+        ...prev.oppositionParty,
+        [name]: value || ""
+      }
+    }))
+  }
+
+  const handleCourtInfo = (name: string, value: string | null) => {
+    setCaseForm(prev => ({
+      ...prev,
+      court: {
+        ...prev.court,
+        [name]: value || ""
+      }
+    }))
+  }
 
   return (
     <Box>
@@ -62,10 +142,10 @@ const CreateCase = () => {
           gap="20px"
           py="40px"
         >
-          <CaseBasicInformation />
-          <CaseClient />
-          <CaseOppositionParty />
-          <CaseCourt />
+          <CaseBasicInformation form={caseForm} handleChange={handleBasicInfo} />
+          <CaseClient form={caseForm} handleChange={handleClientInfo} />
+          <CaseOppositionParty form={caseForm} handleChange={handleOppositionPartyInfo} />
+          <CaseCourt form={caseForm} handleChange={handleCourtInfo} />
         </Box>
       </Box>
     </Box>

@@ -5,14 +5,14 @@ import FormCard from "../FormCard";
 type PropTypes = {
   form: ContactInfo;
   handleData?: (name: string, value: string | null) => void;
-  readonly: boolean;
+  readonly?: boolean;
 };
 
 const ContactInformation = ({ form, handleData, readonly }: PropTypes) => {
   return (
     <FormCard id="contactInfo" title="Contact Information" mt="20px">
       <FormField
-        readOnly
+        readOnly={readonly}
         value={form.email}
         handleChange={handleData}
         fullWidth
@@ -20,7 +20,7 @@ const ContactInformation = ({ form, handleData, readonly }: PropTypes) => {
         name="email"
       />
       <FormField
-        readOnly
+        readOnly={readonly}
         value={form.phone}
         handleChange={handleData}
         fullWidth
@@ -28,7 +28,7 @@ const ContactInformation = ({ form, handleData, readonly }: PropTypes) => {
         name="phone"
       />
       <FormField
-        readOnly
+        readOnly={readonly}
         value={form.address}
         handleChange={handleData}
         fullWidth

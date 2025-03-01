@@ -6,6 +6,9 @@ import { updateUserAbout } from "@redux/slices/user/form";
 import { AboutInfo, UserType } from "@type/User";
 import { create_account_route } from "@utils/context-paths";
 import { useNavigate } from "react-router-dom";
+import { loginAction } from "@actions/portalAction";
+import { isBackendConnected } from "@utils/env-config";
+import { tempLoginAction } from "@temporaryActions/tempPortalActions";
 
 export type SignForm = {
   email: string;
@@ -46,6 +49,12 @@ const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
         dispatch(updateUserAbout(about))
       }
       navigate(create_account_route)
+    }
+    else {
+      if (isBackendConnected){
+        dispatch(loginAction(form.email, form.password));
+      }else 
+        dispatch(tempLoginAction(form.email, form.password));
     }
   }
 

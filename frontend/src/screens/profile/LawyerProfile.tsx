@@ -31,7 +31,7 @@ const LawyerProfile = ({ userData }: PropTypes) => {
 
   return (
     <Box {...flexCenter} alignItems="start" gap="40px" justifyContent="space-between" bgcolor="white">
-      <Box {...flexCenter} flexDirection="column"  alignItems="start" p="20px" pl="60px" gap="20px" width="20%" position="sticky" top="70px">
+      <Box {...flexCenter} flexDirection="column"  alignItems="start" pr="20px" pl="60px" gap="20px" width="20%" position="sticky" top="100px">
         <ImageCompo base64String={basicInfo.image} width="120px" height="120px" />
         <Typography variant="h2">{fullName}</Typography>
         <StatusBox status={userData.userStatus || null} />
