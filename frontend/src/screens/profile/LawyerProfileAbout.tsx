@@ -1,34 +1,30 @@
 import ParentCard from "@components/ParentCard";
 import { Circle } from "@mui/icons-material";
 import { Box, Typography, useTheme } from "@mui/material";
+import { useAppSelector } from "@redux/hooks";
+import { AboutInfo } from "@type/User";
+import { useEffect, useState } from "react";
 
 const LawyerProfileAbout = () => {
-  const firstname = "Sarah";
-  const bio =
-    "Sarah Johnson is a dedicated corporate law expert with over 10 years of experience providing legal solutions for startups, small businesses, and multinational corporations. Her practice focuses on contract law, mergers and acquisitions, and compliance.";
+  const [firstName, setFirstName] = useState("");
+  const [about, setAbout] = useState<AboutInfo | null>(null);
 
-  const praticeAreas = [
-    "Corporate Law",
-    "Intellectual Property",
-    "Employment Law",
-    "Business Contracts",
-  ];
+  const credentialsAndEducation = about?.credentialsAndEducation.split("\n") || [];
+  const workHistory = about?.workHistory.split("\n") || [];
 
-  const credentialsAndEducation = [
-    "Juris Doctor (JD): Harvard Law School",
-    " BA in Political Science: Stanford University",
-    " Bar Admissions: State of New York, California",
-  ];
-  const workHistory = [
-    "Senior Partner: Johnson & Smith LLP (2016 - Present)",
-    " Associate Attorney: Global Legal Solutions (2010 - 2016)",
-  ];
+  const user = useAppSelector(state => state.user.user.data);
+
+  useEffect(() => {
+    if (!user?.about) return;
+    setAbout(user.about);
+    if (user.basicInfo) setFirstName(user.basicInfo.firstName);
+  },[])
 
   return (
     <Box display="flex" flexDirection="column" gap="20px" mt="20px">
-      <ParentCard titleVariant="h3" title={`About ${firstname}`}>
-        <ProfileDetail label="Bio" detail={bio} />
-        <ProfileDetail label="Pratice Areas" detail={praticeAreas} />
+      <ParentCard titleVariant="h3" title={`About ${firstName}`}>
+        <ProfileDetail label="Bio" detail={about?.bio || ""} />
+        <ProfileDetail label="Pratice Areas" detail={about?.practiceAreas || []} />
         <ProfileDetail
           label="Credentials & Education"
           detail={credentialsAndEducation}

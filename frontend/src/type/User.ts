@@ -57,7 +57,7 @@ export type UserInfoRequest = {
 
 export type UserInfoResponse = {
   id: string;
-  userStatus?: UserStatus;
+  status?: UserStatus;
   reviewCount?: number;
   rating?: number;
   type: UserType;

@@ -4,6 +4,7 @@ import createApiSlice from "../config/apiSlice";
 const initialLoginResponse: LoginResponse = {
   token: null,
   userType: null,
+  profileId: null,
 };
 
 const auth = createApiSlice("loginSlice", initialLoginResponse);

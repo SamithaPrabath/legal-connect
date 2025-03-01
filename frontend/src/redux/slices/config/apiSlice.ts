@@ -33,7 +33,10 @@ const createApiSlice = <ResponseType> (name: string, initialResponseState?:Respo
                 state.error = action.payload;
             },
             reset: (state) => {
-                state = initialState as Draft<APISliceType<ResponseType>>
+                state.loading = false;
+                state.data = null;
+                state.error = null;
+                state.success = false;
             }
         }
     })

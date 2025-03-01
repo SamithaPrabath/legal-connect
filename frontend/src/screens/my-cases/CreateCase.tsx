@@ -7,11 +7,13 @@ import MUIButton from "@components/MUIButton";
 import FormNavBar, { FormSection } from "@components/FormNavBar";
 import SubHeader from "@components/SubHeader";
 import { Box } from "@mui/material";
-import { mycases_route } from "@utils/context-paths";
+import { login_signup_route, mycases_route } from "@utils/context-paths";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CaseRequest } from "@type/Case";
 import { useAppSelector } from "@redux/hooks";
+import LocalStorageHandler from "@utils/localStorageHandler";
+import { caseCreateAction } from "@actions/caseActions";
 
 const sections: FormSection[] = [
   { sectionId: "caseBasicInfo", label: "Basic Information" },
@@ -71,6 +73,19 @@ const CreateCase = () => {
   }, []);
 
   useEffect(() => {
+    const localStorageHandler = new LocalStorageHandler();
+
+    const profileId  = localStorageHandler.profileId;
+
+    if (profileId)
+      setCaseForm(prev => ({...prev, lawyerId: profileId}))
+    else {
+      localStorageHandler.removeAll();
+      navigate(login_signup_route)
+    }
+  },[])
+
+  useEffect(() => {
     if (userData) {
       setCaseForm(prev => ({
         ...prev,
@@ -122,11 +137,16 @@ const CreateCase = () => {
     }))
   }
 
+  const handleSubmit = () => {
+    caseCreateAction(caseForm);
+    navigate(mycases_route);
+  }
+
   return (
     <Box>
       <SubHeader {...flexCenter} py="10px">
         <Box width="280px" {...flexCenter} gap="10px">
-        <MUIButton fullWidth>Create Case</MUIButton>
+        <MUIButton onClick={handleSubmit} fullWidth>Create Case</MUIButton>
         <MUIButton fullWidth variant="outlined" color="secondary" onClick={() => navigate(mycases_route)}>
           Back
         </MUIButton>

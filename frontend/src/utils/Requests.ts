@@ -26,14 +26,14 @@ class Requests<ParamType, RequestBodyType> {
         })
     }
 
-    async post<ResponseType>(successCallBack: (data: ResponseType) => void, errorCallBack: (message: string) => void) {
+    async post<ResponseType>(successCallBack?: (data: ResponseType) => void, errorCallBack?: (message: string) => void) {
         await axios.post(this.url, this.requestBody, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}},)
         .then(res => {
-            successCallBack(res.data);
+           if (successCallBack)  successCallBack(res.data);
         })
         .catch(err => {
             const errorMessage = getAxiosErrorMessage(err) as string;
-            errorCallBack(errorMessage);
+            if (errorCallBack) errorCallBack(errorMessage);
         })
     }
 

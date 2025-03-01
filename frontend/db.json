@@ -1,10 +1,11 @@
 {
   "token": [
     {
-      "id": "d62e",
+      "id": "1",
       "email": "lawyer@gmail.com",
       "password": "12345",
       "token": "fdafafadfadsfa",
+      "profileId": "4aa9",
       "userType": "lawyer"
     },
     {
@@ -12,6 +13,7 @@
       "email": "client@gmail.com",
       "password": "12345",
       "token": "blaafadfasdf",
+      "profileId": "5da8",
       "userType": "client"
     },
     {
@@ -19,6 +21,7 @@
       "email": "admin@gmail.com",
       "password": "12345",
       "token": "fadfadfadfafdafadfadf232qfd",
+      "profileId": "",
       "userType": "admin"
     }
   ],
@@ -42,6 +45,136 @@
         "phone": "0768664719"
       },
       "about": null
+    },
+    {
+      "id": "4aa9",
+      "type": "lawyer",
+      "status": "Available for Consultation",
+      "password": "12345",
+      "rating": 4.5,
+      "reviewCount": "255",
+      "basicInfo": {
+        "image": null,
+        "firstName": "Thushara",
+        "lastName": "Dilshan",
+        "city": "Dambulla",
+        "language": "English",
+        "location": "Sri Lanka",
+        "occupation": "Lawyer Consultatnt"
+      },
+      "contactInfo": {
+        "email": "lawyer@gmail.com",
+        "address": "No 12, Rathmalgahaela, Dambulla",
+        "phone": "0712345678"
+      },
+      "about": {
+        "bio": "Hi my name is Thushara Dilshan and I'm working as a software engineer",
+        "credentialsAndEducation": "BSc Computer Science\nLaw College Dambulla\nNegambo International School",
+        "practiceAreas": [
+          "front end development",
+          "backend development",
+          "angular",
+          "reactjs"
+        ],
+        "workHistory": "Sample work history\nsample work hsitory\nsample work history"
+      }
     }
-  ]
+  ],
+  "cases": [
+    {
+      "id": "d045",
+      "caseStatus": "await hearing",
+      "caseName": "asfadfads",
+      "caseNumber": "fadfadf",
+      "caseType": "adfadsfadf",
+      "client": {
+        "id": "5da8",
+        "email": "thushara.abeykoon99@gmail.com",
+        "name": "thushara dilshan",
+        "phone": "0768664719"
+      },
+      "court": {
+        "address": "dasfadsf",
+        "name": "dfasdfadsfaf",
+        "phone": "adfadfadsf"
+      },
+      "lawyerId": "4aa9",
+      "oppositionParty": {
+        "lawyerName": "fadfasfads",
+        "name": "afadsfdasf",
+        "phone": "dfasdfadsf"
+      }
+    }
+  ],
+  "reviewList": [
+    {
+      "client": {
+        "profileId": 1,
+        "image": null,
+        "firstName": "John",
+        "lastName": "Doe"
+      },
+      "date": "2024-03-01",
+      "rating": 5,
+      "title": "Excellent Service!",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vestibulum pulvinar sem, ac cursus arcu molestie quis. Nunc tristique urna nec fringilla maximus. Duis maximus nunc at justo consectetur cursus. Nam luctus, urna sit amet pharetra dictum, ex neque tincidunt ante, sed iaculis massa erat id nunc. Nullam pulvinar"
+    },
+    {
+      "client": {
+        "profileId": 2,
+        "image": null,
+        "firstName": "Jane",
+        "lastName": "Smith"
+      },
+      "date": "2024-02-28",
+      "rating": 4,
+      "title": "Very Good Experience",
+      "description": "Great experience, but there’s room for improvement."
+    },
+    {
+      "client": {
+        "profileId": 3,
+        "image": null,
+        "firstName": "David",
+        "lastName": "Johnson"
+      },
+      "date": "2024-02-25",
+      "rating": 3,
+      "title": "Average Service",
+      "description": "It was okay, but I expected a bit more."
+    },
+    {
+      "id": "5969",
+      "client": {
+        "profileId": 3,
+        "image": null,
+        "firstName": "David",
+        "lastName": "Johnson"
+      },
+      "date": "2024-02-25",
+      "description": "fadfadfknadlf;afjadfaidfnadkfnads;lfa;dfa\nadfnka;ldfna;dfaffnadfads;fnafknafnaadfaf",
+      "rating": 4,
+      "title": "Hello"
+    },
+    {
+      "id": "aae6",
+      "client": {
+        "profileId": "5da8",
+        "firstName": "Thushara",
+        "image": null,
+        "lastName": "Dilshan"
+      },
+      "date": "12-25-2025",
+      "description": "Hello Please do not schedule appointments for this mother fucker",
+      "rating": 3,
+      "title": "Bad Consulting"
+    }
+  ],
+  "reviewSummary": {
+    "1": 10,
+    "2": 10,
+    "3": 10,
+    "4": 20,
+    "5": 50
+  }
 }

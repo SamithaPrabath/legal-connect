@@ -5,6 +5,7 @@ import { admin_dashboard_route, mycases_route } from "@utils/context-paths"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import EmailAndPasswordField, { SignForm } from "./EmailAndPasswordField"
+import LocalStorageHandler from '@utils/localStorageHandler';
 
 const Login = () => {
 
@@ -21,11 +22,14 @@ const Login = () => {
     }
 
     useEffect(() => {
-      if (auth.success && auth.data && auth.data.token && auth.data.userType) {
-        localStorage.setItem("token", auth.data.token) 
-        localStorage.setItem("userType", auth.data.userType);
+      if (auth.success && auth.data && auth.data.token && auth.data.userType && auth.data.profileId) {
+        
+        const localStrorageHandler = new LocalStorageHandler();
+
+        localStrorageHandler.setAll(auth.data.token, auth.data.userType, auth.data.profileId)
+
         if (auth.data.userType !== UserType.ADMIN) navigate(mycases_route)
-          else navigate(admin_dashboard_route);
+        else navigate(admin_dashboard_route);
       };
     },[auth]);
 

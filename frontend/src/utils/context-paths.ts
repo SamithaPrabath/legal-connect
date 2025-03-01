@@ -18,7 +18,7 @@ export const payment_request_route  = "/payments/requests"
 export const payment_history_route  = "/payments/history"
 
 export const profile_route = (profileId: string | null) => `/profile/${profileId || ":profileID"}`
-export const profile_about_route = (profileId: number | null) => `/profile/${profileId || ":profileID"}/about`;
-export const profile_reviews_route = (profileId: number | null) => `/profile/${profileId || ":profileID"}/reviews`;
+export const profile_about_route = (profileId: string | null) => `/profile/${profileId || ":profileID"}/about`;
+export const profile_reviews_route = (profileId: string | null) => `/profile/${profileId || ":profileID"}/reviews`;
 
 export const admin_dashboard_route = "/admin/dashboard";
