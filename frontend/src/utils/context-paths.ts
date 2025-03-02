@@ -33,4 +33,6 @@ export const profile_about_route = (profileId: string | null) =>
 export const profile_reviews_route = (profileId: string | null) =>
   `/profile/${profileId || ":profileID"}/reviews`;
 
+export const schedule_appointment_route = (lawyerId: string | null) => mergeUrls(schedule_route, lawyerId || ":lawyerId")
+
 export const admin_dashboard_route = "/admin/dashboard";

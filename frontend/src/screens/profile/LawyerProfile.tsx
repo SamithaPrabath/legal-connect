@@ -14,6 +14,7 @@ import {
   message_with_user_rotue,
   profile_about_route,
   profile_reviews_route,
+  schedule_appointment_route,
 } from "@utils/context-paths";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -94,7 +95,7 @@ const LawyerProfile = ({ userData }: PropTypes) => {
             </MUIButton>
           )}
           {isClientViewing && (
-            <MUIButton fullWidth variant="outlined" color="secondary">
+            <MUIButton fullWidth variant="outlined" color="secondary" onClick={() => navigate(schedule_appointment_route(id))}>
               Schedule Appointment
             </MUIButton>
           )}

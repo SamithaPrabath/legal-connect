@@ -205,5 +205,24 @@
     "3": 10,
     "4": 20,
     "5": 50
-  }
+  },
+  "events": [
+    {
+      "id": "4281",
+      "description": "hello hi how are you",
+      "date": "2025-03-02",
+      "time": "11.00 AM",
+      "title": "Appointment"
+    }
+  ],
+  "timeslots": [
+    "8.00 AM",
+    "9.00 AM",
+    "10.00 AM",
+    "12.00 PM",
+    "1.00 PM",
+    "2.00 PM",
+    "3.00 PM",
+    "4.00 PM"
+  ]
 }

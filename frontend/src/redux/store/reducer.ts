@@ -1,4 +1,5 @@
 import caseReducer from "@redux/slices/cases/reducer";
+import event from "@redux/slices/event/reducer";
 import portal from "@redux/slices/portal/reducer";
 import review from "@redux/slices/review/reducer";
 import user from "@redux/slices/user/reducer";
@@ -9,6 +10,7 @@ const reducer = combineReducers({
     portal,
     case: caseReducer,
     review,
+    event
 })
 
 export default reducer;

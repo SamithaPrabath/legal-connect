@@ -1,3 +1,4 @@
+import ScheduleAppointment from "@components/schedule/ScheduleAppointment";
 import CreateAccount from "@screens/create-account";
 import FindALawyer from "@screens/find-a-lawyer";
 import Home from "@screens/home";
@@ -32,6 +33,7 @@ import {
   profile_about_route,
   profile_reviews_route,
   profile_route,
+  schedule_appointment_route,
   schedule_route,
   view_case_documents_route,
   view_case_events_route,
@@ -93,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: schedule_route,
         element: <Schedule />,
+      },
+      {
+        path: schedule_appointment_route(null),
+        element: <ScheduleAppointment />
       },
       {
         path: profile_route(null),
