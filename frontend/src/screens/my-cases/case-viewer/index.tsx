@@ -1,9 +1,12 @@
+import { caseByIdAction } from "@actions/caseActions";
 import { flexCenter } from "@assets/style/boxStyles";
 import MUIButton from "@components/MUIButton";
 import SectionNavBar, { Section } from "@components/SectionNavBar";
 import SubHeader from "@components/SubHeader";
 import { Box, Typography } from "@mui/material";
+import { useAppDispatch } from "@redux/hooks";
 import { mycases_route, view_case_documents_route, view_case_events_route, view_case_notes_route, view_case_overview_route } from "@utils/context-paths";
+import { useEffect } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 
@@ -18,6 +21,13 @@ const CaseViewer = () => {
   ]
 
   const navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!caseId) return;
+    dispatch(caseByIdAction(caseId));
+  },[caseId])
 
 
   console.log(params);

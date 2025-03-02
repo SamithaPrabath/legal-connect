@@ -1,3 +1,4 @@
+import { EventResponse } from "./Event";
 import { UserInfoResponse } from "./User";
 
 export enum CaseStatus {
@@ -43,6 +44,7 @@ export type CaseResponse = {
     court: Court;
     caseType: string;
     caseStatus: CaseStatus;
-    upComingEvent: string;
+    createdDate: string;
+    upcomingEvent?: EventResponse;
     deadline: number;
 }

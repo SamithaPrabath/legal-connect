@@ -1,20 +1,84 @@
-import { caseTypesReject, caseTypesRequest, caseTypesSuccess } from "@redux/slices/cases/caseTypes";
-import { CaseRequest } from "@type/Case";
+import { singleCaseReject, singleCaseRequest, singleCaseSuccess } from "@redux/slices/cases/case";
+import {
+    caseTypesReject,
+    caseTypesRequest,
+    caseTypesSuccess,
+} from "@redux/slices/cases/caseTypes";
+import { caseListReject, caseListRequest, caseListSuccess } from "@redux/slices/cases/list";
+import {
+    casePageReject,
+    casePageRequest,
+    casePageSuccess,
+} from "@redux/slices/cases/page";
+import { CaseRequest, CaseResponse } from "@type/Case";
+import { PageType } from "@type/Page";
 import Requests from "@utils/Requests";
-import { case_type_url, case_url } from "@utils/urls/resources/case";
+import {
+    case_byId_url,
+    case_byUserId_url,
+    case_type_url,
+    case_url,
+} from "@utils/urls/resources/case";
 import { useDispatch } from "react-redux";
 
-export const caseTypeListAction = () => async(dispatch: ReturnType<typeof useDispatch>) => {
+export const caseTypeListAction =
+  () => async (dispatch: ReturnType<typeof useDispatch>) => {
     dispatch(caseTypesRequest());
     const requests = new Requests(case_type_url);
 
-    const successCallBack = (data: string[]) => dispatch(caseTypesSuccess(data));
-    const rejectCallBack = (message: string) => dispatch(caseTypesReject(message));
+    const successCallBack = (data: string[]) =>
+      dispatch(caseTypesSuccess(data));
+    const rejectCallBack = (message: string) =>
+      dispatch(caseTypesReject(message));
 
     await requests.get(successCallBack, rejectCallBack);
-}
+  };
 
 export const caseCreateAction = async (caseForm: CaseRequest) => {
-    const request = new Requests(case_url, caseForm);
-    await request.post()
+  const request = new Requests(case_url, caseForm);
+  await request.post();
+};
+
+export const casePageAction =
+  (lawyerId: string, page: number, pageSize: number) =>
+  async (dispatch: ReturnType<typeof useDispatch>) => {
+    dispatch(casePageRequest());
+
+    const successCallBack = (data: PageType<CaseResponse>) =>
+      dispatch(casePageSuccess(data));
+    const rejectCallBack = (message: string) =>
+      dispatch(casePageReject(message));
+
+    const request = new Requests(case_byUserId_url(lawyerId), null, {
+      page,
+      pageSize,
+    });
+
+    await request.get(successCallBack, rejectCallBack);
+  };
+
+export const caseListAction = (profileId: string) => async (dispatch: ReturnType<typeof useDispatch>) => {
+        dispatch(caseListRequest());
+    
+        const successCallBack = (data: CaseResponse[]) =>
+          dispatch(caseListSuccess(data));
+        const rejectCallBack = (message: string) =>
+          dispatch(caseListReject(message));
+    
+        const request = new Requests(case_byUserId_url(profileId));
+    
+        await request.get(successCallBack, rejectCallBack);
+}
+
+export const caseByIdAction = (caseId: string) => async(dispatch: ReturnType<typeof useDispatch>) => {
+    dispatch(singleCaseRequest());
+
+    const successCallback = (data: CaseResponse) =>
+        dispatch(singleCaseSuccess(data));
+      const rejectCallBack = (message: string) =>
+        dispatch(singleCaseReject(message));
+
+    const request = new Requests(case_byId_url(caseId));
+
+    await request.get(successCallback, rejectCallBack);
 }

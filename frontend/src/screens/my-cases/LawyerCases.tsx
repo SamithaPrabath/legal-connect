@@ -11,7 +11,7 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
-import { CaseStatus } from "@type/Case";
+import { useAppSelector } from "@redux/hooks";
 import {
   create_case_route,
   view_case_overview_route,
@@ -124,59 +124,59 @@ const StatusDropdown = () => {
   );
 };
 
-const cases = [
-  {
-    id: "CASE-10001",
-    name: "Johnson vs. Apex Corp.",
-    client: "Emily Johnson",
-    type: "Corporate Dispute",
-    status: CaseStatus.IN_PROGRESS,
-    event: "Hearing",
-    deadline: "Feb 15, 2025",
-  },
-  {
-    id: "CASE-10002",
-    name: "Smith Property Agreement",
-    client: "Robert Smith",
-    type: "Real Estate",
-    status: CaseStatus.ON_HOLD,
-    event: "Appointment",
-    deadline: "Feb 10, 2025",
-  },
-  {
-    id: "CASE-10003",
-    name: "Doe Contract Review",
-    client: "Jane Doe",
-    type: "Contract Review",
-    status: CaseStatus.CLOSED,
-    event: "N/A",
-    deadline: "N/A",
-  },
-  {
-    id: "CASE-10004",
-    name: "Startup Trademark Filing",
-    client: "Tech Innovations",
-    type: "Intellectual Property",
-    status: CaseStatus.IN_PROGRESS,
-    event: "Filing Deadline",
-    deadline: "Mar 1, 2025",
-  },
-  {
-    id: "CASE-10005",
-    name: "Wilson Partnership Dispute",
-    client: "John Wilson",
-    type: "Partnership Dispute",
-    status: CaseStatus.AWAIT_HEARING,
-    event: "Mediation Session",
-    deadline: "Jan 30, 2025",
-  },
-];
+// const cases = [
+//   {
+//     id: "CASE-10001",
+//     name: "Johnson vs. Apex Corp.",
+//     client: "Emily Johnson",
+//     type: "Corporate Dispute",
+//     status: CaseStatus.IN_PROGRESS,
+//     event: "Hearing",
+//     deadline: "Feb 15, 2025",
+//   },
+//   {
+//     id: "CASE-10002",
+//     name: "Smith Property Agreement",
+//     client: "Robert Smith",
+//     type: "Real Estate",
+//     status: CaseStatus.ON_HOLD,
+//     event: "Appointment",
+//     deadline: "Feb 10, 2025",
+//   },
+//   {
+//     id: "CASE-10003",
+//     name: "Doe Contract Review",
+//     client: "Jane Doe",
+//     type: "Contract Review",
+//     status: CaseStatus.CLOSED,
+//     event: "N/A",
+//     deadline: "N/A",
+//   },
+//   {
+//     id: "CASE-10004",
+//     name: "Startup Trademark Filing",
+//     client: "Tech Innovations",
+//     type: "Intellectual Property",
+//     status: CaseStatus.IN_PROGRESS,
+//     event: "Filing Deadline",
+//     deadline: "Mar 1, 2025",
+//   },
+//   {
+//     id: "CASE-10005",
+//     name: "Wilson Partnership Dispute",
+//     client: "John Wilson",
+//     type: "Partnership Dispute",
+//     status: CaseStatus.AWAIT_HEARING,
+//     event: "Mediation Session",
+//     deadline: "Jan 30, 2025",
+//   },
+// ];
 
 const tableColumns: Column[] = [
   { id: "id", label: "Case ID" },
-  { id: "name", label: "Case Name" },
+  { id: "caseName", label: "Case Name" },
   { id: "client", label: "Client Name" },
-  { id: "type", label: "Case Type" },
+  { id: "caseType", label: "Case Type" },
   { id: "status", label: "Status" },
   { id: "event", label: "Upcoming Event" },
   { id: "deadline", label: "Deadline" },
@@ -187,9 +187,15 @@ const CaseTable = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const data: any[] = cases.map((c) => ({
+  const { data: casePage }  = useAppSelector(state => state.case.page);
+
+  const data: any[] | undefined = casePage?.data.map((c) => ({
     ...c,
-    status: getStatusChip(c.status, theme),
+    status: getStatusChip(c.caseStatus, theme),
+    event: c.upcomingEvent?.title,
+    type: c.caseType,
+    client: c.client?.basicInfo?.firstName + " " + c.client?.basicInfo?.lastName,
+    deadline: c.upcomingEvent?.date,
     actions: (
       <MUIButton
         variant="outlined"
@@ -202,6 +208,6 @@ const CaseTable = () => {
     ),
   }));
 
-  return <MUITable columns={tableColumns} data={data} />
+  return <MUITable columns={tableColumns} data={data || []} totalElements={casePage?.totalCount || 0} accessType="lawyerCase" />
 };
 export default MyCasesLawyer;

@@ -1,15 +1,20 @@
+import { casePageAction } from "@actions/caseActions";
 import {
-    Paper,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow,
-    useTheme,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  useTheme,
 } from "@mui/material";
-import { useState } from "react";
+import { useAppDispatch } from "@redux/hooks";
+import { tempGetAllCases } from "@temporaryActions/tempCaseActions";
+import { isBackendConnected } from "@utils/env-config";
+import LocalStorageHandler from "@utils/localStorageHandler";
+import { useEffect, useState } from "react";
 
 export type Column = {
   id: string;
@@ -19,11 +24,15 @@ export type Column = {
 type PropTypes = {
   columns: Column[];
   data: any[];
+  totalElements: number;
+  accessType: "lawyerCase" | "adminLawyer";
 };
 
-const MUITable = ({ columns, data }: PropTypes) => {
+const MUITable = ({ columns, data, totalElements, accessType }: PropTypes) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const dispatch = useAppDispatch();
 
   const handleChangePage = (
     _: React.MouseEvent<HTMLButtonElement> | null,
@@ -35,6 +44,17 @@ const MUITable = ({ columns, data }: PropTypes) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  useEffect(() => {
+    const userId = new LocalStorageHandler().profileId;
+    if (!userId) return;
+
+    if (accessType === "lawyerCase"){
+      if (isBackendConnected)
+        dispatch(casePageAction(userId, page, rowsPerPage));
+      else dispatch(tempGetAllCases())
+    }
+  }, [page, rowsPerPage]);
 
   const { divider } = useTheme().palette;
 
@@ -70,9 +90,9 @@ const MUITable = ({ columns, data }: PropTypes) => {
         </TableBody>
       </Table>
       <TablePagination
-        rowsPerPageOptions={[3, 5, 10]}
+        rowsPerPageOptions={[5, 10, 50]}
         component="div"
-        count={data.length}
+        count={totalElements}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

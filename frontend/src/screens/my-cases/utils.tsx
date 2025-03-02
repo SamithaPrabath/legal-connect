@@ -3,7 +3,7 @@ import { CaseStatus } from "@type/Case";
 
 export const getStatusChip = (status: CaseStatus, theme: Theme) => {
     const { primary, warning, text } = theme.palette;
-    let color = "default";
+    let color = "#000";
     if (status === CaseStatus.IN_PROGRESS) color = primary.main;
     if (status === CaseStatus.ON_HOLD) color = warning.main;
     if (status === CaseStatus.CLOSED) color = text.secondary;
