@@ -10,7 +10,7 @@ import {
     casePageRequest,
     casePageSuccess,
 } from "@redux/slices/cases/page";
-import { CaseRequest, CaseResponse } from "@type/Case";
+import { CaseRequest, CaseResponse, CaseStatus } from "@type/Case";
 import { PageType } from "@type/Page";
 import Requests from "@utils/Requests";
 import {
@@ -81,4 +81,17 @@ export const caseByIdAction = (caseId: string) => async(dispatch: ReturnType<typ
     const request = new Requests(case_byId_url(caseId));
 
     await request.get(successCallback, rejectCallBack);
+}
+
+export const caseUpdateStatusAction = (caseId: string, status: CaseStatus) => async(dispatch: ReturnType<typeof useDispatch>) => {
+    const request = new Requests(case_byId_url(caseId), null, {status});
+
+    dispatch(singleCaseRequest());
+
+    const successCallBack = (data: CaseResponse) =>
+        dispatch(singleCaseSuccess(data));
+      const rejectCallBack = (message: string) =>
+        dispatch(singleCaseReject(message));
+
+    await request.put(successCallBack, rejectCallBack);
 }

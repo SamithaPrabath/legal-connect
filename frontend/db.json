@@ -340,5 +340,31 @@
     { "date": "Jan 5, 2025", "description": "Case assigned to Sarah Johnson" },
     { "date": "Jan 5, 2025", "description": "Case assigned to Sarah Johnson" },
     { "date": "Jan 5, 2025", "description": "Case assigned to Sarah Johnson" }
-  ]
+  ],
+  "documents": [
+      {
+        "id": "doc1",
+        "caseId": "d045",
+        "title": "Case Document 1",
+        "description": "Description for case document 1",
+        "userType": "lawyer",
+        "fileName": "document1.pdf"
+      },
+      {
+        "id": "doc2",
+        "caseId": "d30c",
+        "title": "Case Document 2",
+        "description": "Description for case document 2",
+        "userType": "client",
+        "fileName": "document2.pdf"
+      },
+      {
+        "id": "doc3",
+        "caseId": "1612",
+        "title": "Case Document 3",
+        "description": "Description for case document 3",
+        "userType": "lawyer",
+        "fileName": "document3.pdf"
+      }
+    ]
 }

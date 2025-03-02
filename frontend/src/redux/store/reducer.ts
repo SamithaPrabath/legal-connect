@@ -4,6 +4,7 @@ import portal from "@redux/slices/portal/reducer";
 import review from "@redux/slices/review/reducer";
 import user from "@redux/slices/user/reducer";
 import { combineReducers } from "@reduxjs/toolkit";
+import document from "@redux/slices/document/reducer";
 
 const reducer = combineReducers({
     user,
@@ -11,6 +12,7 @@ const reducer = combineReducers({
     case: caseReducer,
     review,
     event,
+    document,
 })
 
 export default reducer;
