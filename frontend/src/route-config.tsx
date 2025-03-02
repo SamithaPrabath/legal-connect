@@ -2,6 +2,8 @@ import CreateAccount from "@screens/create-account";
 import FindALawyer from "@screens/find-a-lawyer";
 import Home from "@screens/home";
 import LoginSignUp from "@screens/login-and-signup";
+import Messages from "@screens/messages";
+import MessageBox from "@screens/messages/MessageBox";
 import MyCases from "@screens/my-cases";
 import CreateCase from "@screens/my-cases/CreateCase";
 import CaseViewer from "@screens/my-cases/case-viewer";
@@ -21,6 +23,8 @@ import {
   create_case_route,
   findalawyer_route,
   login_signup_route,
+  message_route,
+  message_with_user_rotue,
   mycases_route,
   payment_history_route,
   payment_request_route,
@@ -46,6 +50,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
     children: [
+      { path: message_route, element: <Messages />, children: [{path: message_with_user_rotue(null), element: <MessageBox />}] },
       {
         path: create_account_route,
         element: <CreateAccount />,
@@ -58,9 +63,9 @@ const router = createBrowserRouter([
         path: payments_route,
         element: <Payments />,
         children: [
-          {path: payment_request_route, element:<PaymentRequests />},
-          {path: payment_history_route, element:<PaymentHistory />},
-        ]
+          { path: payment_request_route, element: <PaymentRequests /> },
+          { path: payment_history_route, element: <PaymentHistory /> },
+        ],
       },
       {
         path: mycases_route,
@@ -92,11 +97,14 @@ const router = createBrowserRouter([
       {
         path: profile_route(null),
         element: <Profile />,
-        children:[
-          {path: profile_about_route(null), element: <LawyerProfileAbout />},
-          {path: profile_reviews_route(null), element: <LawyerProfileReviews />},
-        ]
-      }
+        children: [
+          { path: profile_about_route(null), element: <LawyerProfileAbout /> },
+          {
+            path: profile_reviews_route(null),
+            element: <LawyerProfileReviews />,
+          },
+        ],
+      },
     ],
   },
 ]);

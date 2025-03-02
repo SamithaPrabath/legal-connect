@@ -57,18 +57,20 @@ const LawyerProfileReviews = () => {
           <ReviewCard review={review} />
         ))}
       </ParentCard>
-      {userType === UserType.CLIENT && <Box
-        pl="40px"
-        width="600px"
-        display="flex"
-        flexDirection="column"
-        gap="40px"
-        position="sticky"
-        top="120px"
-      >
-        <ReviewSummaryPanel />
-        <ReviewAdderPanel />
-      </Box>}
+      {userType === UserType.CLIENT && (
+        <Box
+          pl="40px"
+          width="600px"
+          display="flex"
+          flexDirection="column"
+          gap="40px"
+          position="sticky"
+          top="120px"
+        >
+          <ReviewSummaryPanel />
+          <ReviewAdderPanel />
+        </Box>
+      )}
     </Box>
   );
 };
@@ -162,6 +164,7 @@ const ReviewSummaryDetail = ({
 const ReviewAdderPanel = () => {
   const [reviewForm, setReviewForm] = useState<ReviewRequest>({
     clientId: "",
+    lawyerId: "",
     date: "",
     description: "",
     rating: 0,
@@ -171,6 +174,11 @@ const ReviewAdderPanel = () => {
   const dispatch = useAppDispatch();
 
   const { data: userData } = useAppSelector((state) => state.user.user);
+
+  useEffect(() => {
+    if (!userData) return;
+    setReviewForm((prev) => ({ ...prev, lawyerId: userData.id }));
+  }, [userData]);
 
   useEffect(() => {
     const clientId = new LocalStorageHandler().profileId;
@@ -201,6 +209,8 @@ const ReviewAdderPanel = () => {
           title: reviewForm.title,
         })
       );
+
+    if (userData) dispatch(reviewListAction(userData.id));
   };
 
   return (

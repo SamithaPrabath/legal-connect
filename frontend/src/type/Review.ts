@@ -13,6 +13,7 @@ export type ReviewResponse = {
 
 export type ReviewRequest = {
   clientId: string;
+  lawyerId: string;
   date: string;
   rating: number;
   title: string;

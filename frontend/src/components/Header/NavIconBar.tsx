@@ -36,7 +36,7 @@ const NavIconBar = () => {
     {
       key: 1,
       Icon: Mail,
-      isActive: location.pathname === message_route,
+      isActive: location.pathname.startsWith(message_route),
       onClick: () => {
         navigate(message_route);
       },

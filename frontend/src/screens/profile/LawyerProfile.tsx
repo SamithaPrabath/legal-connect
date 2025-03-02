@@ -11,17 +11,19 @@ import { Language, LocationOn, Work } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { UserInfoResponse, UserType } from "@type/User";
 import {
+  message_with_user_rotue,
   profile_about_route,
   profile_reviews_route,
 } from "@utils/context-paths";
 import LocalStorageHandler from "@utils/localStorageHandler";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 type PropTypes = {
   userData: UserInfoResponse;
 };
 
 const LawyerProfile = ({ userData }: PropTypes) => {
+  const navigate = useNavigate();
   const { id, basicInfo, rating, reviewCount } = userData;
 
   const localStorageHandler = new LocalStorageHandler();
@@ -78,28 +80,31 @@ const LawyerProfile = ({ userData }: PropTypes) => {
           gap="5px"
         />
         <Box {...flexCenter} flexDirection="column" gap="10px" width="100%">
-          {isThisUsersAccount && <MUIButton fullWidth>
-            Edit Profile Info
-          </MUIButton>}
-         {isClientViewing && <MUIButton fullWidth>
-            Message
-          </MUIButton>}
-          {isClientViewing && <MUIButton
-            fullWidth
-            variant="outlined"
-            color="secondary"
-          >
-            Schedule Appointment
-          </MUIButton>}
+          {isThisUsersAccount && (
+            <MUIButton fullWidth>Edit Profile Info</MUIButton>
+          )}
+          {isClientViewing && (
+            <MUIButton
+              fullWidth
+              onClick={() => {
+                navigate(message_with_user_rotue(id));
+              }}
+            >
+              Message
+            </MUIButton>
+          )}
+          {isClientViewing && (
+            <MUIButton fullWidth variant="outlined" color="secondary">
+              Schedule Appointment
+            </MUIButton>
+          )}
 
           {isAdminViewing && <MUIButton fullWidth>Verfiy Lawyer</MUIButton>}
-          {isAdminViewing && <MUIButton
-            variant="outlined"
-            color="secondary"
-            fullWidth
-          >
-            Deny Lawyer
-          </MUIButton>}
+          {isAdminViewing && (
+            <MUIButton variant="outlined" color="secondary" fullWidth>
+              Deny Lawyer
+            </MUIButton>
+          )}
           <ProfileIDButton profileId={id} fullWidth />
         </Box>
       </Box>
