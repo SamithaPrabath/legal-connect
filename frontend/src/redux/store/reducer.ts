@@ -10,7 +10,7 @@ const reducer = combineReducers({
     portal,
     case: caseReducer,
     review,
-    event
+    event,
 })
 
 export default reducer;

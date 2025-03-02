@@ -1,8 +1,9 @@
 import { eventCreateReject, eventCreateRequest, eventCreateSuccess } from "@redux/slices/event/create";
+import { eventListReject, eventListRequest, eventListSuccess } from "@redux/slices/event/list";
 import { timeslotReject, timeslotRequest, timeslotSuccess } from "@redux/slices/event/timeslots";
 import { EventRequest, EventResponse } from "@type/Event";
 import Requests from "@utils/Requests";
-import { event_timeslot_url, event_url } from "@utils/urls/resources/event";
+import { event_timeslot_url, event_url, events_list_byId } from "@utils/urls/resources/event";
 import { useDispatch } from "react-redux";
 
 export const eventCreateAction = (event: EventRequest) => async(dispatch: ReturnType<typeof useDispatch>) => {
@@ -30,5 +31,20 @@ export const getAvailableTimeSlots = (lawyerId: string, date: string) => async(d
     }
 
     const request = new Requests(event_timeslot_url, null, {lawyerId, date})
+    await request.get(success, error);
+}
+
+export const getUpcomingEvents = (profileId: string) => async(dispatch: ReturnType<typeof useDispatch>) => {
+    dispatch(eventListRequest());
+
+    const success = (data: EventResponse[]) => {
+        dispatch(eventListSuccess(data));
+    }
+
+    const error = (message: string) => {
+        dispatch(eventListReject(message));
+    }
+
+    const request = new Requests(events_list_byId(profileId));
     await request.get(success, error);
 }

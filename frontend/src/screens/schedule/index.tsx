@@ -4,21 +4,30 @@ import CilentScheduleCard from '@components/schedule/CilentScheduleCard';
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { UserType } from "@type/User";
 import ScheduleCard from "./ScheduleCard";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { getUpcomingEvents } from "@actions/eventAction";
+import { isBackendConnected } from "@utils/env-config";
+import { tempGetAllEvents } from "@temporaryActions/tempEventActions";
 
 const Schedule = () => {
-  const userType = new LocalStorageHandler().userType;
+  const localStorageHandler = new LocalStorageHandler();
+  const userType = localStorageHandler.userType;
+  const userId = localStorageHandler.profileId;
 
-  const schedules = [
-    {dateTime: "Feb 15, 2025, 10:30 AM", eventTitle: "Hearing", caseName: "Johnson vs. Apex Corp."},
-    {dateTime: "Feb 15, 2025, 10:30 AM", eventTitle: "Hearing", caseName: "Johnson vs. Apex Corp."},
-    {dateTime: "Feb 15, 2025, 10:30 AM", eventTitle: "Hearing", caseName: "Johnson vs. Apex Corp."},
-    {dateTime: "Feb 15, 2025, 10:30 AM", eventTitle: "Hearing", caseName: "Johnson vs. Apex Corp."},
-  ]
+  const dispatch = useAppDispatch();
+  const { data: schedules } = useAppSelector(state => state.event.list);
+
+  useEffect(() => {
+    if (!userId) return;
+    if (isBackendConnected) dispatch(getUpcomingEvents(userId));
+    else dispatch(tempGetAllEvents());
+  },[userId])
 
   return (
     <Box p="30px">
       <ParentCard title={userType === UserType.CLIENT ? "Schedule" : "Upcoming Events"} display="flex" gap="20px" flexWrap="wrap">
-        {schedules.map(schedule => <CilentScheduleCard {...schedule}/>)}
+        {schedules?.map(schedule => <CilentScheduleCard {...schedule}/>)}
       </ParentCard>
       {userType === UserType.LAWYER && <ScheduleCard />}
     </Box>
