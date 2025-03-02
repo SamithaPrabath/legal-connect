@@ -20,8 +20,8 @@ const CaseOverview = () => {
       <CaseDetailCard
         label="Client"
         title={caseObj?.client?.basicInfo?.firstName + " " + caseObj?.client?.basicInfo?.lastName}
-        detail1={caseObj?.client.contactInfo.phone || ""}
-        detail2={caseObj?.client.contactInfo.email || ""}
+        detail1={caseObj?.client.contactInfo?.phone || ""}
+        detail2={caseObj?.client.contactInfo?.email || ""}
       />
       <CaseDetailCard
         label="Oppostion Party"

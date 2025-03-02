@@ -1,34 +1,33 @@
+import { getEventsByCaseId, getTimeLineEventsByCaseId } from "@actions/eventAction";
 import { border } from "@assets/style/boxStyles";
 import ParentCard from "@components/ParentCard";
 import EventCard from "@components/case/event/EventCard";
 import TimeLineCard from "@components/case/event/TimeLineCard";
 import { Box, Typography } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { tempGetAllEvents, tempGetAllTimeLineEvents } from "@temporaryActions/tempEventActions";
+import { isBackendConnected } from "@utils/env-config";
+import { useEffect } from "react";
 
 const CaseEvents = () => {
-  const events = [
-    {
-      title: "Hearing",
-      date: "Feb 15, 2025, 10:30 AM",
-      description: "Prepare argument summary and attend the court hearing.",
-    },
-    {
-      title: "Document Submission",
-      date: "Feb 15, 2025, 10:30 AM",
-      description: "Prepare argument summary and attend the court hearing.",
-    },
-    {
-      title: "Mediation",
-      date: "Feb 15, 2025, 10:30 AM",
-      description: "Prepare argument summary and attend the court hearing.",
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const { data: caseObj } = useAppSelector(state => state.case.case);
+  const { data: eventList } = useAppSelector(state => state.event.list);
+  const { data: timeLineEventList } = useAppSelector(state => state.event.timelineList);
 
-  const timelineEvents = [
-    { date: "Jan 5, 2025", description: "Case assigned to Sarah Johnson" },
-    { date: "Jan 5, 2025", description: "Case assigned to Sarah Johnson" },
-    { date: "Jan 5, 2025", description: "Case assigned to Sarah Johnson" },
-    { date: "Jan 5, 2025", description: "Case assigned to Sarah Johnson" },
-  ];
+  useEffect(() => {
+    if (!caseObj) return;
+    if (!isBackendConnected) return;
+    dispatch(getEventsByCaseId(caseObj.id));
+    dispatch(getTimeLineEventsByCaseId(caseObj.id));
+  },[caseObj])
+
+  useEffect(() => {
+    if (isBackendConnected) return;
+    dispatch(tempGetAllEvents());
+    dispatch(tempGetAllTimeLineEvents());
+  },[])
+
 
   return (
     <Box
@@ -40,7 +39,7 @@ const CaseEvents = () => {
       height="100%"
     >
       <ParentCard title="Upcoming Events" parentBoxProps={{width:"80%"}}>
-        {events.map((event) => (
+        {eventList?.map((event) => (
           <EventCard {...event} />
         ))}
       </ParentCard>
@@ -48,7 +47,7 @@ const CaseEvents = () => {
         <Typography variant="h4" mb="20px">
           Timeline
         </Typography>
-        {timelineEvents.map((event) => (
+        {timeLineEventList?.map((event) => (
           <TimeLineCard {...event} />
         ))}
       </Box>

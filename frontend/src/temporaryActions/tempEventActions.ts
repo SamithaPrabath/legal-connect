@@ -1,6 +1,7 @@
 import { eventListReject, eventListRequest, eventListSuccess } from "@redux/slices/event/list";
+import { timeLineEventReject, timeLineEventRequest, timeLineEventSuccess } from "@redux/slices/event/timelineEvents";
 import { timeslotReject, timeslotRequest, timeslotSuccess } from "@redux/slices/event/timeslots";
-import { EventResponse } from "@type/Event";
+import { EventResponse, TimeLineEvent } from "@type/Event";
 import Requests from "@utils/Requests";
 import { event_url } from "@utils/urls/resources/event";
 import { getUrl } from "@utils/urls/url-config";
@@ -36,3 +37,18 @@ export const tempGetAllEvents = () => async(dispatch: ReturnType<typeof useDispa
 
     await request.get(success, error);
 }
+
+export const tempGetAllTimeLineEvents = () =>  async (dispatch: ReturnType<typeof useDispatch>) => {
+  dispatch(timeLineEventRequest());
+
+  const success = (data: TimeLineEvent[]) => {
+    dispatch(timeLineEventSuccess(data));
+  };
+
+  const error = (message: string) => {
+    dispatch(timeLineEventReject(message));
+  };
+
+  const request = new Requests(getUrl("timeLineEvents"));
+  await request.get(success, error);
+};

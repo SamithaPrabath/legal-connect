@@ -30,3 +30,8 @@ export const timeSlots = [
     "3.00 PM",
     "4.00 PM",
   ];
+
+export type TimeLineEvent = {
+    date: string;
+    description: string;
+}

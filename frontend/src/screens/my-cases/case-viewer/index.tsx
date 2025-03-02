@@ -4,8 +4,16 @@ import MUIButton from "@components/MUIButton";
 import SectionNavBar, { Section } from "@components/SectionNavBar";
 import SubHeader from "@components/SubHeader";
 import { Box, Typography } from "@mui/material";
-import { useAppDispatch } from "@redux/hooks";
-import { mycases_route, view_case_documents_route, view_case_events_route, view_case_notes_route, view_case_overview_route } from "@utils/context-paths";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { UserType } from "@type/User";
+import {
+  mycases_route,
+  view_case_documents_route,
+  view_case_events_route,
+  view_case_notes_route,
+  view_case_overview_route,
+} from "@utils/context-paths";
+import LocalStorageHandler from "@utils/localStorageHandler";
 import { useEffect } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
@@ -14,21 +22,22 @@ const CaseViewer = () => {
   const params = useParams();
   const caseId = params?.caseId as string;
   const sections: Section[] = [
-    {label: "Overview", contextPath: view_case_overview_route(caseId)},
-    {label: "Events", contextPath: view_case_events_route(caseId)},
-    {label: "Documents", contextPath: view_case_documents_route(caseId)},
-    {label: "Notes", contextPath: view_case_notes_route(caseId)},
-  ]
+    { label: "Overview", contextPath: view_case_overview_route(caseId) },
+    { label: "Events", contextPath: view_case_events_route(caseId) },
+    { label: "Documents", contextPath: view_case_documents_route(caseId) },
+    { label: "Notes", contextPath: view_case_notes_route(caseId) },
+  ];
 
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
+  const userType = new LocalStorageHandler().userType;
+  const { data: caseObj } = useAppSelector((state) => state.case.case);
 
   useEffect(() => {
     if (!caseId) return;
     dispatch(caseByIdAction(caseId));
-  },[caseId])
-
+  }, [caseId]);
 
   console.log(params);
   return (
@@ -42,25 +51,36 @@ const CaseViewer = () => {
         >
           <Box {...flexCenter} gap="15px">
             <Box {...flexCenter} gap="5px">
-              <Typography sx={{cursor:"pointer"}} onClick={() => navigate(mycases_route)}>My Cases</Typography>
+              <Typography
+                sx={{ cursor: "pointer" }}
+                onClick={() => navigate(mycases_route)}
+              >
+                My Cases
+              </Typography>
               <MdKeyboardArrowRight fontSize="24px" />
               <Typography>{params.caseId}</Typography>
             </Box>
-            <Typography variant="h4">Johnson vs. Apex Corp</Typography>
+            <Typography variant="h4">{caseObj?.caseName}</Typography>
           </Box>
           <Box {...flexCenter} gap="10px">
-            <MUIButton variant="outlined" color="secondary" size="small">
-              Update Status
-            </MUIButton>
-            <MUIButton variant="outlined" color="secondary" size="small">
-              Create Event
-            </MUIButton>
+            {userType === UserType.LAWYER && (
+              <>
+                <MUIButton variant="outlined" color="secondary" size="small">
+                  Update Status
+                </MUIButton>
+                <MUIButton variant="outlined" color="secondary" size="small">
+                  Create Event
+                </MUIButton>
+              </>
+            )}
             <MUIButton variant="outlined" color="secondary" size="small">
               Upload Document
             </MUIButton>
           </Box>
         </Box>
-        <Box px="30px" pt="30px"><SectionNavBar sections={sections} /></Box>
+        <Box px="30px" pt="30px">
+          <SectionNavBar sections={sections} />
+        </Box>
       </SubHeader>
 
       <Outlet />

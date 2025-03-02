@@ -6,6 +6,7 @@ import ProfileIDButton from "@components/ProfileIDButton"
 import SubHeader from "@components/SubHeader"
 import { Box, Typography, useTheme } from "@mui/material"
 import { UserInfoResponse } from "@type/User"
+import LocalStorageHandler from "@utils/localStorageHandler"
 
 
 type PropTypes = {
@@ -20,7 +21,7 @@ const ClientProfile = ({userData}:PropTypes) => {
   return (
     <Box>
         <SubHeader py="10px" {...flexCenter} gap="10px">
-            <MUIButton>Edit Profile Info</MUIButton>
+            {userData.id === new LocalStorageHandler().profileId && <MUIButton>Edit Profile Info</MUIButton>}
             <ProfileIDButton profileId="1234"variant={undefined}/>
         </SubHeader>
       <Box py="30px" display="flex" flexDirection="column" gap="30px" maxWidth="800px" margin="auto">

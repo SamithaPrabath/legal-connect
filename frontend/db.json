@@ -83,6 +83,7 @@
   "cases": [
     {
       "id": "d045",
+      "createdDate":"Jan 25, 2025",
       "caseStatus": "await hearing",
       "caseName": "asfadfads",
       "caseNumber": "fadfadf",
@@ -333,5 +334,11 @@
     "2.00 PM",
     "3.00 PM",
     "4.00 PM"
+  ],
+  "timeLineEvents": [
+    { "date": "Jan 5, 2025", "description": "Case assigned to Sarah Johnson" },
+    { "date": "Jan 5, 2025", "description": "Case assigned to Sarah Johnson" },
+    { "date": "Jan 5, 2025", "description": "Case assigned to Sarah Johnson" },
+    { "date": "Jan 5, 2025", "description": "Case assigned to Sarah Johnson" }
   ]
 }
