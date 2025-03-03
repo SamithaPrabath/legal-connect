@@ -6,7 +6,7 @@ import { DocumentRequest, DocumentResponse } from "@type/Document";
 import { documentUploadReject, documentUploadRequest, documentUploadSuccess } from '@redux/slices/document/upload';
 
 export const downloadDocument = async (documentId: string, fileName: string) => {
-    const request = new Requests(`/api/documents/${documentId}`);
+    const request = new Requests(document_byId_url(documentId));
     await request.get<Blob>(
         (data) => {
             const url = window.URL.createObjectURL(new Blob([data]));

@@ -305,16 +305,7 @@
       "lawyerId": "4aa9"
     }
   ],
-  "timeslots": [
-    "8.00 AM",
-    "9.00 AM",
-    "10.00 AM",
-    "12.00 PM",
-    "1.00 PM",
-    "2.00 PM",
-    "3.00 PM",
-    "4.00 PM"
-  ],
+  
   "timeLineEvents": [
     {
       "date": "Jan 5, 2025",
@@ -371,6 +362,91 @@
       "date": "2025-01-15",
       "time": "02:00 PM",
       "note": "Reviewed case documents and prepared for the hearing."
+    }
+  ],
+  "payments": [
+    {
+      "id": "b9e8",
+      "amount": 5000,
+      "clientId": "50dda",
+      "dueDate": "2205-02-05",
+      "invoiceId": "1234",
+      "lawyer": {
+        "id": "4aa9",
+        "type": "lawyer",
+        "status": "Available for Consultation",
+        "password": "12345",
+        "rating": 4.5,
+        "reviewCount": "255",
+        "basicInfo": {
+          "image": null,
+          "firstName": "Thushara",
+          "lastName": "Dilshan",
+          "city": "Dambulla",
+          "language": "English",
+          "location": "Sri Lanka",
+          "occupation": "Lawyer Consultatnt"
+        },
+        "contactInfo": {
+          "email": "lawyer@gmail.com",
+          "address": "No 12, Rathmalgahaela, Dambulla",
+          "phone": "0712345678"
+        },
+        "about": {
+          "bio": "Hi my name is Thushara Dilshan and I'm working as a software engineer",
+          "credentialsAndEducation": "BSc Computer Science\nLaw College Dambulla\nNegambo International School",
+          "practiceAreas": [
+            "front end development",
+            "backend development",
+            "angular",
+            "reactjs"
+          ],
+          "workHistory": "Sample work history\nsample work hsitory\nsample work history"
+        }
+      },
+      "status":"paid",
+      "name": "Client Payment"
+    },{
+      "id": "b9e8",
+      "amount": 5000,
+      "clientId": "50dda",
+      "dueDate": "2205-02-05",
+      "invoiceId": "1234",
+      "lawyer": {
+        "id": "4aa9",
+        "type": "lawyer",
+        "status": "Available for Consultation",
+        "password": "12345",
+        "rating": 4.5,
+        "reviewCount": "255",
+        "basicInfo": {
+          "image": null,
+          "firstName": "Thushara",
+          "lastName": "Dilshan",
+          "city": "Dambulla",
+          "language": "English",
+          "location": "Sri Lanka",
+          "occupation": "Lawyer Consultatnt"
+        },
+        "contactInfo": {
+          "email": "lawyer@gmail.com",
+          "address": "No 12, Rathmalgahaela, Dambulla",
+          "phone": "0712345678"
+        },
+        "about": {
+          "bio": "Hi my name is Thushara Dilshan and I'm working as a software engineer",
+          "credentialsAndEducation": "BSc Computer Science\nLaw College Dambulla\nNegambo International School",
+          "practiceAreas": [
+            "front end development",
+            "backend development",
+            "angular",
+            "reactjs"
+          ],
+          "workHistory": "Sample work history\nsample work hsitory\nsample work history"
+        }
+      },
+      "status":"unpaid",
+      "name": "Client Payment"
     }
   ]
 }

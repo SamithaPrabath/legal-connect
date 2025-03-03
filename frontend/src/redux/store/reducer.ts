@@ -6,6 +6,7 @@ import user from "@redux/slices/user/reducer";
 import { combineReducers } from "@reduxjs/toolkit";
 import document from "@redux/slices/document/reducer";
 import note from "@redux/slices/note/reducer";
+import payment from "@redux/slices/payment/reducer";
 
 const reducer = combineReducers({
     user,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
     event,
     document,
     note,
+    payment
 })
 
 export default reducer;
