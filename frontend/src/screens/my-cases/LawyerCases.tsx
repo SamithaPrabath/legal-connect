@@ -1,3 +1,4 @@
+import { casePageAction } from "@actions/caseActions";
 import FormField from "@components/FormField";
 import MUIButton from "@components/MUIButton";
 import MUITable, { Column } from "@components/MUITable";
@@ -9,19 +10,47 @@ import {
   InputAdornment,
   MenuItem,
   Typography,
-  useTheme
+  useTheme,
 } from "@mui/material";
-import { useAppSelector } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { CaseStatus } from "@type/Case";
 import {
   create_case_route,
   view_case_overview_route,
 } from "@utils/context-paths";
-import { useState } from "react";
+import LocalStorageHandler from "@utils/localStorageHandler";
+import { SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStatusChip } from "./utils";
+import { isBackendConnected } from "@utils/env-config";
+import { tempGetAllCases } from "@temporaryActions/tempCaseActions";
 
 const MyCasesLawyer = () => {
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
+  const [status, setStatus] = useState<CaseStatus | "none">("none");
+  const [name, setName] = useState("");
+
   const { divider } = useTheme().palette;
+
+  const userId = new LocalStorageHandler().profileId;
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!userId) return;
+    if (isBackendConnected) {
+      dispatch(
+        casePageAction(
+          userId,
+          page,
+          pageSize,
+          status === "none" ? undefined : status,
+          name
+        )
+      );
+    }
+    else dispatch(tempGetAllCases());
+  }, [page, pageSize, status, name]);
 
   const navigate = useNavigate();
 
@@ -50,30 +79,40 @@ const MyCasesLawyer = () => {
             justifyContent="space-between"
             px="20px"
           >
-            <SearchBox />
-            <StatusDropdown />
+            <SearchBox name={name} setName={setName} />
+            <StatusDropdown status={status} setStatus={setStatus} />
           </Box>
-          <CaseTable />
+          <CaseTable
+            page={page}
+            setPage={setPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+          />
         </Box>
       </Box>
     </Box>
   );
 };
 
-const SearchBox = () => {
+type SearchBoxProps = {
+  name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const SearchBox = ({ name, setName }: SearchBoxProps) => {
   return (
     <FormField
       label=""
       name=""
       variant="outlined"
       placeholder="Search Box"
+      value={name}
+      handleChange={(_, value) => setName(value || "")}
       fullWidth
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton>
-              <Search fontSize="small" sx={{ cursor: "pointer" }} />
-            </IconButton>
+            <Search fontSize="small" />
           </InputAdornment>
         ),
         style: { fontSize: 14 }, // Adjust text size if needed
@@ -88,16 +127,19 @@ const SearchBox = () => {
   );
 };
 
-const StatusDropdown = () => {
-  const [status, setStatus] = useState<string>("none");
+type StatusDropDownType = {
+  status: CaseStatus | "none";
+  setStatus: React.Dispatch<SetStateAction<CaseStatus | "none">>;
+};
 
+const StatusDropdown = ({ status, setStatus }: StatusDropDownType) => {
   return (
     <MUITextField
       select
       name=""
       placeholder="Status"
       value={status}
-      onChange={(e) => setStatus(e.target.value)}
+      onChange={(e) => setStatus(e.target.value as CaseStatus)}
       variant="outlined"
       sx={{ width: "150px" }}
       InputProps={{
@@ -117,60 +159,14 @@ const StatusDropdown = () => {
       <MenuItem value="none" disabled>
         Status
       </MenuItem>
-      <MenuItem value="active">Active</MenuItem>
-      <MenuItem value="inactive">Inactive</MenuItem>
-      <MenuItem value="pending">Pending</MenuItem>
+      {Object.values(CaseStatus).map((value) => (
+        <MenuItem value={value} sx={{ textTransform: "capitalize" }}>
+          {value}
+        </MenuItem>
+      ))}
     </MUITextField>
   );
 };
-
-// const cases = [
-//   {
-//     id: "CASE-10001",
-//     name: "Johnson vs. Apex Corp.",
-//     client: "Emily Johnson",
-//     type: "Corporate Dispute",
-//     status: CaseStatus.IN_PROGRESS,
-//     event: "Hearing",
-//     deadline: "Feb 15, 2025",
-//   },
-//   {
-//     id: "CASE-10002",
-//     name: "Smith Property Agreement",
-//     client: "Robert Smith",
-//     type: "Real Estate",
-//     status: CaseStatus.ON_HOLD,
-//     event: "Appointment",
-//     deadline: "Feb 10, 2025",
-//   },
-//   {
-//     id: "CASE-10003",
-//     name: "Doe Contract Review",
-//     client: "Jane Doe",
-//     type: "Contract Review",
-//     status: CaseStatus.CLOSED,
-//     event: "N/A",
-//     deadline: "N/A",
-//   },
-//   {
-//     id: "CASE-10004",
-//     name: "Startup Trademark Filing",
-//     client: "Tech Innovations",
-//     type: "Intellectual Property",
-//     status: CaseStatus.IN_PROGRESS,
-//     event: "Filing Deadline",
-//     deadline: "Mar 1, 2025",
-//   },
-//   {
-//     id: "CASE-10005",
-//     name: "Wilson Partnership Dispute",
-//     client: "John Wilson",
-//     type: "Partnership Dispute",
-//     status: CaseStatus.AWAIT_HEARING,
-//     event: "Mediation Session",
-//     deadline: "Jan 30, 2025",
-//   },
-// ];
 
 const tableColumns: Column[] = [
   { id: "id", label: "Case ID" },
@@ -183,18 +179,31 @@ const tableColumns: Column[] = [
   { id: "actions", label: "Actions" },
 ];
 
-const CaseTable = () => {
+type CaseTableProps = {
+  page: number;
+  setPage: React.Dispatch<SetStateAction<number>>;
+  pageSize: number;
+  setPageSize: React.Dispatch<SetStateAction<number>>;
+};
+
+const CaseTable = ({
+  page,
+  pageSize,
+  setPage,
+  setPageSize,
+}: CaseTableProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const { data: casePage }  = useAppSelector(state => state.case.page);
+  const { data: casePage } = useAppSelector((state) => state.case.page);
 
   const data: any[] | undefined = casePage?.data.map((c) => ({
     ...c,
     status: getStatusChip(c.caseStatus, theme),
     event: c.upcomingEvent?.title,
     type: c.caseType,
-    client: c.client?.basicInfo?.firstName + " " + c.client?.basicInfo?.lastName,
+    client:
+      c.client?.basicInfo?.firstName + " " + c.client?.basicInfo?.lastName,
     deadline: c.upcomingEvent?.date,
     actions: (
       <MUIButton
@@ -208,6 +217,16 @@ const CaseTable = () => {
     ),
   }));
 
-  return <MUITable columns={tableColumns} data={data || []} totalElements={casePage?.totalCount || 0} accessType="lawyerCase" />
+  return (
+    <MUITable
+      page={page}
+      rowsPerPage={pageSize}
+      setPage={setPage}
+      setRowsPerPage={setPageSize}
+      columns={tableColumns}
+      data={data || []}
+      totalElements={casePage?.totalCount || 0}
+    />
+  );
 };
 export default MyCasesLawyer;

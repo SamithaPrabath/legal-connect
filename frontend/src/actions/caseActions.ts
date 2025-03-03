@@ -40,7 +40,7 @@ export const caseCreateAction = async (caseForm: CaseRequest) => {
 };
 
 export const casePageAction =
-  (lawyerId: string, page: number, pageSize: number) =>
+  (lawyerId: string, page: number, pageSize: number, status?: CaseStatus, name?:string) =>
   async (dispatch: ReturnType<typeof useDispatch>) => {
     dispatch(casePageRequest());
 
@@ -52,6 +52,8 @@ export const casePageAction =
     const request = new Requests(case_byUserId_url(lawyerId), null, {
       page,
       pageSize,
+      name,
+      status
     });
 
     await request.get(successCallBack, rejectCallBack);

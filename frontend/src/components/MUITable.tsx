@@ -1,4 +1,3 @@
-import { casePageAction } from "@actions/caseActions";
 import {
   Paper,
   Table,
@@ -10,11 +9,6 @@ import {
   TableRow,
   useTheme,
 } from "@mui/material";
-import { useAppDispatch } from "@redux/hooks";
-import { tempGetAllCases } from "@temporaryActions/tempCaseActions";
-import { isBackendConnected } from "@utils/env-config";
-import LocalStorageHandler from "@utils/localStorageHandler";
-import { useEffect, useState } from "react";
 
 export type Column = {
   id: string;
@@ -25,14 +19,13 @@ type PropTypes = {
   columns: Column[];
   data: any[];
   totalElements: number;
-  accessType: "lawyerCase" | "adminLawyer";
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  rowsPerPage: number;
+  setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const MUITable = ({ columns, data, totalElements, accessType }: PropTypes) => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const dispatch = useAppDispatch();
+const MUITable = ({ columns, data, totalElements, page, setPage, rowsPerPage, setRowsPerPage }: PropTypes) => {
 
   const handleChangePage = (
     _: React.MouseEvent<HTMLButtonElement> | null,
@@ -44,17 +37,6 @@ const MUITable = ({ columns, data, totalElements, accessType }: PropTypes) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  useEffect(() => {
-    const userId = new LocalStorageHandler().profileId;
-    if (!userId) return;
-
-    if (accessType === "lawyerCase"){
-      if (isBackendConnected)
-        dispatch(casePageAction(userId, page, rowsPerPage));
-      else dispatch(tempGetAllCases())
-    }
-  }, [page, rowsPerPage]);
 
   const { divider } = useTheme().palette;
 
