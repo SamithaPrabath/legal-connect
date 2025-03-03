@@ -1,36 +1,79 @@
-import ParentCard from "@components/ParentCard"
-import NoteCard from "@components/case/note/NoteCard"
-import MUIButton from "@components/MUIButton"
-import { Box } from "@mui/material"
-import MUIModel from "@components/MUIModal"
-import { useState } from "react"
-import FormField from "@components/FormField"
+import { noteCreateAction, noteListAction } from "@actions/noteActions";
+import NoteCard from "@components/case/note/NoteCard";
+import FormField from "@components/FormField";
+import MUIButton from "@components/MUIButton";
+import MUIModel from "@components/MUIModal";
+import ParentCard from "@components/ParentCard";
+import { Box } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { tempGetAllNotes } from "@temporaryActions/tempNoteActions";
+import { NoteRequest } from "@type/Note";
+import { isBackendConnected } from "@utils/env-config";
+import LocalStorageHandler from "@utils/localStorageHandler";
+import { useEffect, useState } from "react";
 
 const CaseNotes = () => {
   const [noteModal, setNoteModal] = useState(false);
+  const [note, setNote] = useState("");
+
+  const { data: notesList } = useAppSelector((state) => state.note.list);
+  const { success: noteDeleteSuccess } = useAppSelector((state) => state.note.delete);
+  const { data: caseObj } = useAppSelector((state) => state.case.case);
+
+  const dispatch = useAppDispatch();
+
+  const userId = new LocalStorageHandler().profileId;
 
   const handleClose = () => {
     setNoteModal(false);
-  }
+  };
 
   const handleOpen = () => {
     setNoteModal(true);
-  }
+  };
 
   const handleSubmitNote = () => {
+    if (!(userId && caseObj)) return;
 
+    const noteRequest: NoteRequest = {
+      caseId: caseObj.id,
+      date: new Date().toISOString().substring(0, 10),
+      time: new Date().toLocaleTimeString(),
+      note,
+      userId,
+    };
+
+    noteCreateAction(noteRequest);
+    fetchAllNotes();
+    handleClose();
+  };
+
+  const fetchAllNotes = () => {
+    if (!(userId && caseObj)) return;
+    if (isBackendConnected) dispatch(noteListAction(userId, caseObj.id));
+    else dispatch(tempGetAllNotes());
   }
 
-  const notes = [
-    {note: "Reviewed initial case details and documents provided by the client. Identified areas requiring further evidence.", dateTime: "Feb 15, 2025, 10:30 AM"},
-    {note: "Reviewed initial case details and documents provided by the client. Identified areas requiring further evidence.", dateTime: "Feb 15, 2025, 10:30 AM"},
-    {note: "Reviewed initial case details and documents provided by the client. Identified areas requiring further evidence.", dateTime: "Feb 15, 2025, 10:30 AM"},
-  ]
+  useEffect(() => {
+    fetchAllNotes();
+  }, [userId, caseObj, noteDeleteSuccess]);
 
   return (
     <Box p="30px">
-      <ParentCard title="Notes" display="flex" flexDirection="column" gap="10px" sideCompo={<MUIButton color="secondary" size="small" onClick={handleOpen}>Add Notes</MUIButton>}>
-        {notes.map(note => <NoteCard {...note} />)}
+      <ParentCard
+        title="Notes"
+        display="flex"
+        flexDirection="column"
+        gap="10px"
+        sideCompo={
+          <MUIButton color="secondary" size="small" onClick={handleOpen}>
+            Add Notes
+          </MUIButton>
+        }
+      >
+        {notesList?.map((note) => (
+          <NoteCard {...note} />
+        ))}
       </ParentCard>
       <MUIModel
         open={noteModal}
@@ -38,10 +81,18 @@ const CaseNotes = () => {
         onClose={handleClose}
         onClick={handleSubmitNote}
       >
-          <FormField fullWidth label="Description" name="note" multiline rows={5} />
+        <FormField
+          fullWidth
+          label="Description"
+          name="note"
+          multiline
+          rows={5}
+          value={note}
+          handleChange={(_, value) => setNote(value || "")}
+        />
       </MUIModel>
     </Box>
-  )
-}
+  );
+};
 
-export default CaseNotes
+export default CaseNotes;

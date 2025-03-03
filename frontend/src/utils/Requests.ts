@@ -15,21 +15,10 @@ class Requests<ParamType, RequestBodyType> {
         this.requestBody = requestBody || null;
     }
 
-    async get<ResponseType>(successCallBack: (data: ResponseType) => void, errorCallBack: (message: string) => void) {
-        await axios.get(this.url, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}},)
+    async get<ResponseType>(successCallBack?: (data: ResponseType) => void, errorCallBack?: (message: string) => void) {
+        await axios.get(this.url, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}})
         .then(res => {
-            successCallBack(res.data);
-        })
-        .catch(err => {
-            const errorMessage = getAxiosErrorMessage(err) as string;
-            errorCallBack(errorMessage);
-        })
-    }
-
-    async post<ResponseType>(successCallBack?: (data: ResponseType) => void, errorCallBack?: (message: string) => void) {
-        await axios.post(this.url, this.requestBody, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}},)
-        .then(res => {
-           if (successCallBack)  successCallBack(res.data);
+            if (successCallBack) successCallBack(res.data);
         })
         .catch(err => {
             const errorMessage = getAxiosErrorMessage(err) as string;
@@ -37,25 +26,36 @@ class Requests<ParamType, RequestBodyType> {
         })
     }
 
-    async put<ResponseType>(successCallBack: (data: ResponseType) => void, errorCallBack: (message: string) => void) {
-        await axios.put(this.url, this.requestBody, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}},)
+    async post<ResponseType>(successCallBack?: (data: ResponseType) => void, errorCallBack?: (message: string) => void) {
+        await axios.post(this.url, this.requestBody, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}})
         .then(res => {
-            successCallBack(res.data);
+           if (successCallBack) successCallBack(res.data);
         })
         .catch(err => {
             const errorMessage = getAxiosErrorMessage(err) as string;
-            errorCallBack(errorMessage);
+            if (errorCallBack) errorCallBack(errorMessage);
         })
     }
 
-    async delete<ResponseType>(successCallBack: (data: ResponseType) => void, errorCallBack: (message: string) => void) {
-        await axios.delete(this.url, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}},)
+    async put<ResponseType>(successCallBack?: (data: ResponseType) => void, errorCallBack?: (message: string) => void) {
+        await axios.put(this.url, this.requestBody, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}})
         .then(res => {
-            successCallBack(res.data);
+            if (successCallBack) successCallBack(res.data);
         })
         .catch(err => {
             const errorMessage = getAxiosErrorMessage(err) as string;
-            errorCallBack(errorMessage);
+            if (errorCallBack) errorCallBack(errorMessage);
+        })
+    }
+
+    async delete<ResponseType>(successCallBack?: (data: ResponseType) => void, errorCallBack?: (message: string) => void) {
+        await axios.delete(this.url, {params: this.params, headers: {"Authorization": `Bearer ${this.token}`}})
+        .then(res => {
+            if (successCallBack) successCallBack(res.data);
+        })
+        .catch(err => {
+            const errorMessage = getAxiosErrorMessage(err) as string;
+            if (errorCallBack) errorCallBack(errorMessage);
         })
     }
 }

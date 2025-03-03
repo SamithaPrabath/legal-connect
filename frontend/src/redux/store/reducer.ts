@@ -5,6 +5,7 @@ import review from "@redux/slices/review/reducer";
 import user from "@redux/slices/user/reducer";
 import { combineReducers } from "@reduxjs/toolkit";
 import document from "@redux/slices/document/reducer";
+import note from "@redux/slices/note/reducer";
 
 const reducer = combineReducers({
     user,
@@ -13,6 +14,7 @@ const reducer = combineReducers({
     review,
     event,
     document,
+    note,
 })
 
 export default reducer;
