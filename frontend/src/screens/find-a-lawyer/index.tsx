@@ -1,55 +1,30 @@
+import { findLawyerAction } from "@actions/userActions";
 import { flexCenter } from "@assets/style/boxStyles";
 import SearchResultCard from "@components/find-a-lawyer/SearchResultCard";
 import FormField from "@components/FormField";
 import MUIButton from "@components/MUIButton";
 import MUITextField from "@components/MUITextField";
 import { Box, MenuItem, Typography } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { UserStatus } from "@type/User";
 import { useState } from "react";
 
 enum SortOptions {
-  BAST_MATCH = "Best Match"
+  BAST_MATCH = "Best Match",
 }
 
 const FindALawyer = () => {
+  const [location, setLocation] = useState<string>("New York");
+  const [language, setLanguage] = useState<string>("New York");
+  const [caseType, setCaseType] = useState<string>("Corporate Law");
+  const [sortBy, setSortBy] = useState(SortOptions.BAST_MATCH);
 
-  const [selectedLocation, setSelectedLocation]  = useState<string>("New York")
-  const [selectedCaseType, setSelectedCaseType]  = useState<string>("Corporate Law")
+  const dispatch = useAppDispatch();
+  const { data: lawyerList } = useAppSelector((state) => state.user.list);
 
-  const results = [
-    {
-      location: "New York, USA",
-      name: "John Doe",
-      status: UserStatus.AVAILABLE,
-      occupation: "Software Engineer",
-      rating: 4.8,
-      reviewCount: 120
-    },
-    {
-      location: "London, UK",
-      name: "Emily Smith",
-      status: UserStatus.AVAILABLE,
-      occupation: "Graphic Designer",
-      rating: 4.5,
-      reviewCount: 98
-    },
-    {
-      location: "Toronto, Canada",
-      name: "Michael Johnson",
-      status: UserStatus.UNAVAILABLE,
-      occupation: "Data Scientist",
-      rating: 4.7,
-      reviewCount: 85
-    },
-    {
-      location: "Berlin, Germany",
-      name: "Sophia Müller",
-      status: UserStatus.AVAILABLE,
-      occupation: "Marketing Specialist",
-      rating: 3.6,
-      reviewCount: 112
-    },
-  ]
+  const handleSearch = () => {
+    dispatch(findLawyerAction(caseType, language, location, sortBy));
+  };
 
   return (
     <Box height="calc(100dvh - 150px)" bgcolor="white" pt="80px">
@@ -61,43 +36,87 @@ const FindALawyer = () => {
       >
         Find a Laywer
       </Typography>
-      <Box {...flexCenter} alignItems="end" gap="10px" maxWidth="1000px" margin="auto" mb="50px">
-        <FormField boxProps={{mb:0}} fullWidth label="Case Type" name="caseType" />
-        <FormField boxProps={{mb:0}} fullWidth label="Location" name="location" />
-        <FormField boxProps={{mb:0}} fullWidth label="Language" name="language" />
-        <Box width="600px"><MUIButton fullWidth>Search</MUIButton></Box>
+      <Box
+        {...flexCenter}
+        alignItems="end"
+        gap="10px"
+        maxWidth="1000px"
+        margin="auto"
+        mb="50px"
+      >
+        <FormField
+          boxProps={{ mb: 0 }}
+          fullWidth
+          label="Case Type"
+          name="caseType"
+          value={caseType}
+          handleChange={(_, value) => setCaseType(value || "")}
+        />
+        <FormField
+          boxProps={{ mb: 0 }}
+          fullWidth
+          label="Location"
+          name="location"
+          value={location}
+          handleChange={(_, value) => setLocation(value || "")}
+        />
+        <FormField
+          boxProps={{ mb: 0 }}
+          fullWidth
+          label="Language"
+          name="language"
+          value={language}
+          handleChange={(_, value) => setLanguage(value || "")}
+        />
+        <Box width="600px">
+          <MUIButton fullWidth onClick={handleSearch}>Search</MUIButton>
+        </Box>
       </Box>
       <Box {...flexCenter} justifyContent="space-between" px="30px">
-        <Typography variant="h5">{`${selectedLocation} has ${results.length} ${selectedCaseType} Attorneys`}</Typography>
+        <Typography variant="h5">{`${location} has ${lawyerList?.length || 0} ${caseType} Attorneys`}</Typography>
         <Box {...flexCenter} gap="10px">
-          <Typography variant="h5">Sort By </Typography><SortOptionDropdown />
+          <Typography variant="h5">Sort By </Typography>
+          <SortOptionDropdown sortBy={sortBy} setSortBy={setSortBy} />
         </Box>
       </Box>
       <Box py="10px" px="30px" display="flex" flexDirection="column" gap="20px">
-        {results.map(result => <SearchResultCard {...result} />)}
+        {lawyerList?.map((result) => (
+          <SearchResultCard
+            location={result.basicInfo.location}
+            name={result.basicInfo.firstName + " " + result.basicInfo.lastName}
+            occupation={result.basicInfo.occupation}
+            rating={result.rating || 0}
+            reviewCount={result.reviewCount || 0}
+            status={result.status as UserStatus}
+            image={result.basicInfo.image || ""}
+          />
+        ))}
       </Box>
     </Box>
   );
 };
 
-const SortOptionDropdown = () => {
-  const [value, setValue] = useState(SortOptions.BAST_MATCH);
+
+
+interface SortOptionDropdownProps {
+  sortBy: SortOptions;
+  setSortBy: (value: SortOptions) => void;
+}
+
+const SortOptionDropdown: React.FC<SortOptionDropdownProps> = ({ sortBy, setSortBy }) => {
   return (
     <MUITextField
       select
       name=""
-      value={value}
-      onChange={(e) => setValue(e.target.value as SortOptions)}
+      value={sortBy}
+      onChange={(e) => setSortBy(e.target.value as SortOptions)}
       variant="outlined"
       sx={{ width: "150px" }}
       defaultValue={SortOptions.BAST_MATCH}
     >
-      <MenuItem value={SortOptions.BAST_MATCH}>
-        Best Match
-      </MenuItem>
+      <MenuItem value={SortOptions.BAST_MATCH}>Best Match</MenuItem>
     </MUITextField>
   );
 };
-
 
 export default FindALawyer;

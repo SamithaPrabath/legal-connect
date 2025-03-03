@@ -5,7 +5,7 @@ import RatingCard from "@components/lawyer/RatingCard";
 import MUIButton from "@components/MUIButton";
 import StatusBox from "@components/StatusBox";
 import { LocationOn, Work } from "@mui/icons-material";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { UserStatus } from "@type/User";
 
 type PropTypes = {
@@ -65,7 +65,5 @@ const SearchResultCard = ({
     </Box>
   );
 };
-
-
 
 export default SearchResultCard;

@@ -6,7 +6,7 @@ import {
 import { userReject, userRequest, userSuccess } from "@redux/slices/user/user";
 import { UserInfoResponse } from "@type/User";
 import Requests from "@utils/Requests";
-import { user_list_url, user_url } from "@utils/urls/resources/user";
+import { find_lawyer_url, user_list_url, user_url } from "@utils/urls/resources/user";
 import { useDispatch } from "react-redux";
 
 export const getUserByProfileId =
@@ -60,3 +60,19 @@ export const userSearchAction =
 
     await request.get(successCallback, errorCallback);
   };
+
+export const findLawyerAction = (caseType: string, language: string, location: string, sortBy: string) => async(dispatch: ReturnType<typeof useDispatch>) => {
+  dispatch(userListRequest());
+
+  const successCallback = (data: UserInfoResponse[]) => {
+    dispatch(userListSuccess(data));
+  };
+
+  const errorCallback = (err: string) => {
+    dispatch(userListReject(err));
+  };
+
+  const request = new Requests(find_lawyer_url, null, { caseType, language, location, sortBy });
+
+  await request.get(successCallback, errorCallback);
+}
