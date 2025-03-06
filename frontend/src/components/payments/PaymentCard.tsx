@@ -11,20 +11,28 @@ import LocalStorageHandler from "@utils/localStorageHandler";
 import { useLocation } from "react-router-dom";
 import {
   downloadPaymentInvoice,
-  paymentCheckoutAction,
   paymentDeleteAction,
-  paymentListAction,
+  paymentListAction
 } from "../../actions/paymentActions";
 
+type PropTypes = {
+  payment: PaymentResponse;
+  handleOpenGateway: (payment: PaymentResponse) => void
+}
+
 const PaymentCard = ({
-  amount,
-  dueDate,
-  invoiceId,
-  lawyer,
-  name,
-  id,
-  status,
-}: PaymentResponse) => {
+  payment,
+  handleOpenGateway
+}: PropTypes) => {
+
+  const { amount,
+    dueDate,
+    invoiceId,
+    lawyer,
+    name,
+    id,
+    status } = payment;
+
   const { pathname } = useLocation();
 
   const localStorageHandler = new LocalStorageHandler();
@@ -40,11 +48,6 @@ const PaymentCard = ({
 
   const handleDownloadInvoice = () => {
     downloadPaymentInvoice(id);
-    refreshPaymentList();
-  };
-
-  const handleCheckout = () => {
-    paymentCheckoutAction(id);
     refreshPaymentList();
   };
 
@@ -84,7 +87,7 @@ const PaymentCard = ({
             <MUIButton
               fullWidth
               size="small"
-              onClick={handleCheckout}
+              onClick={() => handleOpenGateway(payment)}
               sx={{ width: "170px" }}
             >
               Pay Now

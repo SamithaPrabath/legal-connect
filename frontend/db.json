@@ -49,7 +49,7 @@
     {
       "id": "4aa9",
       "type": "lawyer",
-      "lawyerStatus":"Pending",
+      "lawyerStatus": "Pending",
       "status": "Available for Consultation",
       "password": "12345",
       "rating": 4.5,
@@ -306,7 +306,6 @@
       "lawyerId": "4aa9"
     }
   ],
-  
   "timeLineEvents": [
     {
       "date": "Jan 5, 2025",
@@ -367,6 +366,9 @@
   ],
   "payments": [
     {
+      "id": "b9e8"
+    },
+    {
       "id": "b9e8",
       "amount": 5000,
       "clientId": "50dda",
@@ -405,48 +407,7 @@
           "workHistory": "Sample work history\nsample work hsitory\nsample work history"
         }
       },
-      "status":"paid",
-      "name": "Client Payment"
-    },{
-      "id": "b9e8",
-      "amount": 5000,
-      "clientId": "50dda",
-      "dueDate": "2205-02-05",
-      "invoiceId": "1234",
-      "lawyer": {
-        "id": "4aa9",
-        "type": "lawyer",
-        "status": "Available for Consultation",
-        "password": "12345",
-        "rating": 4.5,
-        "reviewCount": "255",
-        "basicInfo": {
-          "image": null,
-          "firstName": "Thushara",
-          "lastName": "Dilshan",
-          "city": "Dambulla",
-          "language": "English",
-          "location": "Sri Lanka",
-          "occupation": "Lawyer Consultatnt"
-        },
-        "contactInfo": {
-          "email": "lawyer@gmail.com",
-          "address": "No 12, Rathmalgahaela, Dambulla",
-          "phone": "0712345678"
-        },
-        "about": {
-          "bio": "Hi my name is Thushara Dilshan and I'm working as a software engineer",
-          "credentialsAndEducation": "BSc Computer Science\nLaw College Dambulla\nNegambo International School",
-          "practiceAreas": [
-            "front end development",
-            "backend development",
-            "angular",
-            "reactjs"
-          ],
-          "workHistory": "Sample work history\nsample work hsitory\nsample work history"
-        }
-      },
-      "status":"unpaid",
+      "status": "unpaid",
       "name": "Client Payment"
     }
   ]
