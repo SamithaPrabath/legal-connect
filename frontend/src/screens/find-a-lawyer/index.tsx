@@ -82,6 +82,7 @@ const FindALawyer = () => {
       <Box py="10px" px="30px" display="flex" flexDirection="column" gap="20px">
         {lawyerList?.map((result) => (
           <SearchResultCard
+            id={result.id}
             location={result.basicInfo.location}
             name={result.basicInfo.firstName + " " + result.basicInfo.lastName}
             occupation={result.basicInfo.occupation}

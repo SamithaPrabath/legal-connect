@@ -7,8 +7,15 @@ import StatusBox from "@components/StatusBox";
 import { LocationOn, Work } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { UserStatus } from "@type/User";
+import {
+  message_with_user_rotue,
+  profile_about_route,
+  schedule_appointment_route,
+} from "@utils/context-paths";
+import { useNavigate } from "react-router-dom";
 
 type PropTypes = {
+  id: string;
   image?: string;
   name: string;
   status: UserStatus;
@@ -19,6 +26,7 @@ type PropTypes = {
 };
 
 const SearchResultCard = ({
+  id,
   image,
   location,
   name,
@@ -27,6 +35,8 @@ const SearchResultCard = ({
   rating,
   reviewCount,
 }: PropTypes) => {
+  const navigate = useNavigate();
+
   return (
     <Box
       {...border}
@@ -52,13 +62,27 @@ const SearchResultCard = ({
         </Box>
       </Box>
       <Box display="flex" flexDirection="column" gap="10px" minWidth="200px">
-        <MUIButton fullWidth color="secondary">
+        <MUIButton
+          fullWidth
+          color="secondary"
+          onClick={() => navigate(schedule_appointment_route(id))}
+        >
           Schedule a Meeting
         </MUIButton>
-        <MUIButton fullWidth variant="outlined" color="secondary">
+        <MUIButton
+          fullWidth
+          variant="outlined"
+          color="secondary"
+          onClick={() => navigate(message_with_user_rotue(id))}
+        >
           Send Message
         </MUIButton>
-        <MUIButton fullWidth variant="outlined" color="secondary">
+        <MUIButton
+          fullWidth
+          variant="outlined"
+          color="secondary"
+          onClick={() => navigate(profile_about_route(id))}
+        >
           View Profile
         </MUIButton>
       </Box>
