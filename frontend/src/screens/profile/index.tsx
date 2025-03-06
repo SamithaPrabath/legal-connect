@@ -33,7 +33,7 @@ const Profile = () => {
     if (!profileId) return;
     if (pathname === profile_route(profileId) && profile?.type === UserType.LAWYER)
       navigate(profile_about_route(profileId));
-  });
+  },[profileId]);
 
   if (!profile) return null;
   else if (profile.type === UserType.LAWYER)

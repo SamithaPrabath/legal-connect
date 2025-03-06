@@ -11,13 +11,19 @@ import { Language, LocationOn, Work } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { UserInfoResponse, UserType } from "@type/User";
 import {
+  create_account_route,
   message_with_user_rotue,
   profile_about_route,
   profile_reviews_route,
   schedule_appointment_route,
 } from "@utils/context-paths";
 import LocalStorageHandler from "@utils/localStorageHandler";
+import Requests from "@utils/Requests";
+import { verify_lawyer_url } from "@utils/urls/resources/user";
 import { Outlet, useNavigate } from "react-router-dom";
+import { deny_lawyer_url } from '../../utils/urls/resources/user';
+import { useAppDispatch } from "@redux/hooks";
+import { updateUserAbout, updateUserBasicInfo, updateUserContactInfo, updateUserType } from "@redux/slices/user/form";
 
 type PropTypes = {
   userData: UserInfoResponse;
@@ -25,6 +31,7 @@ type PropTypes = {
 
 const LawyerProfile = ({ userData }: PropTypes) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { id, basicInfo, rating, reviewCount } = userData;
 
   const localStorageHandler = new LocalStorageHandler();
@@ -41,6 +48,25 @@ const LawyerProfile = ({ userData }: PropTypes) => {
     { label: "About", contextPath: profile_about_route(id) },
     { label: "Reviews", contextPath: profile_reviews_route(id) },
   ];
+
+  const verifyLawyer = async() => {
+      const request = new Requests(verify_lawyer_url(id))
+      await request.put();
+  }
+
+  const denyLawyer = async() => {
+    const request = new Requests(deny_lawyer_url(id));
+    await request.put();
+  }
+
+  const editLawyer = () => {
+    dispatch(updateUserType(userData.type));
+    if (userData.about) dispatch(updateUserAbout(userData.about));
+    dispatch(updateUserBasicInfo(userData.basicInfo))
+    dispatch(updateUserContactInfo(userData.contactInfo));
+
+    navigate(create_account_route(id))
+  }
 
   return (
     <Box
@@ -82,7 +108,7 @@ const LawyerProfile = ({ userData }: PropTypes) => {
         />
         <Box {...flexCenter} flexDirection="column" gap="10px" width="100%">
           {isThisUsersAccount && (
-            <MUIButton fullWidth>Edit Profile Info</MUIButton>
+            <MUIButton onClick={editLawyer} fullWidth>Edit Profile Info</MUIButton>
           )}
           {isClientViewing && (
             <MUIButton
@@ -100,9 +126,9 @@ const LawyerProfile = ({ userData }: PropTypes) => {
             </MUIButton>
           )}
 
-          {isAdminViewing && <MUIButton fullWidth>Verfiy Lawyer</MUIButton>}
+          {isAdminViewing && <MUIButton onClick={verifyLawyer} fullWidth>Verfiy Lawyer</MUIButton>}
           {isAdminViewing && (
-            <MUIButton variant="outlined" color="secondary" fullWidth>
+            <MUIButton onClick={denyLawyer} variant="outlined" color="secondary" fullWidth>
               Deny Lawyer
             </MUIButton>
           )}

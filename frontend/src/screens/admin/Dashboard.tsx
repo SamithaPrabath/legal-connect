@@ -7,8 +7,10 @@ import { Box, useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { getStatusChip } from "@screens/my-cases/utils";
 import { tempUserListAction } from "@temporaryActions/tempUserActions";
-import { profile_route } from "@utils/context-paths";
+import { UserType } from "@type/User";
+import { profile_about_route } from "@utils/context-paths";
 import { isBackendConnected } from "@utils/env-config";
+import LocalStorageHandler from "@utils/localStorageHandler";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +18,8 @@ const AdminDashboard = () => {
   const [searchKey, setSearchKey] = useState<string>("");
   const [page, setPage] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(5);
+
+  const theme = useTheme()
 
   const tableColumns: Column[] = [
     { id: "id", label: "Profile ID" },
@@ -25,27 +29,36 @@ const AdminDashboard = () => {
     { id: "language", label: "Language" },
     { id: "status", label: "Status" },
     { id: "actions", label: "Actions" },
-  ];
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const lawyerPage = useAppSelector((state) => state.user.page.data);
-  const userList = useAppSelector(state => state.user.list);
+];
+const navigate = useNavigate();
+const dispatch = useAppDispatch();
+const lawyerPage = useAppSelector((state) => state.user.page.data);
+const userList = useAppSelector(state => state.user.list);
 
-  const lawyerList = isBackendConnected ? lawyerPage?.data : userList.data
 
-  const data = lawyerList?.map(lawyer => ({
+if (new LocalStorageHandler().userType !== UserType.ADMIN) return null;
+
+useEffect(() => {
+  if (isBackendConnected)
+      dispatch(lawyerPageAction(searchKey, page, pageSize));
+  else dispatch(tempUserListAction());
+}, [searchKey, page, pageSize]);
+
+const lawyerList = isBackendConnected ? lawyerPage?.data : userList.data
+
+const data = lawyerList?.map(lawyer => ({
     id: lawyer.id,
     name: `${lawyer.basicInfo.firstName} ${lawyer.basicInfo.lastName}`,
     occupation: lawyer.basicInfo.occupation,
     location: lawyer.basicInfo.location,
     language: lawyer.basicInfo.language,
-    status: lawyer.lawyerStatus && getStatusChip(lawyer.lawyerStatus, useTheme()),
+    status: lawyer.lawyerStatus && getStatusChip(lawyer.lawyerStatus, theme),
     actions: (
         <MUIButton
           variant="outlined"
           size="small"
           color="secondary"
-          onClick={() => navigate(profile_route(lawyer.id))}
+          onClick={() => navigate(profile_about_route(lawyer.id))}
         >
           View
         </MUIButton>
@@ -53,11 +66,6 @@ const AdminDashboard = () => {
 
   }))
 
-  useEffect(() => {
-    if (isBackendConnected)
-        dispatch(lawyerPageAction(searchKey, page, pageSize));
-    else dispatch(tempUserListAction());
-  }, [searchKey, page, pageSize]);
 
   return (
     <Box p="30px">

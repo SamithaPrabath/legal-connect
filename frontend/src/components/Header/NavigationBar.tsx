@@ -8,6 +8,9 @@ const NavigationBar = () => {
 
   const userType = new LocalStorageHandler().userType
 
+
+  if (userType === UserType.ADMIN) return null;
+
   const elements: NavElementType[] = [
     { name: "My Cases", contextPath: mycases_route,},
     { name: "Schedule", contextPath: schedule_route},
@@ -16,7 +19,7 @@ const NavigationBar = () => {
   ]
   return (
     <Box display="flex" gap="20px">
-      {elements.map(props => <NavElement {...props} />)}
+      {elements.map((props, key) => <NavElement key={key} {...props} />)}
     </Box>
   )
 }

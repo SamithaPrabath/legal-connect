@@ -51,18 +51,18 @@ const MUITable = ({ columns, data, totalElements, page, setPage, rowsPerPage, se
       <Table>
         <TableHead sx={{ backgroundColor: "#f1f5f9" }}>
           <TableRow sx={{ borderTop: tableCellProps.sx.borderBottom }}>
-            {columns.map((column) => (
-              <TableCell {...tableCellProps}>{column.label}</TableCell>
+            {columns.map((column, key) => (
+              <TableCell key={key} {...tableCellProps}>{column.label}</TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((c, index) => (
             <TableRow key={c.id}>
-              {columns.map((column) => {
+              {columns.map((column, colKey) => {
                 const isLastElement = index === data.length - 1;
                 return (
-                  <TableCell {...(!isLastElement && tableCellProps)}>
+                  <TableCell key={colKey} {...(!isLastElement && tableCellProps)}>
                     {c[column.id]}
                   </TableCell>
                 );

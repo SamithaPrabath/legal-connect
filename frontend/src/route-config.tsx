@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       { path: admin_dashboard_route, element:<AdminDashboard />},
       { path: message_route, element: <Messages />, children: [{path: message_with_user_rotue(null), element: <MessageBox />}] },
       {
-        path: create_account_route,
+        path: create_account_route(null),
         element: <CreateAccount />,
       },
       {

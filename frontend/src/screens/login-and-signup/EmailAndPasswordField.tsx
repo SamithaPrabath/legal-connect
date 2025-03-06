@@ -48,7 +48,7 @@ const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
         }
         dispatch(updateUserAbout(about))
       }
-      navigate(create_account_route)
+      navigate(create_account_route(null))
     }
     else {
       if (isBackendConnected){

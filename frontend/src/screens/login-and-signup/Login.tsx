@@ -28,6 +28,8 @@ const Login = () => {
 
         localStrorageHandler.setAll(auth.data.token, auth.data.userType, auth.data.profileId)
 
+        console.log("hello dears")
+
         if (auth.data.userType !== UserType.ADMIN) navigate(mycases_route)
         else navigate(admin_dashboard_route);
       };

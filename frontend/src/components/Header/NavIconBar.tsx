@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 import { authReset } from "@redux/slices/portal/auth";
-import { login_signup_route, message_route, profile_route } from "@utils/context-paths";
+import { login_signup_route, message_route, profile_about_route } from "@utils/context-paths";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -29,12 +29,12 @@ const NavIconBar = () => {
 
   const navigateToProfile = () => {
     const profileId = localStorageHandler.profileId;
-    navigate(profile_route(profileId))
+    navigate(profile_about_route(profileId))
   }
 
   const iconButtons: NavIconType[] = [
     {
-      key: 1,
+      index: 1,
       Icon: Mail,
       isActive: location.pathname.startsWith(message_route),
       onClick: () => {
@@ -42,9 +42,9 @@ const NavIconBar = () => {
       },
       fontSize: "small",
     },
-    { key: 2, Icon: Notifications, isActive: false, onClick: () => {} },
+    { index: 2, Icon: Notifications, isActive: false, onClick: () => {} },
     {
-      key: 3,
+      index: 3,
       Icon: AccountCircle,
       isActive: false,
       onClick: () => {},
@@ -56,15 +56,15 @@ const NavIconBar = () => {
   ];
   return (
     <Box>
-      {iconButtons.map((props) => (
-        <NavIcon {...props} />
+      {iconButtons.map((props, i) => (
+        <NavIcon key={i} {...props} />
       ))}
     </Box>
   );
 };
 
 type NavIconType = {
-  key: number;
+  index: number;
   Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
   isActive: boolean;
   onClick: () => void;
@@ -79,7 +79,7 @@ type NavMenuType = {
 };
 
 const NavIcon = ({
-  key,
+  index: key,
   Icon,
   isActive,
   onClick,
@@ -124,8 +124,9 @@ const NavIcon = ({
             "aria-labelledby": `${key}-nav-icon-button`,
           }}
         >
-          {menu.map((menuItem) => (
+          {menu.map((menuItem, i) => (
             <MenuItem
+            key={i}
               onClick={() => {
                 menuItem.onClick();
                 handleClose();

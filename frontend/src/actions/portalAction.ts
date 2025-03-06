@@ -13,7 +13,7 @@ import store from "@redux/store/store";
 import { UserInfoResponse } from "@type/User";
 import Requests, { getAxiosErrorMessage } from "@utils/Requests";
 import { token_url } from "@utils/urls/resources/portal";
-import { user_url } from "@utils/urls/resources/user";
+import { user_id_url, user_url } from "@utils/urls/resources/user";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 
@@ -44,7 +44,22 @@ export const signupAction =
     const userForm = getState().user.form;
     const request = new Requests(user_url, userForm);
     dispatch(signupRequest());
-    request.post<UserInfoResponse>(
+    await request.post<UserInfoResponse>(
+      (data: UserInfoResponse) => dispatch(signUpSuccess(data)),
+      (message) => dispatch(signUpReject(message))
+    );
+  };
+
+export const updateUserAction =
+  (id: string) =>
+  async (
+    dispatch: ReturnType<typeof useDispatch>,
+    getState: () => ReturnType<typeof store.getState>
+  ) => {
+    const userForm = getState().user.form;
+    const request = new Requests(user_id_url(id), userForm);
+    dispatch(signupRequest());
+    await request.put(
       (data: UserInfoResponse) => dispatch(signUpSuccess(data)),
       (message) => dispatch(signUpReject(message))
     );
