@@ -1,5 +1,5 @@
 import { border } from "@assets/style/boxStyles";
-import { Box, BoxProps, Typography } from "@mui/material";
+import { Box, BoxProps, Typography, TypographyProps } from "@mui/material";
 import { ReactNode } from "react";
 
 type PropTypes = {
@@ -8,9 +8,10 @@ type PropTypes = {
   sideCompo?: ReactNode;
   parentBoxProps?: BoxProps
   titleVariant?: "h2" | "h3" | "h4"
+  titleProps?: TypographyProps
 } & BoxProps;
 
-const ParentCard = ({ children, title, sideCompo, parentBoxProps, titleVariant, ...rest }: PropTypes) => {
+const ParentCard = ({ children, title, sideCompo, parentBoxProps, titleVariant, titleProps, ...rest }: PropTypes) => {
   return (
     <Box bgcolor="white" {...border} px="30px" py="20px" {...parentBoxProps} >
       <Box
@@ -19,7 +20,7 @@ const ParentCard = ({ children, title, sideCompo, parentBoxProps, titleVariant, 
         justifyContent="space-between"
         mb="30px"
       >
-        <Typography variant={titleVariant || "h2"}>{title}</Typography>
+        <Typography variant={titleVariant || "h2"} {...titleProps}>{title}</Typography>
         {sideCompo}
       </Box>
       <Box {...rest}>

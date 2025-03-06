@@ -49,6 +49,7 @@
     {
       "id": "4aa9",
       "type": "lawyer",
+      "lawyerStatus":"Pending",
       "status": "Available for Consultation",
       "password": "12345",
       "rating": 4.5,

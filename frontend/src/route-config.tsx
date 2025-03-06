@@ -1,4 +1,5 @@
 import ScheduleAppointment from "@components/schedule/ScheduleAppointment";
+import AdminDashboard from "@screens/admin/Dashboard";
 import CreateAccount from "@screens/create-account";
 import FindALawyer from "@screens/find-a-lawyer";
 import Home from "@screens/home";
@@ -20,6 +21,7 @@ import LawyerProfileAbout from "@screens/profile/LawyerProfileAbout";
 import LawyerProfileReviews from "@screens/profile/LawyerProfileReviews";
 import Schedule from "@screens/schedule";
 import {
+  admin_dashboard_route,
   create_account_route,
   create_case_route,
   findalawyer_route,
@@ -52,6 +54,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home />,
     children: [
+      { path: admin_dashboard_route, element:<AdminDashboard />},
       { path: message_route, element: <Messages />, children: [{path: message_with_user_rotue(null), element: <MessageBox />}] },
       {
         path: create_account_route,

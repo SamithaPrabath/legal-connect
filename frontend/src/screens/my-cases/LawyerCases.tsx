@@ -1,9 +1,9 @@
 import { casePageAction } from "@actions/caseActions";
-import FormField from "@components/FormField";
 import MUIButton from "@components/MUIButton";
 import MUITable, { Column } from "@components/MUITable";
 import MUITextField from "@components/MUITextField";
-import { Clear, Search } from "@mui/icons-material";
+import SearchBox from "@components/SearchBox";
+import { Clear } from "@mui/icons-material";
 import {
   Box,
   IconButton,
@@ -13,17 +13,17 @@ import {
   useTheme,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { tempGetAllCases } from "@temporaryActions/tempCaseActions";
 import { CaseStatus } from "@type/Case";
 import {
   create_case_route,
   view_case_overview_route,
 } from "@utils/context-paths";
+import { isBackendConnected } from "@utils/env-config";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { SetStateAction, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getStatusChip } from "./utils";
-import { isBackendConnected } from "@utils/env-config";
-import { tempGetAllCases } from "@temporaryActions/tempCaseActions";
 
 const MyCasesLawyer = () => {
   const [page, setPage] = useState(0);
@@ -91,39 +91,6 @@ const MyCasesLawyer = () => {
         </Box>
       </Box>
     </Box>
-  );
-};
-
-type SearchBoxProps = {
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-};
-
-const SearchBox = ({ name, setName }: SearchBoxProps) => {
-  return (
-    <FormField
-      label=""
-      name=""
-      variant="outlined"
-      placeholder="Search Box"
-      value={name}
-      handleChange={(_, value) => setName(value || "")}
-      fullWidth
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <Search fontSize="small" />
-          </InputAdornment>
-        ),
-        style: { fontSize: 14 }, // Adjust text size if needed
-      }}
-      sx={{
-        width: 300, // Adjust width
-        "& .MuiOutlinedInput-root": {
-          borderRadius: "8px", // Rounded corners
-        },
-      }}
-    />
   );
 };
 

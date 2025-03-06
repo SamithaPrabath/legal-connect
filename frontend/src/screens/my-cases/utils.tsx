@@ -1,13 +1,14 @@
 import { Box, darken, lighten, Theme, Typography } from "@mui/material";
 import { CaseStatus } from "@type/Case";
+import { LawyerStatus } from "@type/User";
 
-export const getStatusChip = (status: CaseStatus, theme: Theme) => {
-    const { primary, warning, text } = theme.palette;
+export const getStatusChip = (status: CaseStatus | LawyerStatus, theme: Theme) => {
+    const { primary, warning, text, error } = theme.palette;
     let color = "#000";
-    if (status === CaseStatus.IN_PROGRESS) color = primary.main;
-    if (status === CaseStatus.ON_HOLD) color = warning.main;
+    if (status === CaseStatus.IN_PROGRESS || status === LawyerStatus.VERIFIED) color = primary.main;
+    if (status === CaseStatus.ON_HOLD || status === CaseStatus.AWAIT_HEARING || status === LawyerStatus.PENDING ) color = warning.main;
     if (status === CaseStatus.CLOSED) color = text.secondary;
-    if (status === CaseStatus.AWAIT_HEARING) color = warning.main;
+    if (status === LawyerStatus.DENIED) color = error.main
 
     return (
       <Box

@@ -3,10 +3,20 @@ import {
   userListRequest,
   userListSuccess,
 } from "@redux/slices/user/list";
+import {
+  userPageReject,
+  userPageRequest,
+  userPageSuccess,
+} from "@redux/slices/user/page";
 import { userReject, userRequest, userSuccess } from "@redux/slices/user/user";
-import { UserInfoResponse } from "@type/User";
+import { PageType } from "@type/Page";
+import { UserInfoResponse, UserType } from "@type/User";
 import Requests from "@utils/Requests";
-import { find_lawyer_url, user_list_url, user_url } from "@utils/urls/resources/user";
+import {
+  find_lawyer_url,
+  user_list_url,
+  user_url,
+} from "@utils/urls/resources/user";
 import { useDispatch } from "react-redux";
 
 export const getUserByProfileId =
@@ -61,18 +71,47 @@ export const userSearchAction =
     await request.get(successCallback, errorCallback);
   };
 
-export const findLawyerAction = (caseType: string, language: string, location: string, sortBy: string) => async(dispatch: ReturnType<typeof useDispatch>) => {
-  dispatch(userListRequest());
+export const findLawyerAction =
+  (caseType: string, language: string, location: string, sortBy: string) =>
+  async (dispatch: ReturnType<typeof useDispatch>) => {
+    dispatch(userListRequest());
 
-  const successCallback = (data: UserInfoResponse[]) => {
-    dispatch(userListSuccess(data));
+    const successCallback = (data: UserInfoResponse[]) => {
+      dispatch(userListSuccess(data));
+    };
+
+    const errorCallback = (err: string) => {
+      dispatch(userListReject(err));
+    };
+
+    const request = new Requests(find_lawyer_url, null, {
+      caseType,
+      language,
+      location,
+      sortBy,
+    });
+
+    await request.get(successCallback, errorCallback);
   };
 
-  const errorCallback = (err: string) => {
-    dispatch(userListReject(err));
+export const lawyerPageAction =
+  (key: string, page: number, pageSize: number) =>
+  async (dispatch: ReturnType<typeof useDispatch>) => {
+    dispatch(userPageRequest());
+
+    const success = (data: PageType<UserInfoResponse>) => {
+      dispatch(userPageSuccess(data));
+    };
+
+    const error = (message: string) => {
+      dispatch(userPageReject(message));
+    };
+
+    const request = new Requests(user_url, null, {
+      userType: UserType.LAWYER,
+      key,
+      page,
+      pageSize,
+    });
+    await request.get(success, error);
   };
-
-  const request = new Requests(find_lawyer_url, null, { caseType, language, location, sortBy });
-
-  await request.get(successCallback, errorCallback);
-}

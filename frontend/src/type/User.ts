@@ -55,9 +55,16 @@ export type UserInfoRequest = {
   about: AboutInfo | null;
 };
 
+export enum LawyerStatus {
+  PENDING = "Pending",
+  VERIFIED = "Verified",
+  DENIED = "Denied",
+}
+
 export type UserInfoResponse = {
   id: string;
   status?: UserStatus;
+  lawyerStatus?: LawyerStatus;
   reviewCount?: number;
   rating?: number;
   type: UserType;
