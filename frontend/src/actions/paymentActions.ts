@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 export const paymentListAction = (userId: string) => async (dispatch: ReturnType<typeof useDispatch>) => {
     dispatch(paymentListRequest());
 
-    const request = new Requests(payment_url, null, {userId})
+    const request = new Requests(payment_byId_url(userId))
 
     const success = (data: PaymentResponse[]) => {
         dispatch(paymentListSuccess(data))
