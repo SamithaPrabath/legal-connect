@@ -15,7 +15,8 @@ import { PageType } from "@type/Page";
 import Requests from "@utils/Requests";
 import {
     case_byId_url,
-    case_byUserId_url,
+    case_byUserId_url as case_listByUserId_url,
+    case_pageByLawyerId_url,
     case_type_url,
     case_url,
 } from "@utils/urls/resources/case";
@@ -49,7 +50,7 @@ export const casePageAction =
     const rejectCallBack = (message: string) =>
       dispatch(casePageReject(message));
 
-    const request = new Requests(case_byUserId_url(lawyerId), null, {
+    const request = new Requests(case_pageByLawyerId_url(lawyerId), null, {
       page,
       pageSize,
       name,
@@ -67,7 +68,7 @@ export const caseListAction = (profileId: string) => async (dispatch: ReturnType
         const rejectCallBack = (message: string) =>
           dispatch(caseListReject(message));
     
-        const request = new Requests(case_byUserId_url(profileId));
+        const request = new Requests(case_listByUserId_url(profileId));
     
         await request.get(successCallBack, rejectCallBack);
 }

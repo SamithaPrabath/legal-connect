@@ -37,6 +37,7 @@ export type CaseRequest = {
 
 export type CaseResponse = {
     id: string;
+    caseNumber: string;
     caseName: string;
     client: UserInfoResponse
     lawyer: UserInfoResponse
