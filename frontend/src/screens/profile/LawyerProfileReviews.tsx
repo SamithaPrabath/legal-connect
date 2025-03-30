@@ -51,7 +51,7 @@ const LawyerProfileReviews = () => {
 
   return (
     <Box mt="20px" display="flex" alignItems="start">
-      <ParentCard title="Reviews" titleVariant="h3" parentBoxProps={{width: userType !== UserType.CLIENT ? "70%" : "100%", height: "calc(100dvh - 240px)"}}>
+      <ParentCard title="Reviews" titleVariant="h3" parentBoxProps={{width: userType === UserType.CLIENT ? "70%" : "100%", height: "calc(100dvh - 240px)"}}>
         {reviews?.map((review) => (
           <ReviewCard review={review} />
         ))}

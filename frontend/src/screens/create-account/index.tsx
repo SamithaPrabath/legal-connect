@@ -12,11 +12,15 @@ import {
   updateUserAbout,
   updateUserBasicInfo,
   updateUserContactInfo,
+  updateUserType,
 } from "@redux/slices/user/form";
 import { aboutKeyType, basicInfoKeyType, contactInorKeyType, UserType } from "@type/User";
 import { signupAction, updateUserAction } from "@actions/portalAction";
 import { useNavigate, useParams } from "react-router-dom";
-import { login_signup_route } from "@utils/context-paths";
+import { login_signup_route, profile_about_route } from "@utils/context-paths";
+import LocalStorageHandler from "@utils/localStorageHandler";
+import { getUserByProfileId } from "@actions/userActions";
+import { signUpReset } from "@redux/slices/portal/signup";
 
 const sections: FormSection[] = [
   { sectionId: "basicInfo", label: "Basic Information" },
@@ -31,6 +35,7 @@ const CreateAccount = () => {
   const params = useParams();
   const { form } = useAppSelector((state) => state.user);
   const { success } = useAppSelector(state => state.portal.signup);
+  const { data: userData } = useAppSelector(state => state.user.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -95,12 +100,35 @@ const CreateAccount = () => {
   }, []);
 
   useEffect(() => {
-    if (success) navigate(login_signup_route)
+    if (success ) {
+      dispatch(signUpReset());
+      if (location.pathname.startsWith("/update") && params && params.id) 
+        navigate(profile_about_route(params.id))
+      else navigate(login_signup_route)
+    }
   },[success])
 
   useEffect(() => {
-    if (!form.type) navigate(login_signup_route);
+    if (!form.type) {
+      if (location.pathname.startsWith("/update")) {
+        const localStoragehandler = new LocalStorageHandler();
+        const userType = localStoragehandler.userType;
+        const profileId = localStoragehandler.profileId;
+        if (userType && profileId) {
+          dispatch(updateUserType(userType))
+          dispatch(getUserByProfileId(profileId))
+        }
+      }
+      else navigate(login_signup_route)
+    }
   },[]);
+
+  useEffect(() => {
+    if (!userData) return;
+    dispatch(updateUserBasicInfo(userData.basicInfo))
+    dispatch(updateUserContactInfo(userData.contactInfo))
+    if (userData.about) dispatch(updateUserAbout(userData.about))
+  },[userData])
 
   useEffect(() => {
     setId(params?.id || null)  

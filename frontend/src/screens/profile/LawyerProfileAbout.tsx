@@ -34,9 +34,9 @@ const LawyerProfileAbout = () => {
       <ParentCard titleVariant="h3" title="Contact Information">
         <ContactInformationDetail
           label="Email"
-          detail="thushara.abeykoon99@gmail.com"
+          detail={user?.contactInfo.email || ""}
         />
-        <ContactInformationDetail label="Phone" detail="+94 768664719" />
+        <ContactInformationDetail label="Phone" detail={user?.contactInfo.phone || ""} />
         <ContactInformationDetail label="Consultation Fee" detail="$200/hour" />
       </ParentCard>
     </Box>

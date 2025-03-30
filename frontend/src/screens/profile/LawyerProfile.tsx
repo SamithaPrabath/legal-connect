@@ -38,7 +38,7 @@ const LawyerProfile = ({ userData }: PropTypes) => {
 
   const userType = localStorageHandler.userType;
 
-  const isThisUsersAccount = localStorageHandler.profileId === id;
+  const isThisUsersAccount = localStorageHandler.profileId == id;
   const isClientViewing = userType === UserType.CLIENT;
   const isAdminViewing = userType === UserType.ADMIN;
 

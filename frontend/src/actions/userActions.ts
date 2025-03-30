@@ -58,6 +58,7 @@ export const userListByIdsAction =
 
 export const userSearchAction =
   (name: string) => async (dispatch: ReturnType<typeof useDispatch>) => {
+    if (!name || name.length === 0) return
     dispatch(userListRequest());
 
     const successCallback = (data: UserInfoResponse[]) => {

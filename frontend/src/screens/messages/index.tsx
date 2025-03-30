@@ -4,6 +4,7 @@ import ImageCompo from "@components/ImageCompo";
 import MUITextField from "@components/MUITextField";
 import {
   Box,
+  CircularProgress,
   lighten,
   List,
   ListItem,
@@ -13,34 +14,40 @@ import {
   useTheme,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
+import { userListReset } from "@redux/slices/user/list";
 import { userSuccess } from "@redux/slices/user/user";
-import { tempUserListAction } from "@temporaryActions/tempUserActions";
 import { UserInfoResponse } from "@type/User";
 import { getAssociatedUserIds } from "@utils/chatService";
 import { message_route, message_with_user_rotue } from "@utils/context-paths";
-import { isBackendConnected } from "@utils/env-config";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Messages() {
-  const [receiverIds, setReceiverIds] = useState<string[]>([]);
+  const [receiverIds, setReceiverIds] = useState<string[] | null>();
+  const [fireBaseLoading, setFireBaseLoading] = useState(false);
 
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { data: contacts } = useAppSelector((state) => state.user.list);
+  const { data: contacts, loading } = useAppSelector((state) => state.user.list);
 
   const userId = new LocalStorageHandler().profileId;
 
   useEffect(() => {
     if (!userId) return;
+    setFireBaseLoading(true);
     getAssociatedUserIds(userId).then(setReceiverIds);
   }, [userId]);
 
+
   useEffect(() => {
-    if (isBackendConnected) dispatch(userListByIdsAction(receiverIds));
-    else dispatch(tempUserListAction());
+    if (!receiverIds) return;
+    setFireBaseLoading(false);
+    dispatch(userListByIdsAction(receiverIds));
+    return () => {
+      dispatch(userListReset())
+    }
   }, [receiverIds]);
 
   const handleContactClick = (contact: UserInfoResponse) => {
@@ -78,6 +85,7 @@ export default function Messages() {
             sx={{ mb: 2 }}
             onChange={(e) => onChange(e.target.value)}
           />
+          {!(loading || fireBaseLoading)?
           <List>
             {contacts?.map((contact) => (
               <ListItem
@@ -106,7 +114,10 @@ export default function Messages() {
                 />
               </ListItem>
             ))}
-          </List>
+          </List> :
+            <Box width="100%" height="calc(100% - 250px)" {...flexCenter}>
+              <CircularProgress size="40px" />
+            </Box>}
         </Box>
         {pathname === message_route && (
           <Box {...flexCenter} height="100%" width="calc(100% - 280px)">
