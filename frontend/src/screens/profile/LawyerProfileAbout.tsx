@@ -15,10 +15,13 @@ const LawyerProfileAbout = () => {
   const user = useAppSelector(state => state.user.user.data);
 
   useEffect(() => {
-    if (!user?.about) return;
-    setAbout(user.about);
+    if (!user) return;
     if (user.basicInfo) setFirstName(user.basicInfo.firstName);
-  },[])
+
+    console.log("User About", user.aboutInfo)
+
+    if (user.aboutInfo) setAbout(user.aboutInfo);
+  },[user])
 
   return (
     <Box display="flex" flexDirection="column" gap="20px" mt="20px" height="calc(100dvh - 190px)">

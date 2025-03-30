@@ -61,7 +61,7 @@ const LawyerProfile = ({ userData }: PropTypes) => {
 
   const editLawyer = () => {
     dispatch(updateUserType(userData.type));
-    if (userData.about) dispatch(updateUserAbout(userData.about));
+    if (userData.aboutInfo) dispatch(updateUserAbout(userData.aboutInfo));
     dispatch(updateUserBasicInfo(userData.basicInfo))
     dispatch(updateUserContactInfo(userData.contactInfo));
 

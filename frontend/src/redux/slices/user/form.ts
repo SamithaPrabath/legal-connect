@@ -18,7 +18,7 @@ const initialState: UserInfoRequest = {
         address: "",
         phone: ""
     },
-    about: null
+    aboutInfo: null
 }
 
 const userFormSlice = createSlice({
@@ -38,7 +38,7 @@ const userFormSlice = createSlice({
             state.contactInfo = action.payload;
         },
         updateUserAbout: (state, action: PayloadAction<AboutInfo>) => {
-            state.about = action.payload;
+            state.aboutInfo = action.payload;
         }
     }
 })

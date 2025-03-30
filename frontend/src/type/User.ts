@@ -52,7 +52,7 @@ export type UserInfoRequest = {
   password: string;
   basicInfo: BasicInfo;
   contactInfo: ContactInfo;
-  about: AboutInfo | null;
+  aboutInfo: AboutInfo | null;
 };
 
 export enum LawyerStatus {
@@ -68,7 +68,7 @@ export type UserInfoResponse = {
   contactInfo: ContactInfo;
   
   // following parameters only can be applicable for lawyer
-  about: AboutInfo | null;
+  aboutInfo: AboutInfo | null;
   status?: UserStatus;
   lawyerStatus?: LawyerStatus;
   reviewCount?: number;

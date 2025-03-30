@@ -58,9 +58,9 @@ const CreateAccount = () => {
 
   const handleAbout = (name: string, value: string | null) => {
     const isAboutType = (obj: any): obj is aboutKeyType => typeof obj === "string";
-    if (!form.about) return;
+    if (!form.aboutInfo) return;
     if (!isAboutType(name)) return;
-    let about = { ...form.about };
+    let about = { ...form.aboutInfo };
 
     if (name === "practiceAreas") {
       if (!value) return;
@@ -73,8 +73,8 @@ const CreateAccount = () => {
   };
 
   const removePracticeArea = (value: string) => {
-    if (!form.about) return;
-    const about = { ...form.about };
+    if (!form.aboutInfo) return;
+    const about = { ...form.aboutInfo };
     const practiceAreas = [...about.practiceAreas];
     about.practiceAreas = practiceAreas.filter(practiceArea => practiceArea !== value);
     dispatch(updateUserAbout(about))
@@ -127,7 +127,7 @@ const CreateAccount = () => {
     if (!userData) return;
     dispatch(updateUserBasicInfo(userData.basicInfo))
     dispatch(updateUserContactInfo(userData.contactInfo))
-    if (userData.about) dispatch(updateUserAbout(userData.about))
+    if (userData.aboutInfo) dispatch(updateUserAbout(userData.aboutInfo))
   },[userData])
 
   useEffect(() => {
@@ -156,7 +156,7 @@ const CreateAccount = () => {
         >
           <BasicInformation form={form.basicInfo} handleData={handleBasicInfo} />
           <ContactInformation form={form.contactInfo} handleData={handleContactInfo} />
-          {form.type === UserType.LAWYER && <About form={form.about} handleData={handleAbout} removePracticeArea={removePracticeArea}/>}
+          {form.type === UserType.LAWYER && <About form={form.aboutInfo} handleData={handleAbout} removePracticeArea={removePracticeArea}/>}
         </Box>
       </Box>
     </Box>

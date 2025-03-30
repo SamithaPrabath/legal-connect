@@ -26,6 +26,7 @@ type PropTypes = {
 const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
   const navigate = useNavigate();
   const { form: userForm } = useAppSelector(state => state.user);
+  const { loading } = useAppSelector(state => state.portal.auth);
   const dispatch = useAppDispatch();
 
   const isEmailAndPasswordValid = () => {
@@ -78,7 +79,7 @@ const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
         handleChange={handleChange}
       />
 
-      <MUIButton fullWidth onClick={handleClick}>
+      <MUIButton fullWidth onClick={handleClick} loading={loading}>
         {formType === "signin" ? "Login" : "Continue"}
       </MUIButton>
     </Box>

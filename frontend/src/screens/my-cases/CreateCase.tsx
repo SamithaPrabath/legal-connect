@@ -47,11 +47,12 @@ const initialState: CaseForm = {
 
 const CreateCase = () => {
   const [activeSection, setActiveSection] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const [caseForm, setCaseForm] = useState<CaseForm>(initialState);
 
   const navigate = useNavigate();
 
-  const { data: userData } = useAppSelector(state => state.user.user);
+  const { data: userData } = useAppSelector(state => state.user.user)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -137,8 +138,9 @@ const CreateCase = () => {
     }))
   }
 
-  const handleSubmit = () => {
-    caseCreateAction({
+  const handleSubmit = async() => {
+    setLoading(true);
+    await caseCreateAction({
       caseName: caseForm.caseName,
       caseNumber: caseForm.caseNumber,
       caseType: caseForm.caseType,
@@ -146,15 +148,18 @@ const CreateCase = () => {
       court: caseForm.court,
       lawyerId: caseForm.lawyerId,
       oppositionParty: caseForm.oppositionParty,
-    });
-    navigate(mycases_route);
+    })
+    .finally(() => {
+      setLoading(false);
+      navigate(mycases_route);
+    })
   }
 
   return (
     <Box>
       <SubHeader {...flexCenter} py="10px">
         <Box width="280px" {...flexCenter} gap="10px">
-        <MUIButton onClick={handleSubmit} fullWidth>Create Case</MUIButton>
+        <MUIButton onClick={handleSubmit} fullWidth loading={loading}>Create Case</MUIButton>
         <MUIButton fullWidth variant="outlined" color="secondary" onClick={() => navigate(mycases_route)}>
           Back
         </MUIButton>
