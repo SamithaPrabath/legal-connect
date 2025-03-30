@@ -50,8 +50,7 @@ public class CaseServiceImpl implements CaseService {
         try {
             EventResponseDto latestUpcomingEventByCase = eventService.getLatestUpcomingEventByCase(aCase.getId());
             caseResponseDto.setUpcomingEvent(latestUpcomingEventByCase);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ignored) {
         }
 
         return caseResponseDto;

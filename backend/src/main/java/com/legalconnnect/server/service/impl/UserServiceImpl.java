@@ -85,6 +85,7 @@ public class UserServiceImpl implements UserService {
         existingUser.setContactInfo(userRequestDto.getContactInfo());
 
         if (existingUser.getType() == UserType.LAWYER)
+
             existingUser.setAboutInfo(userRequestDto.getAboutInfo());
 
         UserInfo updatedUser = userRepository.saveAndFlush(existingUser);

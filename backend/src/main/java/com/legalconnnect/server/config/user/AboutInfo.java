@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -17,5 +18,5 @@ public class AboutInfo {
     @ElementCollection
     @CollectionTable(name = "user_practice_areas", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "practiceAreas")
-    private Set<String> practiceAreas;
+    private List<String> practiceAreas;
 }

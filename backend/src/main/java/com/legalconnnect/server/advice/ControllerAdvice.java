@@ -7,6 +7,7 @@ import com.legalconnnect.server.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -30,11 +31,11 @@ public class ControllerAdvice {
         return ResponseEntityManager.notFound(notFoundException.getMessage());
     }
 
-//    @ExceptionHandler(DataConflictException.class)
-//    public ResponseEntity<StandardResponse<Object>> handleConflict(DataConflictException dataConflictException, WebRequest webRequest) {
-//        logError(dataConflictException, webRequest);
-//        return ResponseEntityManager.conflict(dataConflictException.getMessage());
-//    }
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<StandardResponse<Object>> handleConflict(BadCredentialsException exception, WebRequest webRequest) {
+        logError(exception, webRequest);
+        return ResponseEntityManager.unauthorized(exception.getMessage());
+    }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<StandardResponse<Object>> handleValidationError(ValidationException validationException, WebRequest webRequest) {

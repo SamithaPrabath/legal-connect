@@ -44,4 +44,7 @@ public class ResponseEntityManager {
         return error(HttpStatus.INTERNAL_SERVER_ERROR, message);
     }
 
+    public static ResponseEntity<StandardResponse<Object>> unauthorized(String message) {
+        return error(HttpStatus.UNAUTHORIZED, message);
+    }
 }
