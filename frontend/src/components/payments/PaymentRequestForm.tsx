@@ -36,8 +36,8 @@ const PaymentRequestForm = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    paymentRequestAction(paymentForm);
+  const handleSubmit = async () => {
+    await paymentRequestAction(paymentForm);
     refreshPaymentList();
   };
 

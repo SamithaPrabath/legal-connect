@@ -67,6 +67,9 @@ const data = lawyerList?.map(lawyer => ({
   }))
 
 
+  console.log("data", data);
+
+
   return (
     <Box p="30px">
       <ParentCard title="Lawyers" parentBoxProps={{px:0, pb:0}} titleProps={{ml:"30px"}}>

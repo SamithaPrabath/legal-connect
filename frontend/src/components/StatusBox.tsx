@@ -16,7 +16,7 @@ const StatusBox = ({status}: {status: UserStatus | null}) => {
   return (
     <Box bgcolor={lighten(color, 0.9)} p="2px 5px" width="fit-content" {...flexCenter} gap="5px">
         <Circle sx={{fontSize:"5px", color}} />
-        <Typography sx={{color, fontSize:"10px", fontWeight: 600}}>{status}</Typography>
+        <Typography sx={{color, fontSize:"10px", fontWeight: 600, textTransform:"capitalize"}}>{status}</Typography>
     </Box>
   )
 }

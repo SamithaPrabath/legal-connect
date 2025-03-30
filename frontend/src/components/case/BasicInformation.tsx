@@ -1,11 +1,11 @@
 import FormField from "@components/FormField";
 import { useAppSelector } from "@redux/hooks";
-import { CaseRequest } from "@type/Case";
+import { CaseForm } from "@type/Case";
 import { useEffect, useState } from "react";
 import FormCard from "../FormCard";
 
 type PropTypes = {
-  form: CaseRequest;
+  form: CaseForm;
   handleChange: (name: string, value: string | null) => void;
 };
 

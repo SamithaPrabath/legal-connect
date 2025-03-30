@@ -22,7 +22,7 @@ import LawyerProfileReviews from "@screens/profile/LawyerProfileReviews";
 import Schedule from "@screens/schedule";
 import {
   admin_dashboard_route,
-  create_account_route,
+  update_account_route,
   create_case_route,
   findalawyer_route,
   login_signup_route,
@@ -42,6 +42,7 @@ import {
   view_case_notes_route,
   view_case_overview_route,
   view_case_route,
+  create_account_route,
 } from "@utils/context-paths";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -57,7 +58,11 @@ const router = createBrowserRouter([
       { path: admin_dashboard_route, element:<AdminDashboard />},
       { path: message_route, element: <Messages />, children: [{path: message_with_user_rotue(null), element: <MessageBox />}] },
       {
-        path: create_account_route(null),
+        path: update_account_route(null),
+        element: <CreateAccount />,
+      },
+      {
+        path: create_account_route,
         element: <CreateAccount />,
       },
       {

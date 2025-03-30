@@ -1,24 +1,24 @@
 import { singleCaseReject, singleCaseRequest, singleCaseSuccess } from "@redux/slices/cases/case";
 import {
-    caseTypesReject,
-    caseTypesRequest,
-    caseTypesSuccess,
+  caseTypesReject,
+  caseTypesRequest,
+  caseTypesSuccess,
 } from "@redux/slices/cases/caseTypes";
 import { caseListReject, caseListRequest, caseListSuccess } from "@redux/slices/cases/list";
 import {
-    casePageReject,
-    casePageRequest,
-    casePageSuccess,
+  casePageReject,
+  casePageRequest,
+  casePageSuccess,
 } from "@redux/slices/cases/page";
 import { CaseRequest, CaseResponse, CaseStatus } from "@type/Case";
 import { PageType } from "@type/Page";
 import Requests from "@utils/Requests";
 import {
-    case_byId_url,
-    case_byUserId_url as case_listByUserId_url,
-    case_pageByLawyerId_url,
-    case_type_url,
-    case_url,
+  case_byId_url,
+  case_byUserId_url as case_listByUserId_url,
+  case_pageByLawyerId_url,
+  case_type_url,
+  case_url,
 } from "@utils/urls/resources/case";
 import { useDispatch } from "react-redux";
 

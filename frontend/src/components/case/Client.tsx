@@ -4,12 +4,12 @@ import FormField from "@components/FormField";
 import { Box, Typography } from "@mui/material";
 import { useAppDispatch } from "@redux/hooks";
 import { tempGetUserByProfileId } from "@temporaryActions/tempUserActions";
-import { CaseRequest } from "@type/Case";
+import { CaseForm } from "@type/Case";
 import { isBackendConnected } from "@utils/env-config";
 import { useState } from "react";
 
 type PropTypes = {
-  form: CaseRequest,
+  form: CaseForm,
   handleChange: (name: string, value: string | null) => void
 }
 

@@ -20,7 +20,7 @@ type Court = {
     address: string;
 }
 
-export type CaseRequest = {
+export type CaseForm = {
     caseNumber: string;
     caseName: string;
     caseType: string;
@@ -30,6 +30,16 @@ export type CaseRequest = {
         phone: string;
         email: string
     }
+    lawyerId: string;
+    oppositionParty: OppositionParty;
+    court: Court;
+}
+
+export type CaseRequest = {
+    caseNumber: string;
+    caseName: string;
+    caseType: string;
+    clientId: string;
     lawyerId: string;
     oppositionParty: OppositionParty;
     court: Court;

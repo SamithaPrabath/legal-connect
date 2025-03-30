@@ -11,7 +11,7 @@ import { Language, LocationOn, Work } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { UserInfoResponse, UserType } from "@type/User";
 import {
-  create_account_route,
+  update_account_route,
   message_with_user_rotue,
   profile_about_route,
   profile_reviews_route,
@@ -65,7 +65,7 @@ const LawyerProfile = ({ userData }: PropTypes) => {
     dispatch(updateUserBasicInfo(userData.basicInfo))
     dispatch(updateUserContactInfo(userData.contactInfo));
 
-    navigate(create_account_route(id))
+    navigate(update_account_route(id))
   }
 
   return (

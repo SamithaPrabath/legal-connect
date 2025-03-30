@@ -17,7 +17,7 @@ import {
 
 type PropTypes = {
   payment: PaymentResponse;
-  handleOpenGateway: (payment: PaymentResponse) => void
+  handleOpenGateway?: (payment: PaymentResponse) => void
 }
 
 const PaymentCard = ({
@@ -41,13 +41,13 @@ const PaymentCard = ({
 
   const dispatch = useAppDispatch();
 
-  const handleDeletePayment = () => {
-    paymentDeleteAction(id);
+  const handleDeletePayment = async () => {
+    await paymentDeleteAction(id);
     refreshPaymentList();
   };
 
-  const handleDownloadInvoice = () => {
-    downloadPaymentInvoice(id);
+  const handleDownloadInvoice = async () => {
+    await downloadPaymentInvoice(id);
     refreshPaymentList();
   };
 
@@ -87,7 +87,7 @@ const PaymentCard = ({
             <MUIButton
               fullWidth
               size="small"
-              onClick={() => handleOpenGateway(payment)}
+              onClick={() => handleOpenGateway??(payment)}
               sx={{ width: "170px" }}
             >
               Pay Now

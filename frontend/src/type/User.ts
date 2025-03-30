@@ -1,7 +1,7 @@
 export enum UserType {
-  LAWYER = "lawyer",
-  CLIENT = "client",
-  ADMIN = "admin",
+  LAWYER = "LAWYER",
+  CLIENT = "CLIENT",
+  ADMIN = "ADMIN",
 }
 
 export enum UserStatus {
@@ -63,12 +63,14 @@ export enum LawyerStatus {
 
 export type UserInfoResponse = {
   id: string;
+  type: UserType;
+  basicInfo: BasicInfo;
+  contactInfo: ContactInfo;
+  
+  // following parameters only can be applicable for lawyer
+  about: AboutInfo | null;
   status?: UserStatus;
   lawyerStatus?: LawyerStatus;
   reviewCount?: number;
   rating?: number;
-  type: UserType;
-  basicInfo: BasicInfo;
-  contactInfo: ContactInfo;
-  about: AboutInfo | null;
 };

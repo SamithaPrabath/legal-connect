@@ -10,7 +10,7 @@ const PaymentHistory = () => {
     <Box display="flex" flexDirection="column" gap="30px" p="30px">
       <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(520px, 1fr))" alignContent="start" gap="20px">
         {paymentList?.filter(payment => payment.status === PaymentStatus.PAID).map((payment) => (
-          <PaymentCard {...payment} />
+          <PaymentCard payment={payment} />
         ))}
       </Box>
     </Box>

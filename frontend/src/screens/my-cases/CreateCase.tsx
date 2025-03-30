@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 import { login_signup_route, mycases_route } from "@utils/context-paths";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CaseRequest } from "@type/Case";
+import { CaseForm } from "@type/Case";
 import { useAppSelector } from "@redux/hooks";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { caseCreateAction } from "@actions/caseActions";
@@ -22,7 +22,7 @@ const sections: FormSection[] = [
   { sectionId: "caseCourt", label: "Court" },
 ];
 
-const initialState: CaseRequest = {
+const initialState: CaseForm = {
   caseName:"",
   caseNumber: "",
   caseType: "",
@@ -47,7 +47,7 @@ const initialState: CaseRequest = {
 
 const CreateCase = () => {
   const [activeSection, setActiveSection] = useState<string>("");
-  const [caseForm, setCaseForm] = useState<CaseRequest>(initialState);
+  const [caseForm, setCaseForm] = useState<CaseForm>(initialState);
 
   const navigate = useNavigate();
 
@@ -138,7 +138,15 @@ const CreateCase = () => {
   }
 
   const handleSubmit = () => {
-    caseCreateAction(caseForm);
+    caseCreateAction({
+      caseName: caseForm.caseName,
+      caseNumber: caseForm.caseNumber,
+      caseType: caseForm.caseType,
+      clientId: caseForm.client.id,
+      court: caseForm.court,
+      lawyerId: caseForm.lawyerId,
+      oppositionParty: caseForm.oppositionParty,
+    });
     navigate(mycases_route);
   }
 

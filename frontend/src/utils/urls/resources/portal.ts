@@ -1,4 +1,5 @@
-import { getUrl } from "../url-config";
+import { getUrl, mergeUrls } from "../url-config";
 
-export const token_url = getUrl("token");
-export const signup_url = getUrl("signup");
+const portal_url = getUrl("portal")
+export const token_url = mergeUrls(portal_url,"token");
+export const signup_url = mergeUrls(portal_url, "signup");

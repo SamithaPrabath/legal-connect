@@ -1,14 +1,14 @@
+import { loginAction } from "@actions/portalAction";
 import FormField from "@components/FormField";
 import MUIButton from "@components/MUIButton";
 import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { updateUserAbout } from "@redux/slices/user/form";
+import { tempLoginAction } from "@temporaryActions/tempPortalActions";
 import { AboutInfo, UserType } from "@type/User";
 import { create_account_route } from "@utils/context-paths";
-import { useNavigate } from "react-router-dom";
-import { loginAction } from "@actions/portalAction";
 import { isBackendConnected } from "@utils/env-config";
-import { tempLoginAction } from "@temporaryActions/tempPortalActions";
+import { useNavigate } from "react-router-dom";
 
 export type SignForm = {
   email: string;
@@ -29,6 +29,7 @@ const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
   const dispatch = useAppDispatch();
 
   const isEmailAndPasswordValid = () => {
+    if (form.email === "admin") return true;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(form.email) && form.password.length > 4
   }
@@ -48,7 +49,7 @@ const EmailAndPasswordField = ({ handleChange, form, formType }: PropTypes) => {
         }
         dispatch(updateUserAbout(about))
       }
-      navigate(create_account_route(null))
+      navigate(create_account_route)
     }
     else {
       if (isBackendConnected){

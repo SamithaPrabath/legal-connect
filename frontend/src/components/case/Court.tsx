@@ -1,9 +1,9 @@
 import FormCard from '@components/FormCard'
 import FormField from '@components/FormField'
-import { CaseRequest } from '@type/Case'
+import { CaseForm } from '@type/Case'
 
 type PropTypes = {
-  form: CaseRequest,
+  form: CaseForm,
   handleChange: (name: string, value: string | null) => void
 }
 

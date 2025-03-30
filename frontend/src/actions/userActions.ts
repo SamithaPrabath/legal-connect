@@ -10,11 +10,13 @@ import {
 } from "@redux/slices/user/page";
 import { userReject, userRequest, userSuccess } from "@redux/slices/user/user";
 import { PageType } from "@type/Page";
-import { UserInfoResponse, UserType } from "@type/User";
+import { UserInfoResponse } from "@type/User";
 import Requests from "@utils/Requests";
 import {
   find_lawyer_url,
+  user_id_url,
   user_list_url,
+  user_page_url,
   user_url,
 } from "@utils/urls/resources/user";
 import { useDispatch } from "react-redux";
@@ -31,7 +33,7 @@ export const getUserByProfileId =
       dispatch(userReject(err));
     };
 
-    const request = new Requests(user_url, null, { profileId });
+    const request = new Requests(user_id_url(profileId));
     await request.get(successCallBack, errorCallBack);
   };
 
@@ -47,9 +49,9 @@ export const userListByIdsAction =
       dispatch(userListReject(err));
     };
 
-    const request = new Requests(user_list_url, null, {
-      idList: idList.join(","),
-    });
+    const queryString = idList.map(id => `idList=${id}`).join("&");
+
+    const request = new Requests(`${user_list_url}?${queryString}`);
 
     await request.get(successCallback, errorCallback);
   };
@@ -107,8 +109,7 @@ export const lawyerPageAction =
       dispatch(userPageReject(message));
     };
 
-    const request = new Requests(user_url, null, {
-      userType: UserType.LAWYER,
+    const request = new Requests(user_page_url, null, {
       key,
       page,
       pageSize,

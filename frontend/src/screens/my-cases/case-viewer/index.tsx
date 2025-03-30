@@ -125,8 +125,9 @@ const CaseViewer = () => {
   };
 
   const handleFileSubmit = () => {
-      if (documentEditMode && selectedDocuementId) dispatch(replaceDocument(selectedDocuementId, document))
-      else dispatch(uploadDocument(document));
+    const documentToBeUploaded = {...document, file: document.file.split(",")[1]}
+      if (documentEditMode && selectedDocuementId) dispatch(replaceDocument(selectedDocuementId, documentToBeUploaded))
+      else dispatch(uploadDocument(documentToBeUploaded));
       setDocumentEditMode(false);
       handleCloseDocumentModal();
   }
