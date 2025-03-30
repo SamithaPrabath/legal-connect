@@ -1,10 +1,7 @@
+import { UserInfoResponse } from "./User";
+
 export type ReviewResponse = {
-  client: {
-    profileId: string;
-    image: string | null;
-    firstName: string;
-    lastName: string;
-  };
+  client: UserInfoResponse;
   date: string;
   rating: number;
   title: string;

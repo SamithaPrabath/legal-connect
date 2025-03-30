@@ -14,9 +14,8 @@ import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { reviewListReset } from "@redux/slices/review/list";
 import { reviewSummaryReset } from "@redux/slices/review/reviewSummary";
 import {
-  tempReviewAdder,
   tempReviewListAction,
-  tempReviewSummaryAction,
+  tempReviewSummaryAction
 } from "@temporaryActions/tempReviewActions";
 import { ReviewRequest, ReviewResponse } from "@type/Review";
 import { UserType } from "@type/User";
@@ -52,7 +51,7 @@ const LawyerProfileReviews = () => {
 
   return (
     <Box mt="20px" display="flex" alignItems="start">
-      <ParentCard title="Reviews" titleVariant="h3">
+      <ParentCard title="Reviews" titleVariant="h3" parentBoxProps={{width: userType !== UserType.CLIENT ? "70%" : "100%", height: "calc(100dvh - 240px)"}}>
         {reviews?.map((review) => (
           <ReviewCard review={review} />
         ))}
@@ -78,7 +77,7 @@ const LawyerProfileReviews = () => {
 const ReviewCard = ({ review }: { review: ReviewResponse }) => {
   const { client, date, rating, title, description } = review;
 
-  const clientFullName = `${client.firstName} ${client.lastName}`;
+  const clientFullName = `${client.basicInfo.firstName} ${client.basicInfo.lastName}`;
 
   return (
     <Box display="flex" flexDirection="column" gap="10px" mt="30px">
@@ -86,7 +85,7 @@ const ReviewCard = ({ review }: { review: ReviewResponse }) => {
         <ImageCompo
           width="50px"
           height="50px"
-          base64String={review.client.image}
+          base64String={review.client.basicInfo.image}
         />
         <Box>
           <Typography variant="h4">{clientFullName}</Typography>
@@ -183,6 +182,7 @@ const ReviewAdderPanel = () => {
   useEffect(() => {
     const clientId = new LocalStorageHandler().profileId;
     handleChange("clientId", clientId);
+    handleChange("date", new Date().toISOString().substring(0,10))
   }, []);
 
   const handleChange = (name: string, value: string | null) => {
@@ -192,24 +192,12 @@ const ReviewAdderPanel = () => {
     }));
   };
 
+  useEffect(() => {
+    console.log("Review Form", reviewForm);
+  },[reviewForm])
+
   const submitReview = () => {
     if (isBackendConnected) dispatch(addReviewAction(reviewForm));
-    else
-      dispatch(
-        tempReviewAdder({
-          client: {
-            profileId: reviewForm.clientId,
-            firstName: userData?.basicInfo.firstName || "",
-            image: null,
-            lastName: userData?.basicInfo.lastName || "",
-          },
-          date: "12-25-2025",
-          description: reviewForm.description,
-          rating: reviewForm.rating,
-          title: reviewForm.title,
-        })
-      );
-
     if (userData) dispatch(reviewListAction(userData.id));
   };
 

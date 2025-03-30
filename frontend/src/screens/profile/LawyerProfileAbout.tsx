@@ -21,7 +21,7 @@ const LawyerProfileAbout = () => {
   },[])
 
   return (
-    <Box display="flex" flexDirection="column" gap="20px" mt="20px">
+    <Box display="flex" flexDirection="column" gap="20px" mt="20px" height="calc(100dvh - 190px)">
       <ParentCard titleVariant="h3" title={`About ${firstName}`}>
         <ProfileDetail label="Bio" detail={about?.bio || ""} />
         <ProfileDetail label="Pratice Areas" detail={about?.practiceAreas || []} />

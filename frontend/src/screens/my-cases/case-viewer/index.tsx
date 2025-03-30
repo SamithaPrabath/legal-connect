@@ -14,6 +14,7 @@ import { DocumentRequest } from "@type/Document";
 import { UserType } from "@type/User";
 import {
   mycases_route,
+  schedule_appointment_route,
   view_case_documents_route,
   view_case_events_route,
   view_case_notes_route,
@@ -166,7 +167,7 @@ const CaseViewer = () => {
                 >
                   Update Status
                 </MUIButton>
-                <MUIButton variant="outlined" color="secondary" size="small">
+                <MUIButton variant="outlined" color="secondary" size="small" onClick={() => navigate(schedule_appointment_route(caseId))}>
                   Create Event
                 </MUIButton>
               </>

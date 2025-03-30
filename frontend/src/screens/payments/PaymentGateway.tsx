@@ -76,9 +76,9 @@ const PaymentGateway = ({ open, handleClose, payment }: PropTyps) => {
     setCvv(value);
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!payment) return;
-    paymentCheckoutAction(payment.id);
+    await paymentCheckoutAction(payment.id);
     refreshPaymentList();
   };
 

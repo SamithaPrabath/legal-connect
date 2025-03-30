@@ -22,7 +22,7 @@ const ClientProfile = ({userData}:PropTypes) => {
     <Box>
         <SubHeader py="10px" {...flexCenter} gap="10px">
             {userData.id === new LocalStorageHandler().profileId && <MUIButton>Edit Profile Info</MUIButton>}
-            <ProfileIDButton profileId="1234"variant={undefined}/>
+            <ProfileIDButton profileId={userData.id} variant={undefined}/>
         </SubHeader>
       <Box py="30px" display="flex" flexDirection="column" gap="30px" maxWidth="800px" margin="auto">
           <Box bgcolor="white" {...flexCenter} {...border} flexDirection="column" py="30px" gap="5px">

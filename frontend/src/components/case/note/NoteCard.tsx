@@ -1,16 +1,22 @@
-import { noteDeleteAction } from "@actions/noteActions";
+import { noteDeleteAction, noteListAction } from "@actions/noteActions";
 import { border, boxShadow, flexCenter } from "@assets/style/boxStyles";
 import MUIButton from "@components/MUIButton";
 import { Box, Typography } from "@mui/material";
-import { useAppDispatch } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { NoteResponse } from "@type/Note";
+import LocalStorageHandler from "@utils/localStorageHandler";
 
 const NoteCard = ({ id, note, date, time }: NoteResponse) => {
 
   const dispatch = useAppDispatch();
+  const { data: caseObj } = useAppSelector((state) => state.case.case);
+  const localStorageHandler = new LocalStorageHandler();
 
   const noteDelete = () => {
+    const profileId = localStorageHandler.profileId;
+    if (!profileId || !caseObj) return
     dispatch(noteDeleteAction(id));
+    dispatch(noteListAction(profileId, caseObj.id ))
   }
 
   return (

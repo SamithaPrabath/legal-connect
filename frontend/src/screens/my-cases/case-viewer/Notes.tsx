@@ -32,7 +32,7 @@ const CaseNotes = () => {
     setNoteModal(true);
   };
 
-  const handleSubmitNote = () => {
+  const handleSubmitNote = async () => {
     if (!(userId && caseObj)) return;
 
     const noteRequest: NoteRequest = {
@@ -43,7 +43,7 @@ const CaseNotes = () => {
       userId,
     };
 
-    noteCreateAction(noteRequest);
+    await noteCreateAction(noteRequest);
     fetchAllNotes();
     handleClose();
   };

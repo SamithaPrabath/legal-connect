@@ -83,11 +83,11 @@ const PaymentCard = ({
       <Typography variant="body2">{dueDate}</Typography>
       <Box display="flex" justifyContent="space-between">
         <Box display="flex" gap="10px">
-          {userType === UserType.CLIENT && (
+          {userType === UserType.CLIENT && payment.status === PaymentStatus.UNPAID && (
             <MUIButton
               fullWidth
               size="small"
-              onClick={() => handleOpenGateway??(payment)}
+              onClick={() => { if (handleOpenGateway) handleOpenGateway(payment)}}
               sx={{ width: "170px" }}
             >
               Pay Now
