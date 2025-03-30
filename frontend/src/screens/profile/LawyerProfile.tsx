@@ -9,21 +9,28 @@ import StatusBox from "@components/StatusBox";
 import SubHeader from "@components/SubHeader";
 import { Language, LocationOn, Work } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
+import { useAppDispatch } from "@redux/hooks";
+import {
+  updateUserAbout,
+  updateUserBasicInfo,
+  updateUserContactInfo,
+  updateUserType,
+} from "@redux/slices/user/form";
 import { UserInfoResponse, UserType } from "@type/User";
 import {
-  update_account_route,
+  admin_dashboard_route,
   message_with_user_rotue,
   profile_about_route,
   profile_reviews_route,
   schedule_appointment_route,
+  update_account_route,
 } from "@utils/context-paths";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import Requests from "@utils/Requests";
 import { verify_lawyer_url } from "@utils/urls/resources/user";
+import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { deny_lawyer_url } from '../../utils/urls/resources/user';
-import { useAppDispatch } from "@redux/hooks";
-import { updateUserAbout, updateUserBasicInfo, updateUserContactInfo, updateUserType } from "@redux/slices/user/form";
+import { deny_lawyer_url } from "../../utils/urls/resources/user";
 
 type PropTypes = {
   userData: UserInfoResponse;
@@ -32,6 +39,8 @@ type PropTypes = {
 const LawyerProfile = ({ userData }: PropTypes) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [denyLoading, setDenyLoading] = useState(false);
   const { id, basicInfo, rating, reviewCount } = userData;
 
   const localStorageHandler = new LocalStorageHandler();
@@ -49,24 +58,30 @@ const LawyerProfile = ({ userData }: PropTypes) => {
     { label: "Reviews", contextPath: profile_reviews_route(id) },
   ];
 
-  const verifyLawyer = async() => {
-      const request = new Requests(verify_lawyer_url(id))
-      await request.put();
-  }
+  const verifyLawyer = async () => {
+    setVerifyLoading(true);
+    const request = new Requests(verify_lawyer_url(id));
+    await request.put();
+    setVerifyLoading(false);
+    navigate(admin_dashboard_route);
+  };
 
-  const denyLawyer = async() => {
+  const denyLawyer = async () => {
+    setDenyLoading(true);
     const request = new Requests(deny_lawyer_url(id));
     await request.put();
-  }
+    setDenyLoading(false);
+    navigate(admin_dashboard_route);
+  };
 
   const editLawyer = () => {
     dispatch(updateUserType(userData.type));
     if (userData.aboutInfo) dispatch(updateUserAbout(userData.aboutInfo));
-    dispatch(updateUserBasicInfo(userData.basicInfo))
+    dispatch(updateUserBasicInfo(userData.basicInfo));
     dispatch(updateUserContactInfo(userData.contactInfo));
 
-    navigate(update_account_route(id))
-  }
+    navigate(update_account_route(id));
+  };
 
   return (
     <Box
@@ -108,7 +123,9 @@ const LawyerProfile = ({ userData }: PropTypes) => {
         />
         <Box {...flexCenter} flexDirection="column" gap="10px" width="100%">
           {isThisUsersAccount && (
-            <MUIButton onClick={editLawyer} fullWidth>Edit Profile Info</MUIButton>
+            <MUIButton onClick={editLawyer} fullWidth>
+              Edit Profile Info
+            </MUIButton>
           )}
           {isClientViewing && (
             <MUIButton
@@ -121,14 +138,29 @@ const LawyerProfile = ({ userData }: PropTypes) => {
             </MUIButton>
           )}
           {isClientViewing && (
-            <MUIButton fullWidth variant="outlined" color="secondary" onClick={() => navigate(schedule_appointment_route(id))}>
+            <MUIButton
+              fullWidth
+              variant="outlined"
+              color="secondary"
+              onClick={() => navigate(schedule_appointment_route(id))}
+            >
               Schedule Appointment
             </MUIButton>
           )}
 
-          {isAdminViewing && <MUIButton onClick={verifyLawyer} fullWidth>Verfiy Lawyer</MUIButton>}
           {isAdminViewing && (
-            <MUIButton onClick={denyLawyer} variant="outlined" color="secondary" fullWidth>
+            <MUIButton loading={verifyLoading} onClick={verifyLawyer} fullWidth>
+              Verfiy Lawyer
+            </MUIButton>
+          )}
+          {isAdminViewing && (
+            <MUIButton
+              loading={denyLoading}
+              onClick={denyLawyer}
+              variant="outlined"
+              color="secondary"
+              fullWidth
+            >
               Deny Lawyer
             </MUIButton>
           )}

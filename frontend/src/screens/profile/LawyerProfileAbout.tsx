@@ -9,8 +9,8 @@ const LawyerProfileAbout = () => {
   const [firstName, setFirstName] = useState("");
   const [about, setAbout] = useState<AboutInfo | null>(null);
 
-  const credentialsAndEducation = about?.credentialsAndEducation.split("\n") || [];
-  const workHistory = about?.workHistory.split("\n") || [];
+  const credentialsAndEducation = about?.credentialsAndEducation?.split("\n") || [];
+  const workHistory = about?.workHistory?.split("\n") || [];
 
   const user = useAppSelector(state => state.user.user.data);
 

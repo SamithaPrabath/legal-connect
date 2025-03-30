@@ -9,6 +9,7 @@ import {
   signupRequest,
   signUpSuccess,
 } from "@redux/slices/portal/signup";
+import { resetUserForm } from "@redux/slices/user/form";
 import store from "@redux/store/store";
 import { UserInfoResponse } from "@type/User";
 import Requests, { getAxiosErrorMessage } from "@utils/Requests";
@@ -47,7 +48,7 @@ export const signupAction =
     await axios
       .post(signup_url, userForm)
       .then((res) => {
-        dispatch(signUpSuccess(res.data.data))
+        dispatch(signUpSuccess(res.data.data));
       })
       .catch((err) => {
         dispatch(signUpReject(getAxiosErrorMessage(err)));
@@ -64,7 +65,10 @@ export const updateUserAction =
     const request = new Requests(user_id_url(id), userForm);
     dispatch(signupRequest());
     await request.put(
-      (data: UserInfoResponse) => dispatch(signUpSuccess(data)),
+      (data: UserInfoResponse) => {
+        dispatch(signUpSuccess(data));
+        dispatch(resetUserForm());
+      },
       (message) => dispatch(signUpReject(message))
     );
   };
