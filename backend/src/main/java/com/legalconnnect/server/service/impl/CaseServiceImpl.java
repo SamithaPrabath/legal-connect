@@ -5,7 +5,6 @@ import com.legalconnnect.server.dto.cases.CaseRequestDto;
 import com.legalconnnect.server.dto.cases.CaseResponseDto;
 import com.legalconnnect.server.dto.event.EventResponseDto;
 import com.legalconnnect.server.enums.CaseStatus;
-import com.legalconnnect.server.enums.CaseType;
 import com.legalconnnect.server.exception.NotFoundException;
 import com.legalconnnect.server.model.Case;
 import com.legalconnnect.server.model.UserInfo;
@@ -39,7 +38,7 @@ public class CaseServiceImpl implements CaseService {
         caseResponseDto.setCaseName(aCase.getCaseName());
         caseResponseDto.setCaseStatus(CaseStatus.fromString(aCase.getCaseStatus()));
         caseResponseDto.setCaseNumber(aCase.getCaseNumber());
-        caseResponseDto.setCaseType(aCase.getCaseType().toString());
+        caseResponseDto.setCaseType(aCase.getCaseType());
         caseResponseDto.setId(aCase.getId());
         caseResponseDto.setClient(userService.toDto(aCase.getClient()));
         caseResponseDto.setLawyer(userService.toDto(aCase.getLawyer()));
@@ -80,7 +79,7 @@ public class CaseServiceImpl implements CaseService {
 
     @Override
     public List<String> getCaseTypes() {
-        return CaseType.extractEnum();
+        return caseRepository.getCaseTypes();
     }
 
     @Override

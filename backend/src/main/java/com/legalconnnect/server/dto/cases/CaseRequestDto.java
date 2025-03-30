@@ -2,7 +2,6 @@ package com.legalconnnect.server.dto.cases;
 
 import com.legalconnnect.server.config.cases.Court;
 import com.legalconnnect.server.config.cases.OppositionParty;
-import com.legalconnnect.server.enums.CaseType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class CaseRequestDto {
     private String caseNumber;
     private String caseName;
-    private CaseType caseType;
+    private String caseType;
     private Integer clientId;
     private Integer lawyerId;
     private OppositionParty oppositionParty;

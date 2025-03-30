@@ -15,4 +15,7 @@ public interface CaseRepository extends JpaRepository<Case, Integer> {
     @Query("SELECT c FROM Case c WHERE (:caseStatus IS NULL OR c.caseStatus = :caseStatus) AND c.lawyer.id = :lawyerId AND c.caseName LIKE %:name%")
     Page<Case> findByPageWise(Integer lawyerId, String caseStatus, String name, Pageable pageable);
     List<Case> findByClientId(Integer id);
+
+    @Query("SELECT DISTINCT c.caseType FROM Case c")
+    List<String> getCaseTypes();
 }

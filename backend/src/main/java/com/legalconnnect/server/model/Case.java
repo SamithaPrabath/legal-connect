@@ -2,8 +2,6 @@ package com.legalconnnect.server.model;
 
 import com.legalconnnect.server.config.cases.Court;
 import com.legalconnnect.server.config.cases.OppositionParty;
-import com.legalconnnect.server.enums.CaseStatus;
-import com.legalconnnect.server.enums.CaseType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +20,7 @@ public class Case {
     private Integer id;
     private String caseNumber;
     private String caseName;
-    private CaseType caseType;
+    private String caseType;
     private String caseStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
