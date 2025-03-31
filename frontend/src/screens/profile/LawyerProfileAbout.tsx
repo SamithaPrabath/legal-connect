@@ -17,9 +17,6 @@ const LawyerProfileAbout = () => {
   useEffect(() => {
     if (!user) return;
     if (user.basicInfo) setFirstName(user.basicInfo.firstName);
-
-    console.log("User About", user.aboutInfo)
-
     if (user.aboutInfo) setAbout(user.aboutInfo);
   },[user])
 

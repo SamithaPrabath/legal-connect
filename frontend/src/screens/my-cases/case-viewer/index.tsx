@@ -1,5 +1,5 @@
 import { caseByIdAction, caseUpdateStatusAction } from "@actions/caseActions";
-import { replaceDocument, uploadDocument } from "@actions/documentActions";
+import { getDocumentsByCaseId, replaceDocument, uploadDocument } from "@actions/documentActions";
 import { flexCenter } from "@assets/style/boxStyles";
 import FormField from "@components/FormField";
 import MUIButton from "@components/MUIButton";
@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { createContext } from "react";
+import { isBackendConnected } from "@utils/env-config";
 
 interface CaseViewerContextType {
   handleOpenDocumentModal: () => void;
@@ -131,6 +132,12 @@ const CaseViewer = () => {
       else dispatch(uploadDocument(documentToBeUploaded));
       setDocumentEditMode(false);
       handleCloseDocumentModal();
+
+      if(location.pathname.endsWith("documents")) {
+        if (!caseObj) return;
+        if (isBackendConnected) dispatch(getDocumentsByCaseId(caseObj.id));
+      }
+
   }
 
   return (
@@ -152,7 +159,7 @@ const CaseViewer = () => {
                 My Cases
               </Typography>
               <MdKeyboardArrowRight fontSize="24px" />
-              <Typography>{params.caseId}</Typography>
+              <Typography>CASE-{params.caseId}</Typography>
             </Box>
             <Typography variant="h4">{caseObj?.caseName}</Typography>
           </Box>

@@ -149,9 +149,11 @@ const CreateCase = () => {
       lawyerId: caseForm.lawyerId,
       oppositionParty: caseForm.oppositionParty,
     })
-    .finally(() => {
+    .then(() => {
       setLoading(false);
       navigate(mycases_route);
+    }).catch(() => {
+      setLoading(false);
     })
   }
 

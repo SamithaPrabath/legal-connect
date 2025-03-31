@@ -37,7 +37,10 @@ export const caseTypeListAction =
 
 export const caseCreateAction = async (caseForm: CaseRequest) => {
   const request = new Requests(case_url, caseForm);
-  await request.post();
+  const errorCallback = (message: string) => {
+    throw new Error(message);
+  }
+  await request.post(undefined, errorCallback);
 };
 
 export const casePageAction =
