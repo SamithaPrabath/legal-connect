@@ -14,6 +14,8 @@ import {
   paymentDeleteAction,
   paymentListAction
 } from "../../actions/paymentActions";
+import { useEffect, useState } from "react";
+import generateInvoicePDF from "@utils/generate_pdf";
 
 type PropTypes = {
   payment: PaymentResponse;
@@ -34,6 +36,7 @@ const PaymentCard = ({
     status } = payment;
 
   const { pathname } = useLocation();
+  const [formattedAmount, setFormattedAmount] = useState("");
 
   const localStorageHandler = new LocalStorageHandler();
   const userType = localStorageHandler.userType;
@@ -47,8 +50,7 @@ const PaymentCard = ({
   };
 
   const handleDownloadInvoice = async () => {
-    await downloadPaymentInvoice(id);
-    refreshPaymentList();
+    generateInvoicePDF(payment);
   };
 
   const refreshPaymentList = () => {
@@ -56,6 +58,21 @@ const PaymentCard = ({
     if (isBackendConnected) dispatch(paymentListAction(userId));
     else dispatch(tempPaymentListAction());
   };
+
+
+  useEffect(() => {
+    const amountChars = `${amount}`.split("").reverse();
+    let updatedAmount = ""
+    for (const index in amountChars) {
+       let i = Number(index)
+       updatedAmount = amountChars[index]+updatedAmount;
+       if ((i+1)%3===0 && i !== amountChars.length - 1) {
+         updatedAmount = `,${updatedAmount}`;
+       }
+    }
+    updatedAmount="$"+updatedAmount;
+    setFormattedAmount(updatedAmount);    
+  },[amount])
 
   return (
     <Box
@@ -117,7 +134,7 @@ const PaymentCard = ({
               </MUIButton>
             )}
         </Box>
-        <Typography variant="h3">{amount}</Typography>
+        <Typography variant="h3">{formattedAmount}</Typography>
       </Box>
     </Box>
   );

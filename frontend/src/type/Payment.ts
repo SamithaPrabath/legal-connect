@@ -18,7 +18,7 @@ export type PaymentResponse = {
     id: string;
     invoiceId: string;
     name: string;
-    clientId: string;
+    client: UserInfoResponse;
     amount: number;
     dueDate: string;
     lawyer: UserInfoResponse;
