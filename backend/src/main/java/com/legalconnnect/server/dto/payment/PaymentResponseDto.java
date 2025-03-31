@@ -13,6 +13,6 @@ public class PaymentResponseDto {
     private String dueDate;
     private String status;
     private UserResponseDto lawyer;
-    private Integer clientId;
+    private UserResponseDto client;
     private Double amount;
 }

@@ -64,7 +64,7 @@ public class PaymentServiceImpl implements PaymentService {
         responseDto.setAmount(payment.getAmount());
         responseDto.setStatus(payment.getStatus().toString());
         responseDto.setDueDate(payment.getDueDate());
-        responseDto.setClientId(payment.getClient().getId());
+        responseDto.setClient(userService.toDto(payment.getClient()));
         responseDto.setInvoiceId(payment.getInvoiceId());
         responseDto.setLawyer(userService.toDto(payment.getLawyer()));
 
