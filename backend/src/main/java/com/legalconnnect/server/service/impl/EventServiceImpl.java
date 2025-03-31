@@ -100,6 +100,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventResponseDto getLatestUpcomingEventByCase(Integer caseId) throws Exception {
         List<Event> upcomingEventList = eventRepository.findByCaseId(caseId).stream().filter(this::isUpcomingEvent).toList();
+        if (upcomingEventList.isEmpty()) return null;
         Event latestUpcomingEvent = upcomingEventList.stream().sorted(Comparator.comparing(this::getTimeStamp)).toList().getFirst();
         return toDto(latestUpcomingEvent);
     }

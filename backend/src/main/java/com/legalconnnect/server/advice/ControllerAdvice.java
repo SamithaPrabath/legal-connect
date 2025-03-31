@@ -47,7 +47,7 @@ public class ControllerAdvice {
     public ResponseEntity<StandardResponse<Object>> handleInternalServerError(Exception exception, WebRequest webRequest) {
         logError(exception, webRequest);
         exception.printStackTrace();
-        return ResponseEntityManager.internalServerError("Sorry! There must be an error in the server");
+        return ResponseEntityManager.internalServerError(exception.getMessage());
     }
 
     private void logError(Exception e, WebRequest request) {
