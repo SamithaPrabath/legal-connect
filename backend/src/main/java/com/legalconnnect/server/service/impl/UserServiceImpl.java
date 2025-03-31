@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDto createOne(UserRequestDto userRequestDto) throws Exception {
         UserInfo user = toModel(userRequestDto);
         if (user.getType() == UserType.LAWYER) {
-            user.setRating(0);
+            user.setRating(0d);
             user.setStatus(UserStatus.UNAVAILABLE);
             user.setLawyerStatus(LawyerStatus.PENDING);
             user.setReviewCount(0);
@@ -95,10 +95,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateLawyerReviews(Review review) throws Exception {
         UserInfo lawyer = review.getLawyer();
-        int currentRating = lawyer.getRating();
+        double currentRating = lawyer.getRating();
         int currentReviewCount = lawyer.getReviewCount();
         int updatedReviewCount = currentReviewCount + 1;
-        int updatedRating = (currentRating * currentReviewCount + review.getRating()) / updatedReviewCount;
+        double updatedRating = (currentRating * currentReviewCount + review.getRating()) / updatedReviewCount;
 
         lawyer.setReviewCount(updatedReviewCount);
         lawyer.setRating(updatedRating);

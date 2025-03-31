@@ -57,5 +57,5 @@ public class UserInfo {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
     private Integer reviewCount;
-    private Integer rating;
+    private Double rating;
 }

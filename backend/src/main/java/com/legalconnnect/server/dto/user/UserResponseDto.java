@@ -22,5 +22,5 @@ public class UserResponseDto {
     private String status;
     private String lawyerStatus;
     private Integer reviewCount;
-    private Integer rating;
+    private Double rating;
 }

@@ -185,7 +185,8 @@ public class EventServiceImpl implements EventService {
         int hour = Integer.parseInt(timeSlot.split("\\.")[0]);
         if (timeSlot.endsWith("PM") && !timeSlot.startsWith("12")) hour += 12;
         String timeString = String.format("%s%d:00:00", hour < 10 ? "0" : "", hour);
+        log.info("Time String {}", timeString);
         LocalTime localTime = LocalTime.parse(timeString, DateTimeFormatter.ISO_LOCAL_TIME);
-        return LocalDateTime.of(localDate, localTime );
+        return LocalDateTime.of(localDate, localTime);
     }
 }
