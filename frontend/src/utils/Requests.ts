@@ -1,6 +1,11 @@
 import axios from "axios";
+import { enqueueSnackbar} from "notistack"
 
-export const getAxiosErrorMessage = (error: any) => error.response && error.response.data.message ? error.response.data.message : error.message;
+export const getAxiosErrorMessage = (error: any) => {
+    const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+    enqueueSnackbar(message, { variant: "error" })
+    return message;
+}
 
 class Requests<ParamType, RequestBodyType> {
     token: string | null;

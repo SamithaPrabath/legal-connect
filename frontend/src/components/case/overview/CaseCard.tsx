@@ -52,7 +52,7 @@ const CaseCard = ({
       }}
     >
       <Box {...flexCenter} flexDirection="column" alignItems="start" gap="5px">
-        <Typography variant="h6">{caseId}</Typography>
+        <Typography variant="h6">CASE-{caseId}</Typography>
         <Typography variant="h2">{caseName}</Typography>
         <Typography variant="h6" sx={{ fontSize: "16px" }}>
           {lawyerName}

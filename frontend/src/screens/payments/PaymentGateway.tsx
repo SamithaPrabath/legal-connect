@@ -12,6 +12,9 @@ import { PaymentResponse } from "@type/Payment";
 import { isBackendConnected } from "@utils/env-config";
 import LocalStorageHandler from "@utils/localStorageHandler";
 import { useState } from "react";
+import { enqueueSnackbar } from 'notistack';
+import { payment_history_route } from "@utils/context-paths";
+import { useNavigate } from "react-router-dom";
 
 type PropTyps = {
   handleClose: () => void;
@@ -20,11 +23,13 @@ type PropTyps = {
 };
 
 const PaymentGateway = ({ open, handleClose, payment }: PropTyps) => {
+  const [loading, setLoading] = useState(false)
   const [cardNumber, setCardNumber] = useState<string>("");
   const [cvv, setCvv] = useState<string>("");
   const [expireDate, setExpireDate] = useState<string>("");
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleChangeCardNumber = (_: string, value: string | null) => {
     if (!value) {
@@ -76,10 +81,26 @@ const PaymentGateway = ({ open, handleClose, payment }: PropTyps) => {
     setCvv(value);
   };
 
+  const validate = () => 
+    expireDate.length === 5 && cvv.length === 3 && cardNumber.length === 19;
+  
+
   const handleCheckout = async () => {
+    setLoading(true);
+    setTimeout(async() => {
+      if (!validate()) {
+        enqueueSnackbar("Invalid card details", { variant: "error"})
+        setLoading(false);
+        return;
+      }
     if (!payment) return;
     await paymentCheckoutAction(payment.id);
     refreshPaymentList();
+    enqueueSnackbar("Payment successful!", { variant: "success"});
+    setLoading(false);
+    handleClose();
+    navigate(payment_history_route);
+    },1500);
   };
 
   const refreshPaymentList = () => {
@@ -152,7 +173,7 @@ const PaymentGateway = ({ open, handleClose, payment }: PropTyps) => {
           />
         </Box>
         <Box display="flex" flexDirection="column">
-          <MUIButton sx={{ mt: "20px" }} onClick={handleCheckout}>
+          <MUIButton sx={{ mt: "20px" }} onClick={handleCheckout} loading={loading}>
             Checkout
           </MUIButton>
           <MUIButton

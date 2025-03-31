@@ -11,7 +11,7 @@ const CaseOverview = () => {
     <Box px="30px" display="flex" flexDirection="column" gap="20px" py="30px">
       <CaseCard
         assignedDate={caseObj?.createdDate.substring(0,10) || ""}
-        caseId={`CASE-${caseObj?.id}` || ""}
+        caseId={`${caseObj?.id}` || ""}
         caseName={caseObj?.caseName || ""}
         caseStatus={caseObj?.caseStatus as CaseStatus}
         caseType={caseObj?.caseType || ""}

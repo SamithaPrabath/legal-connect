@@ -44,6 +44,7 @@ export default function Messages() {
   useEffect(() => {
     if (!receiverIds) return;
     setFireBaseLoading(false);
+    if (receiverIds.length === 0) return;
     dispatch(userListByIdsAction(receiverIds));
     return () => {
       dispatch(userListReset())

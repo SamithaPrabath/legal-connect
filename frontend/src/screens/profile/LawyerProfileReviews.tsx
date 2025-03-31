@@ -3,6 +3,7 @@ import {
   reviewListAction,
   reviewSummaryAction,
 } from "@actions/reviewActions";
+import { getUserByProfileId } from "@actions/userActions";
 import FormField from "@components/FormField";
 import ImageCompo from "@components/ImageCompo";
 import RatingCard from "@components/lawyer/RatingCard";
@@ -28,6 +29,7 @@ const LawyerProfileReviews = () => {
 
   const { data: userData } = useAppSelector((state) => state.user.user);
   const { data: reviews } = useAppSelector((state) => state.review.list);
+  const { success: reviewCreateSuccess } = useAppSelector(state => state.review.create);
 
   const userType = new LocalStorageHandler().userType;
 
@@ -41,7 +43,7 @@ const LawyerProfileReviews = () => {
       dispatch(reviewListReset());
       dispatch(reviewSummaryReset());
     };
-  }, [userData]);
+  }, [userData, reviewCreateSuccess]);
 
   useEffect(() => {
     if (isBackendConnected) return;
@@ -155,24 +157,26 @@ const ReviewSummaryDetail = ({
       <LinearProgress variant="determinate" color="inherit" value={value} />
     </Grid>
     <Typography variant="body2" fontWeight={500}>
-      {value}%
+      {value.toFixed(0)}%
     </Typography>
   </Box>
 );
 
 const ReviewAdderPanel = () => {
-  const [reviewForm, setReviewForm] = useState<ReviewRequest>({
+  const initialState = {
     clientId: "",
     lawyerId: "",
     date: "",
     description: "",
     rating: 0,
     title: "",
-  });
+  }
+  const [reviewForm, setReviewForm] = useState<ReviewRequest>(initialState);
 
   const dispatch = useAppDispatch();
 
   const { data: userData } = useAppSelector((state) => state.user.user);
+  const { loading, success } = useAppSelector(state => state.review.create);
 
   useEffect(() => {
     if (!userData) return;
@@ -196,9 +200,17 @@ const ReviewAdderPanel = () => {
     console.log("Review Form", reviewForm);
   },[reviewForm])
 
+  useEffect(() => {
+    if (success) {
+      // if (userData) dispatch(reviewListAction(userData.id));
+      dispatch(reviewListReset());
+      setReviewForm(initialState);
+      if (userData)  dispatch(getUserByProfileId(userData.id))
+    }
+  },[success])
+
   const submitReview = () => {
     if (isBackendConnected) dispatch(addReviewAction(reviewForm));
-    if (userData) dispatch(reviewListAction(userData.id));
   };
 
   return (
@@ -233,7 +245,7 @@ const ReviewAdderPanel = () => {
           rows={3}
         />
       </Box>
-      <MUIButton size="small" color="secondary" onClick={submitReview}>
+      <MUIButton size="small" color="secondary" onClick={submitReview} loading={loading}>
         Save
       </MUIButton>
     </Box>

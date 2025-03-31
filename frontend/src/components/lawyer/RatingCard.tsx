@@ -11,7 +11,7 @@ const RatingCard = ({ rating, reviewCount, fontSize, ...rest }: PropTypes) => {
   return (
     <Box {...flexCenter} gap="10px" {...rest}>
       <Rating value={rating} size="small" precision={0.5} readOnly />
-      <Typography sx={{fontSize}} variant="body2">{`(${rating}/5 from ${reviewCount} reviews)`}</Typography>
+      <Typography sx={{fontSize}} variant="body2">{`(${rating.toFixed(1)}/5 from ${reviewCount} reviews)`}</Typography>
     </Box>
   );
 };
