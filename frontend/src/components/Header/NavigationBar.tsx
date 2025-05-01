@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material"
 import { UserType } from "@type/User"
-import { findalawyer_route, mycases_route, payments_route, schedule_route } from "@utils/context-paths"
+import { faq_route, findalawyer_route, mycases_route, payments_route, schedule_route } from "@utils/context-paths"
 import LocalStorageHandler from "@utils/localStorageHandler"
 import { Link, useLocation } from "react-router-dom"
 
@@ -15,7 +15,8 @@ const NavigationBar = () => {
     { name: "My Cases", contextPath: mycases_route,},
     { name: "Schedule", contextPath: schedule_route},
     { name: "Find a Lawyer", contextPath: findalawyer_route, hidden: userType !== UserType.CLIENT},
-    { name: "Payments", contextPath: payments_route}
+    { name: "Payments", contextPath: payments_route},
+    { name: "FAQ", contextPath: faq_route }
   ]
   return (
     <Box display="flex" gap="20px">
