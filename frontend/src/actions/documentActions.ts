@@ -1,9 +1,10 @@
+import { documentListReject, documentListRequest, documentListSuccess } from "@redux/slices/document/list";
+import { documentUploadReject, documentUploadRequest, documentUploadSuccess } from '@redux/slices/document/upload';
+import { DocumentRequest, DocumentResponse } from "@type/Document";
 import Requests from '@utils/Requests';
-import { documentListRequest, documentListSuccess, documentListReject } from "@redux/slices/document/list";
 import { document_byId_url, document_url, documents_byCaseId_url } from "@utils/urls/resources/document";
 import { useDispatch } from "react-redux";
-import { DocumentRequest, DocumentResponse } from "@type/Document";
-import { documentUploadReject, documentUploadRequest, documentUploadSuccess } from '@redux/slices/document/upload';
+import { getTimeLineEventsByCaseId } from "./eventAction";
 
 export const downloadDocument = async (documentId: string, fileName: string) => {
     const request = new Requests(document_byId_url(documentId));
@@ -28,6 +29,7 @@ export const uploadDocument = (document: DocumentRequest) => async (dispatch: Re
 
     const success = (data: DocumentResponse) => {
         dispatch(documentUploadSuccess(data));
+        dispatch<any>(getTimeLineEventsByCaseId(document.caseId))
     };
 
     const error = (message: string) => {

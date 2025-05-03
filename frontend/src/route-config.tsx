@@ -1,6 +1,7 @@
 import ScheduleAppointment from "@components/schedule/ScheduleAppointment";
 import AdminDashboard from "@screens/admin/Dashboard";
 import CreateAccount from "@screens/create-account";
+import FAQ from "@screens/faq";
 import FindALawyer from "@screens/find-a-lawyer";
 import Home from "@screens/home";
 import LoginSignUp from "@screens/login-and-signup";
@@ -43,6 +44,7 @@ import {
   view_case_overview_route,
   view_case_route,
   create_account_route,
+  faq_route,
 } from "@utils/context-paths";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -107,6 +109,10 @@ const router = createBrowserRouter([
       {
         path: schedule_appointment_route(null),
         element: <ScheduleAppointment />
+      },
+      {
+        path: faq_route,
+        element: <FAQ />
       },
       {
         path: profile_route(null),

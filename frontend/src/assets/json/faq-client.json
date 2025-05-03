@@ -1,0 +1,22 @@
+[
+    {
+        "question":"How do I find a lawyer on the platform?",
+        "answer": "Once you create an account as a client, you can browse lawyer profiles, check their expertise, and book an appointment with a suitable lawyer."
+    },
+    {
+        "question": "How do I book an appointment with a lawyer?",
+        "answer": "After selecting a lawyer, click the \"Book Appointment\" button on their profile, choose a time slot, and confirm your booking"
+    },
+    {
+        "question": "Can I chat with my lawyer through the platform?",
+        "answer": "Yes! Once your case is assigned, you can use the built-in messaging system to communicate with your lawyer."
+    },
+    {
+        "question": "How do I make payments for legal services?",
+        "answer":"Your lawyer will send payment requests through the platform. You can view pending invoices on your Payment page and complete transactions securely."
+    },
+    {
+        "question": "Where can I see my ongoing cases?",
+        "answer": "All your assigned cases will be listed on the \"My Cases\" page, where you can track progress, upcoming hearings, and deadlines."
+    }
+]

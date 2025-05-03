@@ -40,7 +40,7 @@ const CaseDocuments = () => {
         alignContent="start"
         gap="20px"
         sideCompo={
-          <MUIButton color="secondary" size="small" onClick={handleOpenDocumentModal}>
+          <MUIButton color="secondary" size="small" onClick={() => handleOpenDocumentModal(false)}>
             Upload Document
           </MUIButton>
         }

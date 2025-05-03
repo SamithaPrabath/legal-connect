@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import FormCard from "../FormCard";
 import { AboutInfo } from "@type/User";
+import PracticeAreasList from "@assets/json/case-types.json";
 
 type PropTypes = {
   form: AboutInfo | null,
@@ -19,8 +20,8 @@ const About = ({form, handleData, removePracticeArea}:PropTypes) => {
   const [options, setOptions] = useState<string[]>([]);
 
   useEffect(() => {
-    setOptions(form.practiceAreas);
-  },[form.practiceAreas])
+    setOptions(PracticeAreasList);
+  },[PracticeAreasList])
 
   const hanldeInputChange = (value: string) => {
     if (options.length > 0) {

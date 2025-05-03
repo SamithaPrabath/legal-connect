@@ -10,7 +10,7 @@ import { AttachFile } from "@mui/icons-material";
 import { Box, MenuItem, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { CaseStatus } from "@type/Case";
-import { DocumentRequest } from "@type/Document";
+import { DocumentRequest, DocumentResponse } from "@type/Document";
 import { UserType } from "@type/User";
 import {
   mycases_route,
@@ -28,7 +28,7 @@ import { createContext } from "react";
 import { isBackendConnected } from "@utils/env-config";
 
 interface CaseViewerContextType {
-  handleOpenDocumentModal: () => void;
+  handleOpenDocumentModal: (isReplaceMode?: boolean, documentResponse?: DocumentResponse) => void;
   setDocumentEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedDocuemntId: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -102,7 +102,22 @@ const CaseViewer = () => {
     setOpenStatusModal(false);
   };
 
-  const handleOpenDocumentModal = () => {
+  const handleOpenDocumentModal = (isReplaceMode?: boolean, documentResponse?: DocumentResponse) => {
+    if (isReplaceMode && documentResponse) setDocument({
+      title: documentResponse.title,
+      file: "",
+      fileName: documentResponse.fileName,
+      description: documentResponse.description,
+      caseId: documentResponse.caseId,
+      userType: documentResponse.userType
+    })
+    else setDocument({
+      ...document,
+      title: "",
+      description: "",
+      fileName: "",
+      file: "",
+    })
     setOpenDocumentModal(true);
   };
 
@@ -179,7 +194,7 @@ const CaseViewer = () => {
                 </MUIButton>
               </>
             )}
-            <MUIButton variant="outlined" color="secondary" size="small" onClick={handleOpenDocumentModal}>
+            <MUIButton variant="outlined" color="secondary" size="small" onClick={() => handleOpenDocumentModal(false)}>
               Upload Document
             </MUIButton>
           </Box>

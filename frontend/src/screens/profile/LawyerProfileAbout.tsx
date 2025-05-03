@@ -37,7 +37,6 @@ const LawyerProfileAbout = () => {
           detail={user?.contactInfo.email || ""}
         />
         <ContactInformationDetail label="Phone" detail={user?.contactInfo.phone || ""} />
-        <ContactInformationDetail label="Consultation Fee" detail="$200/hour" />
       </ParentCard>
     </Box>
   );

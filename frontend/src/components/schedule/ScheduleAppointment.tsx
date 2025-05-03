@@ -171,7 +171,7 @@ const ScheduleAppointment = () => {
               fullWidth
               value={description}
             />
-            <MUIButton onClick={handleSubmit}>Schedule Appointment</MUIButton>
+            <MUIButton onClick={handleSubmit}>Schedule</MUIButton>
           </Box>
         </Box>
       </ParentCard>
