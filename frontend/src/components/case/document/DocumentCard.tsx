@@ -64,7 +64,7 @@ const DocumentCard = ({ document, ...rest }: PropTypes) => {
             onClick={() => {
               setSelectedDocuemntId(document.id);
               setDocumentEditMode(true);
-              handleOpenDocumentModal();
+              handleOpenDocumentModal(true, document);
             }}
           >
             Replace
