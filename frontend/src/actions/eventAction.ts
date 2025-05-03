@@ -25,8 +25,8 @@ import {
   event_url,
   events_list_byCaseId,
   events_list_byProfileId,
-  timeline_events_byCaseId,
 } from "@utils/urls/resources/event";
+import { timeline_events_byCaseId_url } from "@utils/urls/resources/timeline-event";
 import { useDispatch } from "react-redux";
 
 export const eventCreateAction =
@@ -104,6 +104,6 @@ export const getTimeLineEventsByCaseId =
       dispatch(timeLineEventReject(message));
     };
 
-    const request = new Requests(timeline_events_byCaseId(caseId));
+    const request = new Requests(timeline_events_byCaseId_url(caseId));
     await request.get(success, error);
   };
