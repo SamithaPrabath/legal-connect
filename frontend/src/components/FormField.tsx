@@ -9,6 +9,8 @@ type PropTypes<T> = {
   readOnly?: boolean;
   autocomplete?: boolean;
   options?: T[];
+  defaultValue?: T
+  defaultChecked?: boolean
   optionLabel?: (option: T) => string;
   handleChange?: (name: string, value: string | T | null) => void;
   onInputChange?: (value: string) => void;
@@ -27,6 +29,8 @@ const FormField = <T,>({
   options = [],
   optionLabel,
   boxProps,
+  defaultValue,
+  defaultChecked,
   ...rest
 }: PropTypes<T>) => {
   return (
@@ -65,6 +69,12 @@ const FormField = <T,>({
           onInputChange={(_, value) => {
             if (onInputChange) onInputChange(value);
           }}
+          sx={{
+            ".MuiOutlinedInput-root": {
+              padding: "5px !important"
+            }
+          }}
+          defaultValue={defaultValue}
         />
       )}
     </Box>

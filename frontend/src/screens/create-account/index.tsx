@@ -104,7 +104,10 @@ const CreateAccount = () => {
       dispatch(signUpReset());
       if (location.pathname.startsWith("/update") && params && params.id) 
         navigate(profile_about_route(params.id))
-      else navigate(login_signup_route)
+      else {
+        // TODO: success message 
+        navigate(login_signup_route)
+      }
     }
   },[success])
 
@@ -154,7 +157,7 @@ const CreateAccount = () => {
           gap="20px"
           py="40px"
         >
-          <BasicInformation form={form.basicInfo} handleData={handleBasicInfo} />
+          <BasicInformation userType={form.type!} form={form.basicInfo} handleData={handleBasicInfo} />
           <ContactInformation form={form.contactInfo} handleData={handleContactInfo} />
           {form.type === UserType.LAWYER && <About form={form.aboutInfo} handleData={handleAbout} removePracticeArea={removePracticeArea}/>}
         </Box>
