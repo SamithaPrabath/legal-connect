@@ -2,12 +2,14 @@ package com.legalconnnect.server.service.impl;
 
 import com.legalconnnect.server.dto.document.DocumentRequestDto;
 import com.legalconnnect.server.dto.document.DocumentResponseDto;
+import com.legalconnnect.server.enums.UserType;
 import com.legalconnnect.server.exception.NotFoundException;
 import com.legalconnnect.server.model.Case;
 import com.legalconnnect.server.model.Document;
 import com.legalconnnect.server.repository.CaseRepository;
 import com.legalconnnect.server.repository.DocumentRepository;
 import com.legalconnnect.server.service.DocumentService;
+import com.legalconnnect.server.service.TimelineEventService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.List;
 public class DocumentServiceImpl implements DocumentService {
     private final CaseRepository caseRepository;
     private final DocumentRepository documentRepository;
+    private final TimelineEventService timelineEventService;
 
     @Override
     public DocumentResponseDto toDto(Document document) {
@@ -62,8 +65,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public DocumentResponseDto uploadDocument(DocumentRequestDto requestDto) throws Exception {
         Document document = toModel(requestDto);
-        Document uploadedDocument = documentRepository.saveAndFlush(document);
-        return toDto(uploadedDocument);
+        return getDocumentResponseDto(document, "uploaded new");
     }
 
     @Override
@@ -73,7 +75,18 @@ public class DocumentServiceImpl implements DocumentService {
 
         Document document = toModel(requestDto);
         document.setId(id);
+        return getDocumentResponseDto(document, "replaced");
+    }
+
+    private DocumentResponseDto getDocumentResponseDto(Document document, String actionType) throws Exception {
         Document replacedDocument = documentRepository.saveAndFlush(document);
+
+        boolean isUserLawyer = document.getUserType() == UserType.LAWYER;
+        String userFirstName = isUserLawyer ? replacedDocument.getACase().getLawyer().getBasicInfo().getFirstName() :
+                replacedDocument.getACase().getClient().getBasicInfo().getFirstName();
+
+        timelineEventService.saveEvent(String.format("%s %s document: %s", userFirstName, actionType, document.getTitle()),
+                replacedDocument.getACase().getId());
         return toDto(replacedDocument);
     }
 
