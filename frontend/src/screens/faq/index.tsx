@@ -2,8 +2,8 @@ import ParentCard from '@components/ParentCard'
 import { Box, Typography } from '@mui/material'
 import LocalStorageHandler from '@utils/localStorageHandler'
 import { useEffect, useState } from 'react';
-import faqClients from "./faq-client.json";
-import faqLawyers from "./faq-lawyer.json"
+import faqClients from "@assets/json/faq-client.json";
+import faqLawyers from "@assets/json/faq-lawyer.json"
 import { UserType } from '@type/User';
 import { border } from '@assets/style/boxStyles';
 
