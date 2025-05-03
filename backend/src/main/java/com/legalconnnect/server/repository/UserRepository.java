@@ -24,6 +24,10 @@ public interface UserRepository extends JpaRepository<UserInfo, Integer> {
     @Query("SELECT u FROM UserInfo u WHERE u.basicInfo.firstName LIKE %:name% OR u.basicInfo.lastName LIKE %:name%")
     List<UserInfo> searchByName(String name);
 
-    @Query("SELECT u FROM UserInfo u WHERE u.type = 'LAWYER' AND u.basicInfo.language LIKE %:language% AND u.basicInfo.location LIKE %:location% AND u.basicInfo.occupation LIKE %:caseType% AND u.lawyerStatus = 'Verified'")
+    @Query("SELECT u FROM UserInfo u WHERE u.type = 'LAWYER' " +
+            "AND u.basicInfo.language LIKE %:language% " +
+            "AND u.basicInfo.location LIKE %:location% " +
+            "AND (:caseType = '' OR :caseType IN (SELECT pa FROM u.aboutInfo.practiceAreas pa)) " +
+            "AND u.lawyerStatus = 'Verified'")
     List<UserInfo> searchLawyerList(String caseType, String language, String location);
 }
