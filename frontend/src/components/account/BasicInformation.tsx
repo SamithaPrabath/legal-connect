@@ -6,6 +6,7 @@ import { BasicInfo, UserType } from "@type/User";
 import { useEffect, useRef } from "react";
 import FormCard from "../FormCard";
 import provinces from "@assets/json/provinces.json";
+import languages from "@assets/json/languages.json";
 
 type PropTypes = {
   userType: UserType,
@@ -121,7 +122,7 @@ const BasicInformation = ({ userType, form, handleData }: PropTypes) => {
               handleChange={handleData}
               label="Language"
               name="language"
-              options={["English", "Sinhala", "Tamil"]}
+              options={languages}
               optionLabel={option => option}
               autocomplete
             />
