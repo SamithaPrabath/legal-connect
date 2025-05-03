@@ -13,6 +13,7 @@ import com.legalconnnect.server.repository.CaseRepository;
 import com.legalconnnect.server.repository.EventRepository;
 import com.legalconnnect.server.repository.UserRepository;
 import com.legalconnnect.server.service.EventService;
+import com.legalconnnect.server.service.TimelineEventService;
 import com.legalconnnect.server.utils.EnumUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +37,13 @@ public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final CaseRepository caseRepository;
+    private final TimelineEventService timelineEventService;
 
     @Override
     public EventResponseDto createOne(EventRequestDto requestDto) throws Exception {
         Event event = toModel(requestDto);
         Event savedEvent = eventRepository.saveAndFlush(event);
+        timelineEventService.saveEvent(String.format("%s has been created new event: %s", savedEvent.getLawyer().getBasicInfo().getFirstName() , requestDto.getTitle()), requestDto.getCaseId());
         return toDto(savedEvent);
     }
 

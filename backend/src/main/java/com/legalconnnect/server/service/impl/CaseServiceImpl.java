@@ -12,6 +12,7 @@ import com.legalconnnect.server.repository.CaseRepository;
 import com.legalconnnect.server.repository.UserRepository;
 import com.legalconnnect.server.service.CaseService;
 import com.legalconnnect.server.service.EventService;
+import com.legalconnnect.server.service.TimelineEventService;
 import com.legalconnnect.server.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class CaseServiceImpl implements CaseService {
     private final UserRepository userRepository;
     private final CaseRepository caseRepository;
     private final EventService eventService;
+    private final TimelineEventService timelineEventService;
 
     @Override
     public CaseResponseDto toDto(Case aCase) {
@@ -115,8 +117,13 @@ public class CaseServiceImpl implements CaseService {
     @Override
     public CaseResponseDto updateStatus(Integer caseId, CaseStatus caseStatus) throws Exception {
         Case aCase = caseRepository.findById(caseId).orElseThrow(() -> new NotFoundException("Case Not Found!"));
+        String firstCaseStatus = aCase.getCaseStatus();
         aCase.setCaseStatus(caseStatus.toString());
         Case updatedCase = caseRepository.saveAndFlush(aCase);
+
+        String lawyerFirstName = updatedCase.getLawyer().getBasicInfo().getFirstName();
+        timelineEventService.saveEvent(String.format("%s updated the status from %s to %s", lawyerFirstName, firstCaseStatus, caseStatus), caseId);
+
         return toDto(updatedCase);
     }
 }

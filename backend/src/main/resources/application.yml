@@ -40,6 +40,7 @@ endpoints:
   review: review
   user: user
   portal: portal
+  timeline-event: timeline-event
 
 application:
   security:
