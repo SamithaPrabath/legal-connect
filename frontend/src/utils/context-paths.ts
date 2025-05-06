@@ -38,3 +38,4 @@ export const profile_reviews_route = (profileId: string | null) =>
 export const schedule_appointment_route = (lawyerId: string | null) => mergeUrls(schedule_route, lawyerId || ":lawyerId")
 
 export const admin_dashboard_route = "/admin/dashboard";
+export const meets_room = (roomId: string | null) => mergeUrls("/meets", roomId || ":roomId")

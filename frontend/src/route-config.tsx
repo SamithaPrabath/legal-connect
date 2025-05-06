@@ -5,6 +5,7 @@ import FAQ from "@screens/faq";
 import FindALawyer from "@screens/find-a-lawyer";
 import Home from "@screens/home";
 import LoginSignUp from "@screens/login-and-signup";
+import Meets from "@screens/meets";
 import Messages from "@screens/messages";
 import MessageBox from "@screens/messages/MessageBox";
 import MyCases from "@screens/my-cases";
@@ -45,6 +46,7 @@ import {
   view_case_route,
   create_account_route,
   faq_route,
+  meets_room,
 } from "@utils/context-paths";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -105,6 +107,10 @@ const router = createBrowserRouter([
       {
         path: schedule_route,
         element: <Schedule />,
+      },
+      {
+        path: meets_room(null),
+        element: <Meets />
       },
       {
         path: schedule_appointment_route(null),

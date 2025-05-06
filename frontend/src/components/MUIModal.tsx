@@ -22,6 +22,7 @@ interface ModalProps {
   onClose: () => void;
   onClick: () => void;
   children?: ReactNode;
+  buttonName?: string;
 }
 
 const MUIModel: React.FC<ModalProps> = ({
@@ -30,6 +31,7 @@ const MUIModel: React.FC<ModalProps> = ({
   title,
   children,
   onClick,
+  buttonName
 }) => {
   return (
     <Modal open={open} onClose={onClose}>
@@ -59,7 +61,7 @@ const MUIModel: React.FC<ModalProps> = ({
         <Divider />
         <Box p="10px">
           <MUIButton fullWidth color="secondary" size="small" onClick={onClick}>
-            Submit
+           {buttonName || "Submit"}
           </MUIButton>
         </Box>
       </Box>
