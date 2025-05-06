@@ -43,7 +43,7 @@ public class EventServiceImpl implements EventService {
     public EventResponseDto createOne(EventRequestDto requestDto) throws Exception {
         Event event = toModel(requestDto);
         Event savedEvent = eventRepository.saveAndFlush(event);
-        timelineEventService.saveEvent(String.format("%s has been created new event: %s", savedEvent.getLawyer().getBasicInfo().getFirstName() , requestDto.getTitle()), requestDto.getCaseId());
+        timelineEventService.saveEvent(String.format("%s has created new event: %s", savedEvent.getLawyer().getBasicInfo().getFirstName() , requestDto.getTitle()), requestDto.getCaseId());
         return toDto(savedEvent);
     }
 
