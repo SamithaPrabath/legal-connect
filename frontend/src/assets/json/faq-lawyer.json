@@ -1,0 +1,22 @@
+[
+    {
+        "question": "How do I get clients?",
+        "answer": "Clients can browse lawyer profiles and book appointments with you. You will receive notifications for new appointments."
+    },
+    {
+        "question": "How do I schedule an event with a client",
+        "answer": "To schedule a event go to the specific case with the client and go to the event menu"
+    },
+    {
+        "question": "How do I create and manage cases?",
+        "answer": "After an appointment, you can create a case, add the client, and manage all case details, including events, deadlines, and shared documents."
+    },
+    {
+        "question": "Can I chat with my clients",
+        "answer": "Yes, the platform has a built-in messaging system where you can securely chat with your clients."
+    },
+    {
+        "question": "How do I send payment requests to clients",
+        "answer": "You can generate invoices from the \"Payments\" section and send payment requests directly to clients through the platform."
+    }
+]
